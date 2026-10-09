@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Aula IRT · Entrevista Motivacional</title>
+<meta name="description" content="Aula virtual del Instituto de Riesgo Territorial. Curso de Entrevista Motivacional y Consejería Familiar, CESFAM Doñihue y Lo Miranda.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1B2A4A; --navy-2:#24365C; --terra:#C0392B; --gold:#C9A227; --gold-soft:#F4ECD3;
+  --ink:#1E2430; --muted:#5B6475; --line:#E3E6EC; --bg:#F7F6F2; --card:#FFFFFF;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Carlito",Calibri,"Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.55}
+h1,h2,h3{font-family:"Caladea",Cambria,Georgia,serif;color:var(--navy);line-height:1.2;margin:0 0 .5em}
+a{color:var(--navy)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* Barra superior */
+.top{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.sello{width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;font-family:"Caladea",serif;font-weight:700;font-size:15px;color:var(--gold)}
+.brand b{display:block;font-family:"Caladea",serif;font-size:18px;letter-spacing:.3px}
+.brand span{display:block;font-size:13px;opacity:.8}
+.top nav a{color:#fff;text-decoration:none;font-size:15px;margin-left:18px;opacity:.85}
+.top nav a:hover{opacity:1;text-decoration:underline}
+
+/* Portada */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:56px 0 64px}
+.kicker{display:inline-block;font-size:13px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.hero h1{color:#fff;font-size:clamp(28px,4.4vw,44px);max-width:820px}
+.hero p{max-width:720px;opacity:.9;margin:0 0 24px}
+.datos{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.dato{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 14px;font-size:15px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;transition:transform .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn-line{border-color:rgba(255,255,255,.6);color:#fff}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-terra{background:var(--terra);color:#fff}
+.btn-ghost{border-color:var(--navy);color:var(--navy);background:#fff}
+.btn.pendiente{background:#ECEEF2!important;color:#8A93A3!important;border-color:#ECEEF2!important;pointer-events:none;box-shadow:none}
+
+section{padding:56px 0}
+.sec-head{margin-bottom:28px}
+.sec-head .kicker{color:var(--terra)}
+.sec-head p{color:var(--muted);max-width:720px;margin:0}
+
+/* Pasos */
+.pasos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:p}
+.paso{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 20px;position:relative}
+.paso::before{counter-increment:p;content:counter(p);position:absolute;top:-14px;left:20px;width:30px;height:30px;border-radius:50%;background:var(--terra);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+.paso h3{font-size:19px;margin-top:6px}
+.paso p{margin:0;color:var(--muted);font-size:16px}
+
+/* Aviso */
+.aviso{background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:8px;padding:18px 22px;margin-top:28px}
+.aviso b{color:var(--navy)}
+
+/* Módulos */
+.modulos{display:grid;gap:18px}
+.modulo{background:var(--card);border:1px solid var(--line);border-radius:14px;display:grid;grid-template-columns:120px 1fr;overflow:hidden;scroll-margin-top:20px}
+.modulo .num{background:var(--navy);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 8px;border-right:4px solid var(--gold)}
+.modulo .num small{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;opacity:.75}
+.modulo .num b{font-family:"Caladea",serif;font-size:44px;line-height:1}
+.modulo .num span{font-size:13px;margin-top:6px;color:var(--gold)}
+.modulo .cuerpo{padding:22px 24px}
+.modulo h3{font-size:22px}
+.modulo p{margin:0 0 16px;color:var(--muted);font-size:16px}
+.modulo .btns{gap:10px}
+.modulo .btn{padding:10px 16px;font-size:15px}
+
+/* Jornada */
+.jornada{background:var(--navy);color:#fff;border-radius:16px;padding:34px;display:grid;grid-template-columns:1.3fr 1fr;gap:28px}
+.jornada h2{color:#fff}
+.jornada p{opacity:.9}
+.jornada ul{list-style:none;padding:0;margin:0}
+.jornada li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:14px}
+.jornada li b{color:var(--gold);min-width:84px;font-weight:700}
+
+/* Documentos */
+.docs{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.doc h3{font-size:18px;margin:0 0 4px}
+.doc p{margin:0;color:var(--muted);font-size:15px}
+
+footer{background:var(--navy);color:rgba(255,255,255,.8);padding:34px 0;font-size:15px;border-top:4px solid var(--gold)}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
+footer a{color:#fff}
+footer small{display:block;margin-top:10px;opacity:.7;font-size:13px}
+
+@media (max-width:860px){
+  .pasos{grid-template-columns:repeat(2,1fr);row-gap:28px}
+  .jornada,.docs,footer .wrap{grid-template-columns:1fr}
+  .top nav{display:none}
+}
+@media (max-width:520px){
+  body{font-size:17px}
+  .wrap{padding:0 16px}
+  .pasos{grid-template-columns:1fr}
+  .modulo{grid-template-columns:1fr}
+  .modulo .num{flex-direction:row;gap:12px;justify-content:flex-start;padding:12px 18px;border-right:0;border-bottom:4px solid var(--gold)}
+  .modulo .num b{font-size:30px}
+  .modulo .num span{margin-top:0}
+  .jornada{padding:24px}
+  .doc{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">
+      <div class="sello">IRT</div>
+      <div><b>Aula IRT</b><span>Instituto de Riesgo Territorial</span></div>
+    </a>
+    <nav>
+      <a href="#como">Cómo funciona</a>
+      <a href="#modulos">Módulos</a>
+      <a href="#jornada">Jornada presencial</a>
+      <a href="#documentos">Documentos</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="inicio">
+  <div class="wrap">
+    <span class="kicker">Curso · Departamento de Salud Municipal de Doñihue</span>
+    <h1>Entrevista Motivacional y Consejería Familiar en el Cuidado de Personas con Multimorbilidad Crónica</h1>
+    <p>Curso para los equipos de los CESFAM Doñihue y Lo Miranda. La etapa online se estudia a su propio ritmo; la jornada presencial se dedica a la práctica con casos.</p>
+    <div class="datos">
+      <span class="dato">20 horas pedagógicas</span>
+      <span class="dato">12 h online asincrónicas</span>
+      <span class="dato">8 h presenciales</span>
+      <span class="dato">Relator: Dr. Pablo Guerra Cisternas</span>
+    </div>
+    <div class="btns">
+      <a class="btn btn-gold" href="ENLACE_FICHA">Completar ficha de inscripción</a>
+      <a class="btn btn-line" href="#modulos">Ir a los módulos</a>
+    </div>
+  </div>
+</div>
+
+<section id="como">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Cómo funciona</span>
+      <h2>Cuatro pasos</h2>
+      <p>Después de cada paso recibirá un correo de academia@institutoriesgoterritorial.cl con el enlace al siguiente.</p>
+    </div>
+    <div class="pasos">
+      <div class="paso"><h3>Ficha de inscripción</h3><p>Sus datos se registran una sola vez. Toma 2 minutos.</p></div>
+      <div class="paso"><h3>Test de partida</h3><p>Diagnóstico breve, sin nota, para medir el punto de inicio.</p></div>
+      <div class="paso"><h3>Cinco módulos</h3><p>Lea cada módulo en PDF y responda su test. Puede avanzar a su ritmo dentro del plazo.</p></div>
+      <div class="paso"><h3>Jornada presencial</h3><p>Talleres prácticos y evaluación final del curso.</p></div>
+    </div>
+    <div class="aviso">
+      <b>Importante:</b> en todos los formularios identifíquese siempre con el <b>mismo RUT</b> (sin puntos y con guion, por ejemplo 12345678-9). Así su avance queda registrado correctamente. Si responde un test más de una vez, se considera solo el primer envío.
+    </div>
+  </div>
+</section>
+
+<section id="modulos" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Etapa online · 12 horas pedagógicas</span>
+      <h2>Módulos del curso</h2>
+      <p>Comience por el test de partida. Luego, en cada módulo: lea el PDF y responda su test.</p>
+    </div>
+
+    <div class="btns" style="margin-bottom:22px">
+      <a class="btn btn-terra" href="ENLACE_TEST_PARTIDA">Responder el test de partida</a>
+    </div>
+
+    <div class="modulos">
+      <article class="modulo" id="modulo-1">
+        <div class="num"><small>Módulo</small><b>1</b><span>2 horas</span></div>
+        <div class="cuerpo">
+          <h3>ECICEP y multimorbilidad en APS</h3>
+          <p>Multimorbilidad crónica y sus desafíos; atención centrada en la persona; rol de la familia y la persona cuidadora; decisiones compartidas y plan consensuado.</p>
+          <div class="btns"><a class="btn btn-navy" href="ENLACE_PDF_M1">Leer el módulo (PDF)</a><a class="btn btn-ghost" href="ENLACE_TEST_M1">Responder el test</a></div>
+        </div>
+      </article>
+
+      <article class="modulo" id="modulo-2">
+        <div class="num"><small>Módulo</small><b>2</b><span>3 horas</span></div>
+        <div class="cuerpo">
+          <h3>Fundamentos de la entrevista motivacional</h3>
+          <p>Qué es y qué no es; el reflejo de corregir; espíritu de la entrevista motivacional (colaboración, aceptación, compasión, evocación); procesos: vincular, enfocar, evocar y planificar.</p>
+          <div class="btns"><a class="btn btn-navy" href="ENLACE_PDF_M2">Leer el módulo (PDF)</a><a class="btn btn-ghost" href="ENLACE_TEST_M2">Responder el test</a></div>
+        </div>
+      </article>
+
+      <article class="modulo" id="modulo-3">
+        <div class="num"><small>Módulo</small><b>3</b><span>3 horas</span></div>
+        <div class="cuerpo">
+          <h3>Habilidades centrales y discurso de cambio</h3>
+          <p>Preguntas abiertas, afirmaciones, reflejos simples y complejos, resúmenes; discurso de cambio y discurso de mantención; manejo de la ambivalencia y la discordancia.</p>
+          <div class="btns"><a class="btn btn-navy" href="ENLACE_PDF_M3">Leer el módulo (PDF)</a><a class="btn btn-ghost" href="ENLACE_TEST_M3">Responder el test</a></div>
+        </div>
+      </article>
+
+      <article class="modulo" id="modulo-4">
+        <div class="num"><small>Módulo</small><b>4</b><span>2 horas</span></div>
+        <div class="cuerpo">
+          <h3>Consejería familiar en APS</h3>
+          <p>Enfoque familiar; ciclo vital y crisis normativas y no normativas; genograma y ecomapa; estructura de una consejería familiar.</p>
+          <div class="btns"><a class="btn btn-navy" href="ENLACE_PDF_M4">Leer el módulo (PDF)</a><a class="btn btn-ghost" href="ENLACE_TEST_M4">Responder el test</a></div>
+        </div>
+      </article>
+
+      <article class="modulo" id="modulo-5">
+        <div class="num"><small>Módulo</small><b>5</b><span>2 horas</span></div>
+        <div class="cuerpo">
+          <h3>Integración aplicada a la multimorbilidad</h3>
+          <p>Adherencia y automanejo; activación de la persona; participación de la familia o cuidador; del diálogo motivacional al plan de cuidado consensuado.</p>
+          <div class="btns"><a class="btn btn-navy" href="ENLACE_PDF_M5">Leer el módulo (PDF)</a><a class="btn btn-ghost" href="ENLACE_TEST_M5">Responder el test</a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="jornada" style="padding-top:0">
+  <div class="wrap">
+    <div class="jornada">
+      <div>
+        <span class="kicker">8 horas pedagógicas</span>
+        <h2>Jornada presencial</h2>
+        <p>Talleres prácticos con los casos que conoció en los módulos: habilidades centrales, simulación de entrevista y consejería familiar. Al cierre se aplica la evaluación final del curso.</p>
+        <div class="btns" style="margin-top:18px"><a class="btn btn-gold" href="ENLACE_PDF_JORNADA">Información de la jornada (PDF)</a></div>
+      </div>
+      <ul>
+        <li><b>Fecha</b><span>[PENDIENTE]</span></li>
+        <li><b>Horario</b><span>09:00 a 17:00 horas</span></li>
+        <li><b>Lugar</b><span>[PENDIENTE]</span></li>
+        <li><b>Requisito</b><span>Haber completado los cinco módulos online</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="documentos" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Documentos</span>
+      <h2>Programa y apoyo</h2>
+    </div>
+    <div class="docs">
+      <div class="doc"><div><h3>Programa del curso</h3><p>Objetivos, contenidos, evaluación y requisitos de aprobación.</p></div><a class="btn btn-ghost" href="ENLACE_PDF_PROGRAMA">Descargar</a></div>
+      <div class="doc"><div><h3>¿Dudas o problemas?</h3><p>Escriba a academia@institutoriesgoterritorial.cl indicando su nombre y RUT.</p></div><a class="btn btn-ghost" href="mailto:academia@institutoriesgoterritorial.cl">Escribir</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <b style="color:#fff;font-family:'Caladea',serif;font-size:18px">Instituto de Riesgo Territorial (IRT)</b><br>
+      Análisis, docencia y gestión aplicada del riesgo desde una perspectiva territorial, sanitaria y comunitaria.<br>
+      <a href="https://institutoriesgoterritorial.cl">institutoriesgoterritorial.cl</a>
+      <small>Los datos personales registrados en este curso se usan solo para su seguimiento académico, evaluación y certificación, y se informan a la institución que contrata la capacitación.</small>
+    </div>
+    <div>
+      Contacto del aula<br>
+      <a href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Los enlaces que aún no se han cargado se muestran como "Disponible pronto"
+  document.querySelectorAll('a[href^="ENLACE_"]').forEach(function (a) {
+    a.classList.add('pendiente');
+    a.setAttribute('aria-disabled', 'true');
+    a.textContent = a.textContent.trim() + ' · disponible pronto';
+  });
+  // Los enlaces externos se abren en una pestaña nueva
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    a.target = '_blank'; a.rel = 'noopener';
+  });
+</script>
+</body>
+</html>
