@@ -1,0 +1,15 @@
+# Nunca subir al repositorio: scripts de Apps Script, documentos, planillas ni datos
+*.gs
+*.pdf
+*.docx
+*.xlsx
+*.csv
+.env
+
+# Carpetas internas (relatoría, evaluaciones, datos de participantes)
+relatoria/
+evaluaciones/
+datos/
+**/relatoria/
+**/evaluaciones/
+**/datos/
