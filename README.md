@@ -12,7 +12,7 @@ El aula es solo un conjunto de páginas web. No tiene servidor, inicio de sesió
 | `404.html` | Página que aparece cuando alguien escribe una dirección que no existe. Sin enlaces a cursos. |
 | `donihue-2026-k7q3x9/index.html` | Página del curso de Doñihue (`noindex, nofollow`). |
 | `assets/academia.css` | Hoja de estilos compartida: identidad visual de la Academia para portada, 404 y cursos. |
-| `assets/academia.js` | Script compartido. Aquí se define `URL_SITIO` (ver sección 5). |
+| `assets/academia.js` | Script compartido: ventana «Solicitud de capacitación» (`ENDPOINT`) y `URL_SITIO` (ver sección 5). |
 | `assets/iconos.svg` | Iconografía lineal propia (módulos, duración, modalidad, certificado, progreso…). |
 | `assets/sello.svg` | Sello circular «IRT» de la Academia (también es el ícono de la pestaña). |
 | `assets/og-academia.png` | Imagen que aparece al compartir la portada en redes o mensajería. |
@@ -83,7 +83,7 @@ Use la plantilla `plantillas/curso.html`: ya tiene la identidad de la Academia, 
 
 Las secciones de la página tienen anclas que los correos pueden usar, agregándolas al final de la dirección: `#como`, `#modulos`, `#modulo-1` a `#modulo-5`, `#jornada` y `#documentos`. Ejemplo: `…/rengo-2027-p4m8t2/#modulo-3`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261011`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js` e `iconos.svg`.
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261011b`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js` e `iconos.svg`.
 
 ## 4. La dirección de cada curso es reservada
 
@@ -97,17 +97,23 @@ Si una dirección se filtra, cree una carpeta con un nombre nuevo, actualice `UR
 
 Nota: un nombre difícil de adivinar reduce el acceso casual, pero no es una protección real. Si el repositorio es público, cualquiera que lo revise puede ver el nombre de las carpetas. Por eso la página del curso no debe contener nunca datos personales ni material reservado.
 
-## 5. Dirección del sitio institucional (`URL_SITIO`)
+## 5. Solicitudes de capacitación y dirección del sitio institucional
 
-Los botones «Solicitar un curso para mi institución», «Solicitar este programa…» y «Solicitar información» llevan al formulario de contacto del sitio institucional con el área Academia preseleccionada (`URL_SITIO/?area=academia#contacto`). El enlace «← Instituto de Riesgo Territorial» lleva a la portada del sitio institucional.
+**Ventana «Solicitud de capacitación».** Los botones «Solicitar un curso para mi institución», «Solicitar este programa para mi institución» y «Solicitar información» de la portada **no abren otra pestaña ni llevan al sitio institucional**: abren una ventana flotante (`<dialog id="solicitud">`, al final de `index.html`) dentro de la propia Academia.
 
-La dirección está definida **en un solo lugar**, la primera línea de `assets/academia.js`:
+- Cada botón lleva el atributo `data-solicitud="…"` con el programa que queda **ya seleccionado** en «Programa o curso de interés». El texto debe ser idéntico a una de las opciones de la lista. `data-solicitud=""` abre la ventana sin programa elegido.
+- Para agregar un programa nuevo: sume una `<option>` en la lista `#s-programa` y use el mismo texto en el `data-solicitud` del botón.
+- El `href="mailto:…"` del botón es solo un respaldo si el script no carga.
+- El envío va al Google Apps Script definido en `ENDPOINT` (inicio de `assets/academia.js`), con `fetch` POST, `mode: 'no-cors'` y `Content-Type: text/plain;charset=utf-8`. Claves del JSON: `area` (`'academia'`), `nombre`, `apellidos`, `correo`, `telefono`, `institucion`, `cargo`, `region`, `necesidad` (programa elegido), `asunto` (`'Solicitud de capacitación: ' + programa`), `mensaje` (empieza con «Participantes aprox.: X · Modalidad: Y» y sigue con el texto escrito), `tipo` (`''`), `acepta` (verdadero/falso), `web` (campo trampa: debe llegar vacío), `t` (milisegundos desde que se abrió la ventana) y `origen` (dirección de la página).
+- Con `no-cors` la página no puede leer la respuesta del script: muestra el mensaje de éxito si la red no falla. Si falla, sugiere escribir a `academia@institutoriesgoterritorial.cl`.
+
+**`URL_SITIO`.** Solo la usan el enlace «← Instituto de Riesgo Territorial» y el del pie («Sitio institucional del IRT»), marcados con `data-sitio="/"`. Está definida **en un solo lugar**, al inicio de `assets/academia.js`:
 
 ```js
 var URL_SITIO = 'https://nuevo.institutoriesgoterritorial.cl';
 ```
 
-Cuando el sitio institucional pase al dominio principal, cambie esa línea por `'https://institutoriesgoterritorial.cl'` y suba la versión `?v=` de `academia.js` en las páginas. En el HTML, esos enlaces se marcan con `data-sitio="/ruta"`; el `href` escrito en el HTML es solo un respaldo para navegadores sin JavaScript (un correo a academia o el dominio principal).
+Cuando el sitio institucional pase al dominio principal, cambie esa línea por `'https://institutoriesgoterritorial.cl'` y suba la versión `?v=` de `academia.js` en las páginas.
 
 ## 6. Identidad visual de la Academia
 
@@ -128,6 +134,15 @@ La Academia comparte la tipografía del IRT (Caladea para títulos, Carlito para
 
 Reglas: proporción aproximada 60-30-10 (fondos claros · petróleo y tinta · ocre); sin fondos oscuros de sección; texto base de 18 px; todas las combinaciones texto/fondo cumplen WCAG AA o superior (4,5:1 texto normal; 3:1 gráficos y componentes). Si agrega un color, verifique su contraste antes de usarlo.
 
-**Marcas `[PENDIENTE]`.** Lo que falta confirmar se muestra en la página con el estilo `.por-validar` (recuadro ocre punteado), para que nadie lo pase por alto. Al confirmarlo, reemplace el texto y borre el `<span class="por-validar">`.
+**Sin marcas `[PENDIENTE]` visibles en la portada.** Lo que falta confirmar no se muestra en la página: se anota en la sección «Pendientes» de este README.
 
-**Nuevas fichas de experiencia.** En `index.html`, sección «Experiencia formativa del IRT», hay un comentario `PLANTILLA DE FICHA`: copie el bloque `<article class="ficha">`, péguelo antes del comentario y cambie los textos. Solo experiencias realizadas o en ejecución; las propuestas van en «Propuestas formativas disponibles».
+**Nuevas fichas de experiencia.** En `index.html`, sección «Experiencia formativa del IRT», hay un comentario `PLANTILLA DE FICHA`: copie el bloque `<article class="ficha">`, péguelo antes del comentario y cambie los textos. Solo experiencias realizadas o en ejecución y **confirmadas**; las propuestas y los cursos ofrecidos van en «Propuestas formativas disponibles».
+
+## 7. Pendientes
+
+Nada de esta lista aparece en la portada; se completa aquí hasta confirmarlo.
+
+- **Módulos I a IV del Programa GRD**: validar las descripciones de cada módulo con su manual (hoy se muestran como texto normal).
+- **Entrevista Motivacional y Consejería Familiar**: figura solo como curso ofrecido en «Propuestas formativas disponibles». Si se confirma su ejecución (estado, institución, región y autorización para nombrarla), puede volver a «Experiencia formativa del IRT».
+- **Apps Script de solicitudes** (`ENDPOINT`): confirmar que acepta `area: 'academia'` y todas las claves de la sección 5 (`necesidad`, `cargo`, `region`, `acepta`, `web`, `t`, `origen`), que descarta envíos con `web` lleno o con `t` muy bajo, y que avisa a `academia@institutoriesgoterritorial.cl`. Probar un envío real desde el sitio publicado.
+- **Curso de Doñihue** (`donihue-2026-k7q3x9/`): fecha y lugar de la jornada presencial siguen como `[PENDIENTE]` en esa página reservada (ver sección 2).
