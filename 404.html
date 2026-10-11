@@ -4,100 +4,59 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Aula IRT · Página no encontrada</title>
-<meta name="description" content="Página no encontrada en el Aula IRT.">
+<title>Academia IRT · Página no encontrada</title>
+<meta name="description" content="Página no encontrada en la Academia IRT.">
+<meta name="theme-color" content="#0E5E6F">
+<link rel="icon" href="/assets/sello.svg?v=20261011" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root{
-  --navy:#1B2A4A; --navy-2:#24365C; --terra:#C0392B; --gold:#C9A227; --gold-soft:#F4ECD3;
-  --ink:#1E2430; --muted:#5B6475; --line:#E3E6EC; --bg:#F7F6F2; --card:#FFFFFF;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Carlito",Calibri,"Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.55;display:flex;flex-direction:column}
-h1,h2,h3{font-family:"Caladea",Cambria,Georgia,serif;color:var(--navy);line-height:1.2;margin:0 0 .5em}
-a{color:var(--navy)}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px;width:100%}
-
-/* Barra superior */
-.top{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
-.top .wrap{display:flex;align-items:center;gap:16px;padding-top:14px;padding-bottom:14px}
-.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
-.sello{width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;font-family:"Caladea",Cambria,serif;font-weight:700;font-size:15px;color:var(--gold);flex:none}
-.brand b{display:block;font-family:"Caladea",Cambria,serif;font-size:18px;letter-spacing:.3px}
-.brand span{display:block;font-size:13px;opacity:.8}
-
-/* Contenido */
-main{flex:1;padding:56px 0 64px}
-.kicker{display:inline-block;font-size:13px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra);margin-bottom:14px}
-.tarjeta{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:36px 34px;max-width:720px}
-.tarjeta h1{font-size:clamp(30px,4.4vw,42px)}
-.tarjeta p{margin:0 0 16px;color:var(--muted)}
-.aviso{background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:8px;padding:18px 22px;margin:24px 0}
-.aviso p{margin:0;color:var(--ink)}
-.aviso b{color:var(--navy)}
-.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
-.btn{display:inline-flex;align-items:center;padding:12px 20px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;transition:transform .15s ease,box-shadow .15s ease}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
-.btn-navy{background:var(--navy);color:#fff}
-.btn-ghost{border-color:var(--navy);color:var(--navy);background:#fff}
-.correo{overflow-wrap:anywhere}
-
-footer{background:var(--navy);color:rgba(255,255,255,.8);padding:30px 0;font-size:15px;border-top:4px solid var(--gold)}
-footer a{color:#fff}
-footer b{color:#fff;font-family:"Caladea",Cambria,serif;font-size:18px}
-
-@media (max-width:520px){
-  body{font-size:17px}
-  .wrap{padding:0 16px}
-  main{padding:32px 0 40px}
-  .tarjeta{padding:24px 20px}
-  .aviso{padding:16px 18px}
-}
-</style>
+<link rel="stylesheet" href="/assets/academia.css?v=20261011">
 </head>
 <body>
 
-<header class="top">
+<header class="cabecera">
   <div class="wrap">
-    <a class="brand" href="/">
-      <div class="sello">IRT</div>
-      <div><b>Aula IRT</b><span>Instituto de Riesgo Territorial</span></div>
+    <a class="marca" href="/">
+      <svg class="sello" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0E5E6F"/><circle cx="32" cy="32" r="25.5" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><path d="M14 45.5a22 22 0 0 0 36 0" fill="none" stroke="#B7791F" stroke-width="3" stroke-linecap="round"/><text x="32" y="38" text-anchor="middle" font-family="Caladea, Cambria, Georgia, serif" font-weight="700" font-size="19" fill="#fff">IRT</text></svg>
+      <span><b>Academia IRT</b><small>Aula virtual del Instituto de Riesgo Territorial</small></span>
     </a>
+    <div class="cabecera__extra">
+      <a class="volver-irt" href="https://institutoriesgoterritorial.cl" data-sitio="/"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-volver"/></svg>Instituto de Riesgo Territorial<span class="visual-oculto"> (sitio institucional)</span></a>
+    </div>
   </div>
 </header>
 
-<main>
+<main class="simple">
   <div class="wrap">
-    <div class="tarjeta">
-      <span class="kicker">Error 404</span>
-      <h1>Página no encontrada</h1>
+    <div class="tarjeta tarjeta--banda">
+      <span class="antetitulo">Error 404</span>
+      <h1 style="font-size:clamp(30px,4.4vw,42px)">Página no encontrada</h1>
       <p>La dirección que ingresó no existe o ya no está disponible. Revise que el enlace esté completo, tal como aparece en el correo que recibió.</p>
-      <div class="aviso">
+      <div class="recuadro">
         <p><b>¿Necesita ayuda?</b> Escriba a <a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a> indicando su nombre y RUT.</p>
       </div>
       <div class="btns">
-        <a class="btn btn-navy" href="/">Volver a la portada</a>
+        <a class="btn btn--primario" href="/">Ir a la página de la Academia</a>
       </div>
     </div>
   </div>
 </main>
 
-<footer>
+<footer class="pie">
   <div class="wrap">
-    <b>Instituto de Riesgo Territorial (IRT)</b><br>
-    Análisis, docencia y gestión aplicada del riesgo desde una perspectiva territorial, sanitaria y comunitaria.<br>
-    <a href="https://institutoriesgoterritorial.cl">institutoriesgoterritorial.cl</a>
+    <div>
+      <div class="pie__marca"><b>Academia IRT · Instituto de Riesgo Territorial</b></div>
+      <p><a class="pie__irt" href="https://institutoriesgoterritorial.cl" data-sitio="/">Sitio institucional del IRT</a></p>
+    </div>
+    <div>
+      <p>Contacto de la Academia</p>
+      <p><a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a></p>
+    </div>
+    <p class="pie__copy">© 2026 Instituto de Riesgo Territorial · Academia IRT</p>
   </div>
 </footer>
 
-<script>
-  // Los enlaces externos se abren en una pestaña nueva
-  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
-    a.target = '_blank'; a.rel = 'noopener';
-  });
-</script>
+<script src="/assets/academia.js?v=20261011"></script>
 </body>
 </html>
