@@ -3,103 +3,359 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Aula IRT · Acceso por invitación</title>
-<meta name="description" content="Aula virtual del Instituto de Riesgo Territorial. Acceso por invitación.">
+<title>Academia IRT · Aula virtual del Instituto de Riesgo Territorial</title>
+<meta name="description" content="Academia IRT: formación para funcionarios, equipos de salud y comunidades en gestión del riesgo de desastres, salud pública territorial y preparación comunitaria. Etapa en línea a su ritmo y jornada presencial práctica.">
+<link rel="canonical" href="https://cursos.institutoriesgoterritorial.cl/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:site_name" content="Academia IRT">
+<meta property="og:title" content="Academia IRT · Aprender desde el territorio para prevenir el daño">
+<meta property="og:description" content="Aula virtual del Instituto de Riesgo Territorial. Formación en gestión del riesgo de desastres para instituciones públicas, equipos de salud y comunidades.">
+<meta property="og:url" content="https://cursos.institutoriesgoterritorial.cl/">
+<meta property="og:image" content="https://cursos.institutoriesgoterritorial.cl/assets/og-academia.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sello de la Academia IRT y el texto: Aprender desde el territorio para prevenir el daño">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0E5E6F">
+<link rel="icon" href="/assets/sello.svg?v=20261011" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root{
-  --navy:#1B2A4A; --navy-2:#24365C; --terra:#C0392B; --gold:#C9A227; --gold-soft:#F4ECD3;
-  --ink:#1E2430; --muted:#5B6475; --line:#E3E6EC; --bg:#F7F6F2; --card:#FFFFFF;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Carlito",Calibri,"Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.55;display:flex;flex-direction:column}
-h1,h2,h3{font-family:"Caladea",Cambria,Georgia,serif;color:var(--navy);line-height:1.2;margin:0 0 .5em}
-a{color:var(--navy)}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px;width:100%}
-
-/* Barra superior */
-.top{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
-.top .wrap{display:flex;align-items:center;gap:16px;padding-top:14px;padding-bottom:14px}
-.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
-.sello{width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;font-family:"Caladea",Cambria,serif;font-weight:700;font-size:15px;color:var(--gold);flex:none}
-.brand b{display:block;font-family:"Caladea",Cambria,serif;font-size:18px;letter-spacing:.3px}
-.brand span{display:block;font-size:13px;opacity:.8}
-
-/* Contenido */
-main{flex:1;padding:56px 0 64px}
-.kicker{display:inline-block;font-size:13px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra);margin-bottom:14px}
-.tarjeta{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:36px 34px;max-width:720px}
-.tarjeta h1{font-size:clamp(30px,4.4vw,42px)}
-.tarjeta p{margin:0 0 16px;color:var(--muted)}
-.aviso{background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:8px;padding:18px 22px;margin:24px 0}
-.aviso p{margin:0;color:var(--ink)}
-.aviso b{color:var(--navy)}
-.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
-.btn{display:inline-flex;align-items:center;padding:12px 20px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;transition:transform .15s ease,box-shadow .15s ease}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
-.btn-navy{background:var(--navy);color:#fff}
-.btn-ghost{border-color:var(--navy);color:var(--navy);background:#fff}
-.correo{overflow-wrap:anywhere}
-
-footer{background:var(--navy);color:rgba(255,255,255,.8);padding:30px 0;font-size:15px;border-top:4px solid var(--gold)}
-footer a{color:#fff}
-footer b{color:#fff;font-family:"Caladea",Cambria,serif;font-size:18px}
-
-@media (max-width:520px){
-  body{font-size:17px}
-  .wrap{padding:0 16px}
-  main{padding:32px 0 40px}
-  .tarjeta{padding:24px 20px}
-  .aviso{padding:16px 18px}
-}
-</style>
+<link rel="stylesheet" href="/assets/academia.css?v=20261011">
 </head>
 <body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
 
-<header class="top">
+<header class="cabecera">
   <div class="wrap">
-    <a class="brand" href="/">
-      <div class="sello">IRT</div>
-      <div><b>Aula IRT</b><span>Instituto de Riesgo Territorial</span></div>
+    <a class="marca" href="#inicio">
+      <svg class="sello" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0E5E6F"/><circle cx="32" cy="32" r="25.5" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><path d="M14 45.5a22 22 0 0 0 36 0" fill="none" stroke="#B7791F" stroke-width="3" stroke-linecap="round"/><text x="32" y="38" text-anchor="middle" font-family="Caladea, Cambria, Georgia, serif" font-weight="700" font-size="19" fill="#fff">IRT</text></svg>
+      <span><b>Academia IRT</b><small>Aula virtual del Instituto de Riesgo Territorial</small></span>
     </a>
+    <div class="cabecera__extra">
+      <a class="volver-irt" href="https://institutoriesgoterritorial.cl" data-sitio="/"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-volver"/></svg>Instituto de Riesgo Territorial<span class="visual-oculto"> (sitio institucional)</span></a>
+    </div>
+    <nav class="menu" aria-label="Secciones de la Academia">
+      <a href="#aula">Nuestra aula</a>
+      <a href="#programa-grd">Programa GRD</a>
+      <a href="#formacion">Formación</a>
+      <a href="#como-trabajamos">Cómo trabajamos</a>
+      <a href="#instituciones">Para instituciones</a>
+    </nav>
   </div>
 </header>
 
-<main>
+<main id="contenido">
+
+<!-- 1 · Apertura -->
+<section class="apertura" id="inicio" aria-labelledby="titulo-inicio">
+  <svg class="apertura__trazo" viewBox="0 0 720 560" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M360 90c120-10 230 60 250 160s-50 210-170 230-260-20-300-120 100-260 220-270z"/>
+    <path d="M362 140c90-6 170 44 184 118s-38 152-124 166-190-14-218-88 70-190 158-196z"/>
+    <path d="M366 190c62-4 112 30 120 78s-24 98-82 108-124-10-142-58 44-124 104-128z"/>
+    <path d="M372 240c34-2 60 16 64 40s-12 50-42 56-64-6-74-30 22-64 52-66z"/>
+    <path d="M354 40c150-14 300 70 320 200s-70 270-230 290-340-30-390-160 150-316 300-330z" stroke-opacity=".7"/>
+  </svg>
   <div class="wrap">
-    <div class="tarjeta">
-      <span class="kicker">Acceso por invitación</span>
-      <h1>Aula IRT</h1>
-      <p>El Aula IRT es el espacio de estudio en línea de los cursos del Instituto de Riesgo Territorial.</p>
-      <p>El acceso a los cursos es por invitación. Cada participante recibe el enlace de su curso por correo electrónico después de completar la ficha de inscripción.</p>
-      <div class="aviso">
-        <p><b>¿No recibió su enlace?</b> Revise la carpeta de correo no deseado (spam). Si no lo encuentra, escriba a <a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a> indicando su nombre y RUT.</p>
+    <span class="antetitulo">Academia IRT · Formación</span>
+    <h1 id="titulo-inicio">Aprender desde el territorio para prevenir el daño</h1>
+    <p class="bajada">Formación para funcionarios, equipos de salud y comunidades: comprender el riesgo donde se vive y se trabaja, y llevarlo a la práctica al día siguiente.</p>
+    <div class="btns">
+      <a class="btn btn--primario" href="#programa-grd">Conocer nuestra formación<svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-flecha"/></svg></a>
+      <a class="btn btn--secundario" href="mailto:academia@institutoriesgoterritorial.cl?subject=Solicitud%20de%20curso%20para%20mi%20instituci%C3%B3n" data-sitio="/?area=academia#contacto">Solicitar un curso para mi institución</a>
+    </div>
+    <ul class="apertura__datos">
+      <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-movil"/></svg>Estudio en línea, también desde el celular</li>
+      <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-presencial"/></svg>Jornada presencial práctica</li>
+      <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-certificado"/></svg>Certificado del IRT</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2 · Nuestra aula -->
+<section class="seccion" id="aula" aria-labelledby="titulo-aula">
+  <div class="wrap">
+    <div class="encabezado">
+      <span class="antetitulo">Nuestra aula</span>
+      <h2 id="titulo-aula">Cómo se aprende en la Academia</h2>
+      <p class="bajada">Un formato pensado para personas que trabajan: estudio breve cuando usted puede y práctica guiada cuando el equipo se reúne.</p>
+    </div>
+    <div class="grilla grilla--4">
+      <article class="tarjeta">
+        <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-movil"/></svg></div>
+        <h3>En línea, a su ritmo</h3>
+        <p>Lecturas y un test breve por módulo. Se estudia desde el computador o el celular, en pausas cortas, dentro del plazo del curso.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-presencial"/></svg></div>
+        <h3>Jornada presencial</h3>
+        <p>Práctica con casos y situaciones del propio territorio. Lo leído se ensaya en equipo.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-evaluacion"/></svg></div>
+        <h3>Evaluación de inicio y término</h3>
+        <p>Una medición al comenzar y otra al terminar muestran cuánto avanzó cada participante y el grupo.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-certificado"/></svg></div>
+        <h3>Informe y certificado</h3>
+        <p>La institución recibe un informe de resultados y cada participante que aprueba, un certificado del IRT.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · Programa base: Formación en Gestión del Riesgo de Desastres -->
+<section class="seccion seccion--salvia seccion--banda" id="programa-grd" aria-labelledby="titulo-grd">
+  <div class="wrap">
+    <div class="encabezado">
+      <span class="etiqueta etiqueta--petroleo">Programa propio IRT</span>
+      <h2 id="titulo-grd" style="margin-top:14px">Formación en Gestión del Riesgo de Desastres</h2>
+      <p class="bajada">El núcleo de la Academia y la base del IRT. Un itinerario de cuatro módulos que parte de una idea: el desastre no es el evento, es el resultado de amenazas, exposición, vulnerabilidades y capacidades en un territorio.</p>
+    </div>
+
+    <div class="programa">
+      <ol class="itinerario" aria-label="Módulos del programa, del I al IV">
+        <li class="etapa">
+          <span class="etapa__num" aria-hidden="true">I</span>
+          <div class="etapa__tarjeta">
+            <div class="etapa__cabeza"><span>Módulo I</span><span><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-reloj"/></svg>4 horas</span></div>
+            <div class="etapa__cuerpo">
+              <h3>Comprensión del Desastre</h3>
+              <p>Mirar el desastre como un proceso y no como un hecho súbito, para reconocer dónde se puede actuar antes de que ocurra. <span class="por-validar">[PENDIENTE: validar descripción con el manual]</span></p>
+            </div>
+          </div>
+        </li>
+        <li class="etapa">
+          <span class="etapa__num" aria-hidden="true">II</span>
+          <div class="etapa__tarjeta">
+            <div class="etapa__cabeza"><span>Módulo II</span><span><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-reloj"/></svg>4 horas</span></div>
+            <div class="etapa__cuerpo">
+              <h3>Riesgos en Latinoamérica y Vulnerabilidad Territorial</h3>
+              <p>Leer las amenazas de la región junto a las condiciones que hacen a un territorio y a su población más o menos vulnerable. <span class="por-validar">[PENDIENTE: validar descripción con el manual]</span></p>
+            </div>
+          </div>
+        </li>
+        <li class="etapa">
+          <span class="etapa__num" aria-hidden="true">III</span>
+          <div class="etapa__tarjeta">
+            <div class="etapa__cabeza"><span>Módulo III</span><span><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-reloj"/></svg>4 horas</span></div>
+            <div class="etapa__cuerpo">
+              <h3>Preparación Comunitaria y Respuesta Inicial</h3>
+              <p>Fortalecer las capacidades de la comunidad y de los equipos locales para prepararse y actuar en los primeros momentos de una emergencia. <span class="por-validar">[PENDIENTE: validar descripción con el manual]</span></p>
+            </div>
+          </div>
+        </li>
+        <li class="etapa">
+          <span class="etapa__num" aria-hidden="true">IV</span>
+          <div class="etapa__tarjeta">
+            <div class="etapa__cabeza"><span>Módulo IV</span><span><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-reloj"/></svg>4 horas</span></div>
+            <div class="etapa__cuerpo">
+              <h3>Recuperación, Salud Mental y Resiliencia Comunitaria</h3>
+              <p>Comprender la recuperación como parte del ciclo del riesgo, cuidando la salud mental y las redes que sostienen a la comunidad. <span class="por-validar">[PENDIENTE: validar descripción con el manual]</span></p>
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <aside class="ficha-programa" aria-labelledby="titulo-ficha-grd">
+        <h3 id="titulo-ficha-grd" class="visual-oculto">Datos del programa</h3>
+        <p class="ficha-programa__total">16 <small>horas cronológicas en total</small></p>
+        <dl style="margin-top:20px">
+          <div><dt><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-riesgo"/></svg>Origen</dt><dd>Programa propio del IRT, diseñado por su Dirección Ejecutiva.</dd></div>
+          <div><dt><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-modulo"/></svg>Materiales</dt><dd>Cada módulo cuenta con Manual del Docente y Guía del Estudiante propios.</dd></div>
+          <div><dt><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-modalidad"/></svg>Modalidad</dt><dd>Presencial o híbrida: sesiones presenciales con material de estudio en el aula virtual.</dd></div>
+          <div><dt><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-progreso"/></svg>Flexibilidad</dt><dd>Se puede tomar completo o por módulo.</dd></div>
+        </dl>
+        <a class="btn btn--primario" href="mailto:academia@institutoriesgoterritorial.cl?subject=Programa%20de%20Gesti%C3%B3n%20del%20Riesgo%20de%20Desastres" data-sitio="/?area=academia#contacto">Solicitar este programa para mi institución</a>
+      </aside>
+    </div>
+
+    <div class="complementos">
+      <p><b>Puede complementarse</b> con módulos de primeros auxilios, primeros auxilios psicológicos, liderazgo y organización en desastres, y continuidad de funciones. <span class="etiqueta etiqueta--propuesta">Propuesta</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · Formación: áreas y experiencia -->
+<section class="seccion" id="formacion" aria-labelledby="titulo-formacion">
+  <div class="wrap">
+    <div class="encabezado">
+      <span class="antetitulo">Formación</span>
+      <h2 id="titulo-formacion">Áreas de formación</h2>
+      <p class="bajada">Todas parten del mismo enfoque: el riesgo se entiende y se reduce en el territorio, con las personas que lo habitan y los equipos que lo cuidan.</p>
+    </div>
+    <div class="grilla grilla--3">
+      <div class="area area--eje">
+        <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-riesgo"/></svg></div>
+        <div><h3>Gestión del riesgo de desastres <span class="etiqueta etiqueta--ocre" style="margin-left:6px;vertical-align:middle">Eje principal</span></h3><p>La base del IRT: comprender, anticipar y reducir el riesgo antes, durante y después de una emergencia.</p></div>
       </div>
-      <div class="btns">
-        <a class="btn btn-navy" href="mailto:academia@institutoriesgoterritorial.cl">Escribir a academia</a>
-        <a class="btn btn-ghost" href="https://institutoriesgoterritorial.cl">Sitio institucional</a>
+      <div class="area">
+        <div class="tarjeta__ico"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-salud"/></svg></div>
+        <div><h3>Salud pública territorial y continuidad de cuidados</h3><p>Que la atención de salud no se interrumpa cuando el territorio se ve afectado.</p></div>
+      </div>
+      <div class="area">
+        <div class="tarjeta__ico"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-mente"/></svg></div>
+        <div><h3>Salud mental comunitaria</h3><p>Cuidar a las personas y a los equipos en contextos de crisis y recuperación.</p></div>
+      </div>
+      <div class="area">
+        <div class="tarjeta__ico"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-comunidad"/></svg></div>
+        <div><h3>Preparación comunitaria</h3><p>Organización, redes y capacidades locales para enfrentar juntos una emergencia.</p></div>
+      </div>
+      <div class="area">
+        <div class="tarjeta__ico"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-mayores"/></svg></div>
+        <div><h3>Personas mayores y cuidados</h3><p>Que ninguna persona mayor ni quien la cuida enfrente sola una emergencia.</p></div>
+      </div>
+      <div class="area">
+        <div class="tarjeta__ico"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-aps"/></svg></div>
+        <div><h3>Equipos de salud en atención primaria</h3><p>Herramientas prácticas para el trabajo diario con personas, familias y comunidad.</p></div>
+      </div>
+    </div>
+
+    <!-- Experiencia formativa: solo lo realizado o en ejecución -->
+    <h2 class="subtitulo" id="experiencia">Experiencia formativa del IRT</h2>
+    <p class="bajada" style="margin-bottom:28px">Procesos que el IRT ya ha llevado al territorio.</p>
+    <div class="grilla grilla--2">
+
+      <article class="ficha">
+        <div class="ficha__meta"><span class="etiqueta etiqueta--realizado">Realizado</span><span class="etiqueta etiqueta--suave">Programa piloto comunitario</span></div>
+        <h3>Programa Piloto Comunitario con Personas Mayores · APJM Quilpué</h3>
+        <p>Junto a la Asociación de Pensionados, Jubilados y Montepiados de Quilpué (Región de Valparaíso).</p>
+        <ul class="ficha__datos">
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-presencial"/></svg><span>Cuatro jornadas: escucha territorial; riesgo, salud y vida cotidiana; salud mental, memoria y comunidad; devolución y cierre.</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-informe"/></svg><span>Sistematizado en julio de 2026.</span></li>
+        </ul>
+        <blockquote class="ficha__cita">«Una comunidad preparada no es aquella que no tiene problemas. Es aquella que se conoce, se organiza, cuida su salud, sostiene sus redes y exige respuestas proporcionales para que ninguna persona mayor enfrente sola la interrupción de la vida cotidiana.»</blockquote>
+      </article>
+
+      <article class="ficha">
+        <div class="ficha__meta"><span class="etiqueta etiqueta--ejecucion">Estado por confirmar</span><span class="etiqueta etiqueta--suave">Curso</span></div>
+        <h3>Entrevista Motivacional y Consejería Familiar en el Cuidado de Personas con Multimorbilidad Crónica</h3>
+        <p>Para equipos de atención primaria de salud. <span class="por-validar">[PENDIENTE: confirmar «En ejecución, 2026» o «Realizado»]</span></p>
+        <ul class="ficha__datos">
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-reloj"/></svg><span>20 horas pedagógicas: 12 en línea asincrónicas y 8 presenciales.</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-territorio"/></svg><span>Departamento de salud municipal, Región de O'Higgins. <span class="por-validar">[PENDIENTE: confirmar autorización para nombrar a la institución]</span></span></li>
+        </ul>
+      </article>
+
+      <!-- PLANTILLA DE FICHA · Para sumar una experiencia nueva, copie desde <article> hasta </article>,
+           péguela antes de este comentario y cambie los textos. Estado: use
+           etiqueta--realizado («Realizado») o etiqueta--ejecucion («En ejecución»).
+           No agregue enlaces a cursos ni datos de participantes.
+
+      <article class="ficha">
+        <div class="ficha__meta"><span class="etiqueta etiqueta--realizado">Realizado</span><span class="etiqueta etiqueta--suave">Tipo de actividad</span></div>
+        <h3>Nombre de la experiencia</h3>
+        <p>Con quién y dónde se realizó.</p>
+        <ul class="ficha__datos">
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-reloj"/></svg><span>Duración y modalidad.</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-territorio"/></svg><span>Institución o territorio.</span></li>
+        </ul>
+      </article>
+      -->
+    </div>
+  </div>
+</section>
+
+<!-- 5 · Cómo trabajamos -->
+<section class="seccion seccion--salvia" id="como-trabajamos" aria-labelledby="titulo-como">
+  <div class="wrap">
+    <div class="encabezado">
+      <span class="antetitulo">Cómo trabajamos</span>
+      <h2 id="titulo-como">Con su institución, en cinco pasos</h2>
+      <p class="bajada">Cada curso se ajusta a la realidad del equipo y del territorio en que trabaja.</p>
+    </div>
+    <ol class="proceso">
+      <li><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-diagnostico"/></svg><h3>Diagnóstico de necesidades</h3><p>Conversamos con la institución sobre su equipo, su territorio y lo que necesita resolver.</p></li>
+      <li><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-diseno"/></svg><h3>Diseño a medida</h3><p>Ajustamos contenidos, casos y tiempos a esa realidad.</p></li>
+      <li><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-modalidad"/></svg><h3>En línea y presencial</h3><p>Etapa en línea a su propio ritmo y jornada presencial práctica.</p></li>
+      <li><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-evaluacion"/></svg><h3>Evaluación de inicio y término</h3><p>Medimos el punto de partida y el de llegada.</p></li>
+      <li><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-certificado"/></svg><h3>Informe y certificación</h3><p>Informe de resultados para la institución y certificado del IRT para cada participante que aprueba.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 6 · Para instituciones: propuestas formativas -->
+<section class="seccion" id="instituciones" aria-labelledby="titulo-instituciones">
+  <div class="wrap">
+    <div class="encabezado">
+      <span class="antetitulo">Para instituciones</span>
+      <h2 id="titulo-instituciones">Propuestas formativas disponibles</h2>
+      <p class="bajada">Propuestas que el IRT puede diseñar y dictar para su institución. Aún no forman parte de la experiencia realizada.</p>
+    </div>
+    <div class="grilla grilla--3">
+      <article class="propuesta">
+        <span class="etiqueta etiqueta--propuesta" style="align-self:flex-start">Propuesta</span>
+        <h3>Jornadas de fortalecimiento de equipos con enfoque territorial</h3>
+        <p>Para equipos que quieren mirar su trabajo desde el territorio que atienden.</p>
+        <a class="btn btn--secundario btn--chico" href="mailto:academia@institutoriesgoterritorial.cl?subject=Jornadas%20de%20fortalecimiento%20de%20equipos" data-sitio="/?area=academia#contacto">Solicitar información</a>
+      </article>
+      <article class="propuesta">
+        <span class="etiqueta etiqueta--propuesta" style="align-self:flex-start">Propuesta</span>
+        <h3>Cuidado integral de personas mayores con demencia y dependencia</h3>
+        <p>Incluye la preparación del hogar ante emergencias.</p>
+        <a class="btn btn--secundario btn--chico" href="mailto:academia@institutoriesgoterritorial.cl?subject=Cuidado%20integral%20de%20personas%20mayores" data-sitio="/?area=academia#contacto">Solicitar información</a>
+      </article>
+      <article class="propuesta">
+        <span class="etiqueta etiqueta--propuesta" style="align-self:flex-start">Propuesta</span>
+        <h3>Ciclos de conversatorios sobre riesgo territorial</h3>
+        <p>Para universidades e instituciones públicas.</p>
+        <a class="btn btn--secundario btn--chico" href="mailto:academia@institutoriesgoterritorial.cl?subject=Ciclos%20de%20conversatorios" data-sitio="/?area=academia#contacto">Solicitar información</a>
+      </article>
+    </div>
+    <div class="cta-instituciones">
+      <p>¿Su institución necesita formar a su equipo? Cuéntenos qué necesita y diseñamos la propuesta con ustedes.</p>
+      <a class="btn btn--primario" href="mailto:academia@institutoriesgoterritorial.cl?subject=Solicitud%20de%20curso%20para%20mi%20instituci%C3%B3n" data-sitio="/?area=academia#contacto">Solicitar un curso para mi institución</a>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · Relatoría -->
+<section class="seccion seccion--salvia" id="relatoria" aria-labelledby="titulo-relatoria">
+  <div class="wrap">
+    <div class="relatoria">
+      <div class="relatoria__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261011#i-relatoria"/></svg></div>
+      <div>
+        <span class="antetitulo">Relatoría</span>
+        <h2 id="titulo-relatoria">Quiénes enseñan</h2>
+        <p>El equipo docente está encabezado por el <b>Dr. Pablo Guerra Cisternas</b>, médico, docente y Director Ejecutivo del IRT, con experiencia clínica en atención primaria y urgencias, y formación en gestión del riesgo (SENAPRED).</p>
       </div>
     </div>
   </div>
+</section>
+
+<!-- 8 · Participantes inscritos -->
+<section class="seccion" id="inscritos" aria-labelledby="titulo-inscritos">
+  <div class="wrap">
+    <div class="recuadro" style="max-width:860px">
+      <h2 id="titulo-inscritos" style="font-size:26px;display:flex;align-items:center;gap:10px"><svg class="ico ico--g" aria-hidden="true" style="color:var(--ocre-osc)"><use href="/assets/iconos.svg?v=20261011#i-correo"/></svg>¿Ya está inscrito en un curso?</h2>
+      <p>El acceso a su curso llega por correo desde <a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a> después de completar la ficha de inscripción.</p>
+      <p><b>¿No lo encuentra?</b> Revise la carpeta de correo no deseado (spam). Si no está ahí, escriba a ese correo indicando su nombre y RUT.</p>
+    </div>
+  </div>
+</section>
+
 </main>
 
-<footer>
+<footer class="pie">
   <div class="wrap">
-    <b>Instituto de Riesgo Territorial (IRT)</b><br>
-    Análisis, docencia y gestión aplicada del riesgo desde una perspectiva territorial, sanitaria y comunitaria.<br>
-    <a href="https://institutoriesgoterritorial.cl">institutoriesgoterritorial.cl</a>
+    <div>
+      <div class="pie__marca">
+        <svg class="sello" viewBox="0 0 64 64" aria-hidden="true" style="width:40px;height:40px"><circle cx="32" cy="32" r="30" fill="#0E5E6F"/><path d="M14 45.5a22 22 0 0 0 36 0" fill="none" stroke="#B7791F" stroke-width="3" stroke-linecap="round"/><text x="32" y="38" text-anchor="middle" font-family="Caladea, Cambria, Georgia, serif" font-weight="700" font-size="19" fill="#fff">IRT</text></svg>
+        <b>Academia IRT · Instituto de Riesgo Territorial</b>
+      </div>
+      <p>Análisis, docencia y gestión aplicada del riesgo desde una perspectiva territorial, sanitaria y comunitaria.</p>
+      <p><a class="pie__irt" href="https://institutoriesgoterritorial.cl" data-sitio="/">Sitio institucional del IRT</a></p>
+    </div>
+    <div>
+      <p>Contacto de la Academia</p>
+      <p><a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a></p>
+    </div>
+    <p class="pie__copy">© 2026 Instituto de Riesgo Territorial · Academia IRT</p>
   </div>
 </footer>
 
-<script>
-  // Los enlaces externos se abren en una pestaña nueva
-  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
-    a.target = '_blank'; a.rel = 'noopener';
-  });
-</script>
+<script src="/assets/academia.js?v=20261011"></script>
 </body>
 </html>
