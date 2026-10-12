@@ -6,7 +6,8 @@
      En la parte pública no nombre a la institución contratante ni la comuna.
   3. La tabla de módulos es la vista previa y también la fuente de las descripciones que se
      muestran después de ingresar: una fila <tr data-modulo="N"> por módulo.
-  4. Pegue en data-endpoint (formulario #acceso-form) la URL /exec del Apps Script de acceso del curso.
+  4. Agregue el curso en assets/aula-cursos.js (clave = data-curso del formulario #acceso-form) con su
+     página y la URL /exec de su Apps Script de acceso, y súmelo a la lista cursos/index.html.
   5. NUNCA ponga enlaces a PDF, tests ni formularios en esta página: los entrega el Apps Script.
   6. Mantenga la línea meta robots noindex, nofollow y los dos <script> del final.
   Instrucciones completas: README.md, sección «Cómo crear un curso nuevo».
@@ -19,11 +20,11 @@
 <title>Academia IRT · [NOMBRE CORTO DEL CURSO]</title>
 <meta name="description" content="Curso de la Academia IRT: [descripción breve, sin institución ni comuna].">
 <meta name="theme-color" content="#0E5E6F">
-<link rel="icon" href="/assets/sello.svg?v=20261012" type="image/svg+xml">
+<link rel="icon" href="/assets/sello.svg?v=20261013" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/academia.css?v=20261012">
+<link rel="stylesheet" href="/assets/academia.css?v=20261013">
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -35,9 +36,10 @@
       <span><b>Academia IRT</b><small>Aula virtual del Instituto de Riesgo Territorial</small></span>
     </a>
     <div class="cabecera__extra">
-      <a class="volver-irt" href="https://institutoriesgoterritorial.cl" data-sitio="/"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-volver"/></svg>Instituto de Riesgo Territorial<span class="visual-oculto"> (sitio institucional)</span></a>
+      <a class="volver-irt" href="https://institutoriesgoterritorial.cl" data-sitio="/"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-volver"/></svg>Instituto de Riesgo Territorial<span class="visual-oculto"> (sitio institucional)</span></a>
     </div>
     <nav class="menu" aria-label="Secciones del curso" data-vista="publica">
+      <a href="/cursos/">Todos los cursos</a>
       <a href="#introduccion">El curso</a>
       <a href="#como">Cómo funciona</a>
       <a href="#modulos">Módulos</a>
@@ -60,13 +62,13 @@
     <h1>[NOMBRE COMPLETO DEL CURSO]</h1>
     <p class="bajada">[Bajada de una línea]</p>
     <div class="datos">
-      <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-reloj"/></svg>[XX] horas pedagógicas</span>
-      <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-movil"/></svg>[XX] h en línea, a su ritmo</span>
-      <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-presencial"/></svg>[XX] h presenciales</span>
-      <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-relatoria"/></svg>Relator: [NOMBRE DEL RELATOR]</span>
+      <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-reloj"/></svg>[XX] horas pedagógicas</span>
+      <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-movil"/></svg>[XX] h en línea, a su ritmo</span>
+      <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-presencial"/></svg>[XX] h presenciales</span>
+      <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-relatoria"/></svg>Relator: [NOMBRE DEL RELATOR]</span>
     </div>
     <div class="btns">
-      <a class="btn btn--primario" href="#ingresar" data-ir-acceso>Ingresar a los módulos<svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-flecha"/></svg></a>
+      <a class="btn btn--primario" href="#ingresar" data-ir-acceso>Ingresar a los módulos<svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-flecha"/></svg></a>
     </div>
   </div>
 </div>
@@ -91,10 +93,10 @@
       <p class="bajada">Siempre sabrá dónde está y qué sigue. Después de cada paso recibirá un correo de academia@institutoriesgoterritorial.cl.</p>
     </div>
     <ol class="pasos">
-      <li class="paso"><svg class="ico ico--g paso__ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-test"/></svg><h3>Inscripción y test de partida</h3><p>Complete la ficha de inscripción y responda un diagnóstico breve, sin nota.</p></li>
-      <li class="paso"><svg class="ico ico--g paso__ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-modulo"/></svg><h3>Cinco módulos a su ritmo</h3><p>En cada uno, lea el módulo en PDF y responda su test. Al responderlo se libera el siguiente.</p></li>
-      <li class="paso"><svg class="ico ico--g paso__ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-presencial"/></svg><h3>Jornada presencial</h3><p>Talleres prácticos con casos y evaluación final del curso.</p></li>
-      <li class="paso"><svg class="ico ico--g paso__ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-certificado"/></svg><h3>Certificado</h3><p>Al aprobar el curso recibe el certificado del IRT.</p></li>
+      <li class="paso"><svg class="ico ico--g paso__ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-test"/></svg><h3>Inscripción y test de partida</h3><p>Complete la ficha de inscripción y responda un diagnóstico breve, sin nota.</p></li>
+      <li class="paso"><svg class="ico ico--g paso__ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-modulo"/></svg><h3>Cinco módulos a su ritmo</h3><p>En cada uno, lea el módulo en PDF y responda su test. Al responderlo se libera el siguiente.</p></li>
+      <li class="paso"><svg class="ico ico--g paso__ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-presencial"/></svg><h3>Jornada presencial</h3><p>Talleres prácticos con casos y evaluación final del curso.</p></li>
+      <li class="paso"><svg class="ico ico--g paso__ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-certificado"/></svg><h3>Certificado</h3><p>Al aprobar el curso recibe el certificado del IRT.</p></li>
     </ol>
   </div>
 </section>
@@ -110,11 +112,11 @@
       <caption class="visual-oculto">Módulos del curso y su duración</caption>
       <thead><tr><th scope="col">Módulo</th><th scope="col">Contenido</th><th scope="col">Duración</th></tr></thead>
       <tbody>
-        <tr data-modulo="1"><td><span class="tabla-modulos__n">1</span></td><td><b>[Título del módulo 1]</b><span class="tabla-modulos__desc">[Contenidos del módulo 1]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-reloj"/></svg>[X] horas</span></td></tr>
-        <tr data-modulo="2"><td><span class="tabla-modulos__n">2</span></td><td><b>[Título del módulo 2]</b><span class="tabla-modulos__desc">[Contenidos del módulo 2]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-reloj"/></svg>[X] horas</span></td></tr>
-        <tr data-modulo="3"><td><span class="tabla-modulos__n">3</span></td><td><b>[Título del módulo 3]</b><span class="tabla-modulos__desc">[Contenidos del módulo 3]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-reloj"/></svg>[X] horas</span></td></tr>
-        <tr data-modulo="4"><td><span class="tabla-modulos__n">4</span></td><td><b>[Título del módulo 4]</b><span class="tabla-modulos__desc">[Contenidos del módulo 4]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-reloj"/></svg>[X] horas</span></td></tr>
-        <tr data-modulo="5"><td><span class="tabla-modulos__n">5</span></td><td><b>[Título del módulo 5]</b><span class="tabla-modulos__desc">[Contenidos del módulo 5]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-reloj"/></svg>[X] horas</span></td></tr>
+        <tr data-modulo="1"><td><span class="tabla-modulos__n">1</span></td><td><b>[Título del módulo 1]</b><span class="tabla-modulos__desc">[Contenidos del módulo 1]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-reloj"/></svg>[X] horas</span></td></tr>
+        <tr data-modulo="2"><td><span class="tabla-modulos__n">2</span></td><td><b>[Título del módulo 2]</b><span class="tabla-modulos__desc">[Contenidos del módulo 2]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-reloj"/></svg>[X] horas</span></td></tr>
+        <tr data-modulo="3"><td><span class="tabla-modulos__n">3</span></td><td><b>[Título del módulo 3]</b><span class="tabla-modulos__desc">[Contenidos del módulo 3]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-reloj"/></svg>[X] horas</span></td></tr>
+        <tr data-modulo="4"><td><span class="tabla-modulos__n">4</span></td><td><b>[Título del módulo 4]</b><span class="tabla-modulos__desc">[Contenidos del módulo 4]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-reloj"/></svg>[X] horas</span></td></tr>
+        <tr data-modulo="5"><td><span class="tabla-modulos__n">5</span></td><td><b>[Título del módulo 5]</b><span class="tabla-modulos__desc">[Contenidos del módulo 5]</span></td><td><span class="tabla-modulos__h"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-reloj"/></svg>[X] horas</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -122,10 +124,10 @@
 
 <section class="seccion seccion--salvia" id="ingresar" aria-labelledby="titulo-ingresar">
   <div class="wrap">
-    <!-- Acceso. Después de publicar acceso_aula_IRT.gs, pegue la URL /exec de la aplicación
-         web en el atributo data-endpoint de la línea siguiente (README, sección 5). -->
-    <form class="acceso" id="acceso-form" data-endpoint="URL_ACCESO_APPS_SCRIPT" data-curso="[carpeta-del-curso]" novalidate>
-      <div class="acceso__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-candado"/></svg></div>
+    <!-- Acceso. La URL del Apps Script de este curso se define en assets/aula-cursos.js,
+         con la misma clave que data-curso (README, sección 5). -->
+    <form class="acceso" id="acceso-form" data-curso="[carpeta-del-curso]" novalidate>
+      <div class="acceso__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-candado"/></svg></div>
       <h2 id="titulo-ingresar">Ingresar a los módulos</h2>
       <p class="acceso__bajada">Solo para participantes inscritos.</p>
       <div class="campo">
@@ -134,7 +136,7 @@
         <p class="campo__ayuda" id="acceso-ayuda">Use el mismo RUT o correo que registró en la ficha de inscripción. RUT sin puntos y con guion: 12345678-9</p>
       </div>
       <!-- Solo se muestra si el aula exige RUT y correo (MODO_ACCESO 'RUT_Y_CORREO') -->
-      <div class="campo" id="acceso-correo-campo" hidden>
+      <div class="campo campo--correo" id="acceso-correo-campo" hidden>
         <label for="acceso-correo">Correo electrónico</label>
         <input id="acceso-correo" name="correo" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
       </div>
@@ -159,7 +161,7 @@
         <h2 id="aula-saludo" tabindex="-1">Hola</h2>
         <p class="aula__curso">[NOMBRE COMPLETO DEL CURSO]<span id="aula-institucion"></span></p>
       </div>
-      <button type="button" class="btn btn--secundario btn--chico" id="aula-salir"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-salir"/></svg>Salir</button>
+      <button type="button" class="btn btn--secundario btn--chico" id="aula-salir"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-salir"/></svg>Salir</button>
     </div>
 
     <div class="progreso">
@@ -169,7 +171,7 @@
     </div>
 
     <article class="partida" id="aula-partida" hidden>
-      <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261012#i-test"/></svg></div>
+      <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261013#i-test"/></svg></div>
       <div>
         <h3>Primer paso: test de partida</h3>
         <p>Diagnóstico breve y sin nota. Al responderlo se libera el Módulo 1.</p>
@@ -219,7 +221,8 @@
   </div>
 </footer>
 
-<script src="/assets/academia.js?v=20261012"></script>
-<script src="/assets/aula-acceso.js?v=20261012"></script>
+<script src="/assets/academia.js?v=20261013"></script>
+<script src="/assets/aula-cursos.js?v=20261013"></script>
+<script src="/assets/aula-acceso.js?v=20261013"></script>
 </body>
 </html>
