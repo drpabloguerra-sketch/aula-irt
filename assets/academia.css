@@ -486,6 +486,9 @@ html.con-ventana{overflow:hidden}
 .progreso__barra span{display:block;height:100%;width:0;border-radius:999px;background:var(--ocre);transition:width .4s ease}
 .progreso__siguiente{margin:12px 0 0;font-size:17px;color:var(--texto)}
 .progreso__siguiente b{color:var(--petroleo-osc)}
+.progreso__promedio{margin:12px 0 0;font-size:17px;color:var(--texto)}
+.progreso__promedio b{font-family:var(--f-titulo);font-size:22px;color:var(--ocre-osc)}
+.progreso__inicio{margin:6px 0 0;font-size:16px;color:var(--texto-suave)}
 
 .partida{display:flex;gap:18px;align-items:flex-start;background:var(--blanco);border:2px solid var(--petroleo);border-radius:var(--radio);padding:24px;margin-bottom:20px;box-shadow:var(--sombra)}
 .partida .tarjeta__ico{flex:none;margin:0}
@@ -496,6 +499,10 @@ html.con-ventana{overflow:hidden}
 .insignia-completado{display:inline-flex;align-items:center;gap:6px;padding:3px 12px 3px 8px;border-radius:999px;border:1px solid var(--ocre);background:var(--ocre-claro);color:var(--ocre-osc);font-size:15px;font-weight:700}
 .insignia-completado .ico{width:18px;height:18px;color:var(--ocre-osc)}
 .modulo--completado .num{border-right-color:var(--ocre)}
+.modulo__nota{margin:0 0 6px!important;font-size:17px;color:var(--texto)!important}
+.modulo__nota b{font-family:var(--f-titulo);font-size:24px;color:var(--ocre-osc)}
+.respondido{display:flex;align-items:center;gap:8px;margin:0 0 14px!important;font-size:16px;color:var(--texto-suave)!important}
+.respondido .ico{width:20px;height:20px;color:var(--petroleo)}
 .modulo--disponible{border:2px solid var(--petroleo)}
 .modulo--bloqueado{box-shadow:none}
 .modulo--bloqueado .num{background:var(--pendiente-fondo);border-right-color:var(--linea)}

@@ -78,7 +78,7 @@ Use la plantilla `plantillas/curso.html`: ya tiene la identidad de la Academia, 
 
 Las secciones de la página de cada curso tienen anclas: `#introduccion`, `#como`, `#modulos` e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261014`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261015`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -103,12 +103,12 @@ La página del curso tiene dos estados:
 
 | Envía la página | Responde el Apps Script |
 |---|---|
-| `{ "identificador": "12345678-9" }` o `{ "identificador": "correo@…" }` | Inscrito: `{ "ok": true, "nombre", "token", "institucion"?, "partida": { "completado", "test"? }, "modulos": [ { "n", "titulo", "horas", "estado", "pdf"?, "presentacion"?, "test"? } ], "jornada": { "fecha", "horario", "lugar", "requisito"?, "pdf"? }, "programa"? }` |
+| `{ "identificador": "12345678-9" }` o `{ "identificador": "correo@…" }` | Inscrito: `{ "ok": true, "nombre", "token", "institucion"?, "partida": { "completado", "test"? }, "inicio"?: { "puntaje", "maximo" }, "modulos": [ { "n", "titulo", "horas", "estado", "pdf"?, "presentacion"?, "test"?, "puntaje"?, "maximo"?, "nota"? } ], "jornada": { "fecha", "horario", "lugar", "requisito"?, "pdf"? }, "programa"? }` |
 | `{ "identificador": "", "token": "…" }` (al recargar) | Lo mismo, o `{ "ok": false, "motivo": "sesion_vencida" }` |
 | En modo `RUT_Y_CORREO`: `{ "identificador": RUT, "correo": … }` | Si falta uno: `{ "ok": false, "motivo": "faltan_datos" }` (la página muestra el segundo campo) |
 | — | No inscrito: `{ "ok": false, "motivo": "no_inscrito" }` · Demasiados intentos: `{ "ok": false, "motivo": "espera" }` |
 
-`estado` es `completado`, `disponible` o `bloqueado`; `pdf`, `presentacion` y `test` solo llegan cuando no está bloqueado. `presentacion` es opcional: si llega, el módulo muestra «Ver la presentación» y la abre dentro de la página (el visor se carga recién al abrirla); si no, el primer paso es descargar el PDF. La página solo acepta enlaces `https://` y escribe los textos como texto (nunca como HTML). Si `fecha`, `horario` o `lugar` llegan como `[PENDIENTE…]`, muestra «Fecha por confirmar» o «Por confirmar».
+`estado` es `completado`, `disponible` o `bloqueado`; `pdf` y `presentacion` solo llegan cuando no está bloqueado, y `test` solo cuando está `disponible` (cada cuestionario tiene un solo intento). Un módulo `completado` trae `puntaje`, `maximo` y `nota` (primer envío del RUT, escala 1,0 a 7,0, exigencia 60 %): la tarjeta muestra «Nota 5,1 · 12 de 16 puntos» y «Cuestionario respondido · un solo intento», y la barra de avance muestra el promedio de la etapa en línea con las notas disponibles. `inicio` es el puntaje del test de partida, que no lleva nota. `presentacion` es opcional: si llega, el módulo muestra «Ver la presentación» y la abre dentro de la página (el visor se carga recién al abrirla); si no, el primer paso es descargar el PDF. La página solo acepta enlaces `https://` y escribe los textos como texto (nunca como HTML). Si `fecha`, `horario` o `lugar` llegan como `[PENDIENTE…]`, muestra «Fecha por confirmar» o «Por confirmar».
 
 ## 6. Solicitudes de capacitación y dirección del sitio institucional
 
