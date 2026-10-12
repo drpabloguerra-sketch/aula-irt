@@ -10,13 +10,15 @@ El aula es un conjunto de páginas web estáticas. No tiene servidor propio ni b
 
 | Archivo o carpeta | Para qué sirve |
 |---|---|
-| `index.html` | Página de inicio de la Academia IRT (se puede indexar). En «¿Ya está inscrito en un curso?» enlaza a la página de cada curso con acceso. |
+| `index.html` | Página de inicio de la Academia IRT (se puede indexar). Enlaza a la lista de cursos `/cursos/` desde la apertura («¿Ya está inscrito en un curso? Ingrese al aula») y desde la tarjeta «Cursos del aula». |
 | `404.html` | Página que aparece cuando alguien escribe una dirección que no existe. Sin enlaces a cursos. |
+| `cursos/index.html` | Lista de cursos del aula (`noindex, nofollow`), agrupados por área, con una descripción breve. Al hacer clic en un curso se despliega su formulario de ingreso (RUT o correo); si la persona está inscrita, pasa a sus módulos. |
 | `cursos/entrevista-motivacional/index.html` | Página del curso (`noindex, nofollow`): parte pública con introducción y, tras ingresar con RUT o correo, los módulos de cada participante. |
 | `donihue-2026-k7q3x9/index.html` | Dirección antigua del curso. Solo redirige a la página nueva (hay correos enviados con ella). |
 | `assets/academia.css` | Hoja de estilos compartida: identidad visual de la Academia para portada, 404 y cursos. |
 | `assets/academia.js` | Script compartido: ventana «Solicitud de capacitación» (`ENDPOINT`) y `URL_SITIO` (ver sección 6). |
-| `assets/aula-acceso.js` | Script del acceso de participantes: envía el RUT o correo al Apps Script y muestra los módulos (sección 5). |
+| `assets/aula-cursos.js` | **Único lugar** donde se define, para cada curso, su página y la URL del Apps Script de acceso (sección 5). |
+| `assets/aula-acceso.js` | Script del acceso de participantes: formularios de ingreso de la lista y de cada curso, y módulos de la persona (sección 5). |
 | `assets/iconos.svg` | Iconografía lineal propia (módulos, duración, modalidad, certificado, progreso, candado, completado…). |
 | `assets/sello.svg` | Sello circular «IRT» de la Academia (también es el ícono de la pestaña). |
 | `assets/og-academia.png` | Imagen que aparece al compartir la portada en redes o mensajería. |
@@ -58,14 +60,14 @@ Use la plantilla `plantillas/curso.html`: ya tiene la identidad de la Academia, 
 1. **Cree la página** en `cursos/[carpeta-del-curso]/index.html` (minúsculas, sin tildes ni espacios). Ejemplo: `cursos/primeros-auxilios-psicologicos/index.html`.
 2. **Reemplace todo lo que está entre corchetes** (`[NOMBRE COMPLETO DEL CURSO]`, `[XX] horas`, `[Título del módulo 1]`, etc.), incluidos el `<title>` y la descripción al inicio del archivo. En la parte pública **no nombre a la institución contratante ni la comuna**.
 3. **Módulos:** una fila `<tr data-modulo="N">` por módulo en la tabla. Esa tabla es la vista previa pública y también la fuente de las descripciones que ve cada participante después de ingresar.
-4. **Acceso:** en el formulario `#acceso-form`, cambie `data-curso` por el nombre de la carpeta y pegue en `data-endpoint` la URL `/exec` del Apps Script de acceso del curso (sección 5).
+4. **Acceso:** en el formulario `#acceso-form`, cambie `data-curso` por el nombre de la carpeta. Agregue el curso en `assets/aula-cursos.js` con esa misma clave, su página y la URL `/exec` de su Apps Script de acceso (sección 5).
 5. Mantenga la línea `<meta name="robots" content="noindex, nofollow">` y los dos `<script>` del final.
-6. **Enlace desde la portada:** copie el bloque `<article class="curso-tarjeta">` de la sección «¿Ya está inscrito en un curso?» de `index.html` y cambie título, datos y dirección.
+6. **Lista de cursos:** en `cursos/index.html`, copie un `<li class="curso-item">` completo dentro del grupo (área) que corresponda, o copie un `<div class="grupo-cursos">` para un área nueva. Cambie título, descripción breve, datos, el id del panel (`aria-controls` e `id`), los `id` de los campos y `data-curso`. Sume también el título a la tarjeta «Cursos del aula» de la portada.
 7. **Correos automáticos:** en el Apps Script del curso, `URL_AULA` debe apuntar a la página nueva.
 
-Las secciones de la página tienen anclas: `#introduccion`, `#como`, `#modulos` e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
+Las secciones de la página de cada curso tienen anclas: `#introduccion`, `#como`, `#modulos` e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261012`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-acceso.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261013`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -80,9 +82,11 @@ La página del curso tiene dos estados:
 - **A · Pública:** introducción, cómo funciona, tabla de módulos (sin enlaces) y el recuadro «Ingresar a los módulos».
 - **B · Privada:** al ingresar, la página muestra el saludo, el avance (módulos completados de 5), el siguiente paso, la tarjeta de cada módulo (completado, disponible o bloqueado) y la jornada presencial. Todo se construye con la respuesta del Apps Script; nada de eso está escrito en el HTML.
 
-**Dónde va la URL del Apps Script.** En la página del curso, atributo `data-endpoint` del formulario `#acceso-form`. Mientras diga `URL_ACCESO_APPS_SCRIPT`, el botón «Ingresar» responde que el acceso se habilitará pronto.
+**Dos puertas de entrada.** La lista `/cursos/` (al hacer clic en un curso se despliega su formulario y, al ingresar, la persona pasa a la página del curso con sus módulos ya abiertos) y el recuadro «Ingresar a los módulos» de la página de cada curso.
 
-**Sesión.** Al ingresar, la página guarda un `token` (válido 6 horas en el Apps Script) en `sessionStorage`, para no volver a pedir el dato al recargar. Se borra con «Salir» o al cerrar la pestaña. Si el navegador bloquea el almacenamiento, el aula funciona igual y solo vuelve a pedir el dato.
+**Dónde va la URL del Apps Script.** En `assets/aula-cursos.js`, campo `endpoint` del curso. Lo usan la lista y la página del curso. Mientras diga `URL_ACCESO_APPS_SCRIPT`, el botón «Ingresar» responde que el acceso se habilitará pronto.
+
+**Sesión.** Al ingresar, la página guarda un `token` (válido 6 horas en el Apps Script) en `sessionStorage`, para no volver a pedir el dato al recargar. Se borra con «Salir» o al cerrar la pestaña. Si el navegador bloquea el almacenamiento, el aula funciona igual: desde la lista, el token pasa a la página del curso en el fragmento `#sesion=…` (que no se envía a ningún servidor y la página borra de la barra de direcciones), y al recargar se vuelve a pedir el dato.
 
 **Contrato con `acceso_aula_IRT.gs`** (POST con `Content-Type: text/plain;charset=utf-8`, que evita la verificación previa de CORS que Apps Script no admite):
 
@@ -142,7 +146,7 @@ Reglas: proporción aproximada 60-30-10 (fondos claros · petróleo y tinta · o
 
 Nada de esta lista aparece en la portada; se completa aquí hasta confirmarlo.
 
-- **Acceso de participantes:** publicar `acceso_aula_IRT.gs` y pegar su URL `/exec` en `data-endpoint` de `cursos/entrevista-motivacional/index.html` (hoy dice `URL_ACCESO_APPS_SCRIPT`). Hacer una prueba con un RUT real inscrito.
+- **Acceso de participantes:** publicar `acceso_aula_IRT.gs` y pegar su URL `/exec` en `endpoint` de `assets/aula-cursos.js` (hoy dice `URL_ACCESO_APPS_SCRIPT`). Hacer una prueba con un RUT real inscrito, desde la lista `/cursos/`.
 - **Correos automáticos:** cambiar `URL_AULA` a `https://cursos.institutoriesgoterritorial.cl/cursos/entrevista-motivacional/` y agregar la línea de acceso con RUT o correo.
 - **Jornada presencial:** fecha y lugar por confirmar; se cargan en la constante `AULA` del Apps Script (la página muestra «Fecha por confirmar» mientras tanto).
 - **Módulos I a IV del Programa GRD:** validar las descripciones de cada módulo con su manual (hoy se muestran como texto normal).
