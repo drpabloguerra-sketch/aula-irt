@@ -12,7 +12,7 @@
 (function () {
   var CURSOS = window.CURSOS_AULA || {};
   var CORREO = 'academia@institutoriesgoterritorial.cl';
-  var ICONOS = '/assets/iconos.svg?v=20261013';
+  var ICONOS = '/assets/iconos.svg?v=20261014';
   var $ = function (id) { return document.getElementById(id); };
 
   /* ---------- Sesión (sessionStorage puede fallar: modo privado, bloqueos) ---------- */
@@ -209,6 +209,52 @@
   }
   function horas(h) { return h + (Number(h) === 1 ? ' hora' : ' horas'); }
 
+  function pasoModulo(texto, boton, extra) {
+    var li = el('li', 'paso-modulo');
+    li.appendChild(el('p', 'paso-modulo__texto', texto));
+    li.appendChild(boton);
+    if (extra) li.appendChild(extra);
+    return li;
+  }
+
+  /* Presentación del módulo, vista dentro de la página.
+     El iframe se crea al abrirla por primera vez (ahorra datos en el celular). */
+  var numeroVisor = 0;
+  function visorPresentacion(url, m, chico) {
+    var id = 'presentacion-' + m.n + '-' + (++numeroVisor);
+    var boton = el('button', 'btn ' + (chico ? 'btn--secundario btn--chico' : 'btn--primario') + ' btn--presentacion', 'Ver la presentación');
+    boton.type = 'button';
+    boton.setAttribute('aria-expanded', 'false');
+    boton.setAttribute('aria-controls', id);
+    var panel = el('div', 'visor');
+    panel.id = id;
+    panel.hidden = true;
+    var marco = el('div', 'visor__marco');
+    panel.appendChild(marco);
+    var pie = el('div', 'visor__pie');
+    var abrir = el('a', null, 'Abrir en pantalla completa');
+    abrir.href = url; abrir.target = '_blank'; abrir.rel = 'noopener';
+    abrir.appendChild(el('span', 'visual-oculto', ' (se abre en una pestaña nueva)'));
+    pie.appendChild(abrir);
+    panel.appendChild(pie);
+    boton.addEventListener('click', function () {
+      var abrirla = panel.hidden;
+      if (abrirla && !marco.firstChild) {
+        var f = document.createElement('iframe');
+        f.src = url;
+        f.title = 'Presentación del Módulo ' + m.n + (m.titulo ? ': ' + m.titulo : '');
+        f.setAttribute('allowfullscreen', '');
+        f.setAttribute('allow', 'fullscreen');
+        f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        marco.appendChild(f);
+      }
+      panel.hidden = !abrirla;
+      boton.setAttribute('aria-expanded', abrirla ? 'true' : 'false');
+      boton.textContent = abrirla ? 'Ocultar la presentación' : 'Ver la presentación';
+    });
+    return { boton: boton, panel: panel };
+  }
+
   function tarjetaModulo(m, partidaPendiente) {
     var estado = m.estado === 'completado' || m.estado === 'disponible' ? m.estado : 'bloqueado';
     var art = el('article', 'modulo modulo--' + estado);
@@ -237,18 +283,22 @@
     var desc = descripcion(m.n);
     if (desc) cuerpo.appendChild(el('p', null, desc));
 
-    var pdf = seguro(m.pdf), test = seguro(m.test);
+    var pdf = seguro(m.pdf), test = seguro(m.test), pres = seguro(m.presentacion);
     if (estado === 'disponible') {
-      var b = el('div', 'btns');
-      if (pdf) b.appendChild(botonExterno(pdf, 'Leer el módulo (PDF)', 'btn--primario btn--leer'));
-      if (test) b.appendChild(botonExterno(test, 'Responder el test', 'btn--secundario btn--test'));
-      cuerpo.appendChild(b);
+      // Pasos del módulo, en orden: presentación en línea → PDF para estudio → test
+      var pasos = el('ol', 'pasos-modulo');
+      var visor = pres ? visorPresentacion(pres, m) : null;
+      if (visor) pasos.appendChild(pasoModulo('Vea la presentación', visor.boton, visor.panel));
+      if (pdf) pasos.appendChild(pasoModulo('Descargue el módulo para estudiarlo', botonExterno(pdf, 'Descargar el PDF', (visor ? 'btn--secundario' : 'btn--primario') + ' btn--descargar')));
+      if (test) pasos.appendChild(pasoModulo('Responda el test', botonExterno(test, 'Responder el test', 'btn--secundario btn--test')));
+      cuerpo.appendChild(pasos);
     } else if (estado === 'completado') {
-      if (pdf) {
-        var c = el('div', 'btns');
-        c.appendChild(botonExterno(pdf, 'Volver a leer (PDF)', 'btn--secundario btn--chico btn--leer'));
-        cuerpo.appendChild(c);
-      }
+      var c = el('div', 'btns');
+      var visorC = pres ? visorPresentacion(pres, m, true) : null;
+      if (visorC) c.appendChild(visorC.boton);
+      if (pdf) c.appendChild(botonExterno(pdf, 'Descargar el PDF', 'btn--secundario btn--chico btn--descargar'));
+      if (c.children.length) cuerpo.appendChild(c);
+      if (visorC) cuerpo.appendChild(visorC.panel);
     } else {
       var bloqueo = el('p', 'bloqueo');
       bloqueo.appendChild(icono('i-candado'));

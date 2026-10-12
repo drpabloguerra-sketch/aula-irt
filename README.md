@@ -47,6 +47,17 @@ El archivo `.gitignore` bloquea `*.gs`, `*.pdf`, `*.docx`, `*.xlsx`, `*.csv`, `.
 
 Para cambiar un PDF o un test: actualice el enlace en la hoja o en la propiedad del script. No hay que tocar este repositorio.
 
+### Materiales de cada módulo
+
+Cada módulo tiene tres pasos para la persona: **1. ver la presentación** dentro de la página, **2. descargar el documento en PDF** para estudio independiente y **3. responder el test**. Los archivos nunca se suben a este repositorio.
+
+| Material | Dónde va | Enlace que entrega el Apps Script |
+|---|---|---|
+| Presentación (`.pptx`) | Súbala a Google Drive y ábrala con **Presentaciones de Google** (Archivo → Guardar como Presentaciones de Google). Compártala como «Cualquier persona con el enlace · Lector». | `https://docs.google.com/presentation/d/ID/embed?start=false&loop=false&delayms=5000` (campo `presentacion`). En Presentaciones de Google: Archivo → Compartir → Publicar en la Web → Insertar, y copie solo la dirección del `src`. |
+| Documento de estudio (`.pdf`) | Google Drive, compartido como «Cualquier persona con el enlace · Lector». | `https://drive.google.com/uc?export=download&id=ID` (campo `pdf`), para que se descargue directo. |
+
+`ID` es el código largo que aparece en la dirección del archivo en Drive. Anote ambos enlaces en la hoja «Índice de la biblioteca», junto al módulo. Solo las personas inscritas reciben esos enlaces, pero quien tenga un enlace puede abrirlo: no ponga en esos archivos datos de participantes.
+
 Antes de subir cualquier cambio, revise que las páginas no tengan enlaces a Google Docs, Drive ni Forms:
 
 ```
@@ -67,7 +78,7 @@ Use la plantilla `plantillas/curso.html`: ya tiene la identidad de la Academia, 
 
 Las secciones de la página de cada curso tienen anclas: `#introduccion`, `#como`, `#modulos` e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261013`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261014`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -92,12 +103,12 @@ La página del curso tiene dos estados:
 
 | Envía la página | Responde el Apps Script |
 |---|---|
-| `{ "identificador": "12345678-9" }` o `{ "identificador": "correo@…" }` | Inscrito: `{ "ok": true, "nombre", "token", "institucion"?, "partida": { "completado", "test"? }, "modulos": [ { "n", "titulo", "horas", "estado", "pdf"?, "test"? } ], "jornada": { "fecha", "horario", "lugar", "requisito"?, "pdf"? }, "programa"? }` |
+| `{ "identificador": "12345678-9" }` o `{ "identificador": "correo@…" }` | Inscrito: `{ "ok": true, "nombre", "token", "institucion"?, "partida": { "completado", "test"? }, "modulos": [ { "n", "titulo", "horas", "estado", "pdf"?, "presentacion"?, "test"? } ], "jornada": { "fecha", "horario", "lugar", "requisito"?, "pdf"? }, "programa"? }` |
 | `{ "identificador": "", "token": "…" }` (al recargar) | Lo mismo, o `{ "ok": false, "motivo": "sesion_vencida" }` |
 | En modo `RUT_Y_CORREO`: `{ "identificador": RUT, "correo": … }` | Si falta uno: `{ "ok": false, "motivo": "faltan_datos" }` (la página muestra el segundo campo) |
 | — | No inscrito: `{ "ok": false, "motivo": "no_inscrito" }` · Demasiados intentos: `{ "ok": false, "motivo": "espera" }` |
 
-`estado` es `completado`, `disponible` o `bloqueado`; `pdf` y `test` solo llegan cuando no está bloqueado. La página solo acepta enlaces `https://` y escribe los textos como texto (nunca como HTML). Si `fecha`, `horario` o `lugar` llegan como `[PENDIENTE…]`, muestra «Fecha por confirmar» o «Por confirmar».
+`estado` es `completado`, `disponible` o `bloqueado`; `pdf`, `presentacion` y `test` solo llegan cuando no está bloqueado. `presentacion` es opcional: si llega, el módulo muestra «Ver la presentación» y la abre dentro de la página (el visor se carga recién al abrirla); si no, el primer paso es descargar el PDF. La página solo acepta enlaces `https://` y escribe los textos como texto (nunca como HTML). Si `fecha`, `horario` o `lugar` llegan como `[PENDIENTE…]`, muestra «Fecha por confirmar» o «Por confirmar».
 
 ## 6. Solicitudes de capacitación y dirección del sitio institucional
 
@@ -148,6 +159,7 @@ Nada de esta lista aparece en la portada; se completa aquí hasta confirmarlo.
 
 - **Acceso de participantes:** publicar `acceso_aula_IRT.gs` y pegar su URL `/exec` en `endpoint` de `assets/aula-cursos.js` (hoy dice `URL_ACCESO_APPS_SCRIPT`). Hacer una prueba con un RUT real inscrito, desde la lista `/cursos/`.
 - **Correos automáticos:** cambiar `URL_AULA` a `https://cursos.institutoriesgoterritorial.cl/cursos/entrevista-motivacional/` y agregar la línea de acceso con RUT o correo.
+- **Materiales del Módulo 1:** subir a Drive la presentación «Multimorbilidad y ECICEP» (como Presentaciones de Google) y el PDF «Módulo 1 · ECICEP y multimorbilidad», y anotar sus enlaces en la hoja «Índice de la biblioteca» (sección 2). Faltan los materiales de los módulos 2 a 5.
 - **Jornada presencial:** fecha y lugar por confirmar; se cargan en la constante `AULA` del Apps Script (la página muestra «Fecha por confirmar» mientras tanto).
 - **Módulos I a IV del Programa GRD:** validar las descripciones de cada módulo con su manual (hoy se muestran como texto normal).
 - **Entrevista Motivacional y Consejería Familiar en la portada:** figura como curso ofrecido en «Propuestas formativas disponibles» y como curso en el aula. Si se confirma su ejecución (estado, institución, región y autorización para nombrarla), puede pasar a «Experiencia formativa del IRT».

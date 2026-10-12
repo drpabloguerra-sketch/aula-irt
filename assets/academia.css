@@ -116,10 +116,11 @@ img,svg{max-width:100%}
 .btn .ico{width:22px;height:22px}
 
 /* Iconos dentro de botones de curso (CSS, para que sobrevivan al script de enlaces pendientes) */
-.btn--leer::before,.btn--test::before,.btn--descargar::before,.btn--correo::before{content:"";width:22px;height:22px;flex:none;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.btn--leer::before,.btn--test::before,.btn--descargar::before,.btn--correo::before,.btn--presentacion::before{content:"";width:22px;height:22px;flex:none;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
 .btn--leer{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5.5c3-1.5 6-1.5 9 .5 3-2 6-2 9-.5v13c-3-1.5-6-1.5-9 .5-3-2-6-2-9-.5z'/%3E%3Cpath d='M12 6v13'/%3E%3C/svg%3E")}
 .btn--test{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4.5' y='3.5' width='15' height='18' rx='2'/%3E%3Cpath d='M8 11l1.5 1.5L12 10M8 16l1.5 1.5L12 15M14 11.5h2.5M14 16.5h2.5'/%3E%3C/svg%3E")}
 .btn--descargar{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v11M7 10.5l5 5 5-5M5 20h14'/%3E%3C/svg%3E")}
+.btn--presentacion{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='12.5' rx='1.5'/%3E%3Cpath d='M10.5 7.8v5l4-2.5z'/%3E%3Cpath d='M12 16.5V20M8.5 20h7'/%3E%3C/svg%3E")}
 .btn--correo{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M3.5 6.5L12 13l8.5-6.5'/%3E%3C/svg%3E")}
 
 /* Enlaces aún no cargados (los marca el script de cada curso) */
@@ -512,6 +513,20 @@ html.con-ventana{overflow:hidden}
 .apertura__aula a{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-weight:700;color:var(--petroleo-osc)}
 .apertura__aula .ico{width:20px;height:20px}
 
+/* Pasos de un módulo disponible y visor de la presentación */
+.pasos-modulo{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:14px;counter-reset:pm}
+.paso-modulo{counter-increment:pm;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:8px;align-items:center}
+.paso-modulo::before{content:counter(pm);grid-row:1;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--petroleo-claro);color:var(--petroleo-osc);font-weight:700;font-size:16px}
+.paso-modulo__texto{grid-column:2;margin:0!important;font-weight:700;color:var(--tinta)!important}
+.paso-modulo .btn,.paso-modulo .visor{grid-column:2;justify-self:start}
+.paso-modulo .visor{justify-self:stretch}
+.visor{margin-top:2px}
+.modulo .cuerpo>.visor{margin-top:14px}
+.visor__marco{position:relative;aspect-ratio:16/9;background:var(--salvia);border:1px solid var(--linea);border-radius:10px;overflow:hidden}
+.visor__marco iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.visor__pie{margin-top:8px;font-size:16px}
+.visor__pie a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}
+
 /* Lista de cursos (/cursos/): cursos agrupados por área; cada uno despliega su ingreso */
 .grupo-cursos{margin-bottom:40px}
 .grupo-cursos__titulo{display:flex;align-items:center;gap:12px;font-size:clamp(22px,2.6vw,26px);margin:0 0 18px;padding-bottom:12px;border-bottom:3px solid var(--petroleo-claro)}
@@ -551,7 +566,9 @@ html.con-ventana{overflow:hidden}
   .aula__cabeza{flex-direction:column-reverse;gap:12px}
   .aula__cabeza .btn{align-self:flex-end}
   .partida{flex-direction:column;padding:20px 18px}
-  .partida .btn,.modulo .btns .btn{width:100%}
+  .partida .btn,.modulo .btns .btn,.paso-modulo .btn{width:100%}
+  .paso-modulo .btn{justify-self:stretch}
+  .paso-modulo .visor{grid-column:1/-1}
   .curso-tarjeta{padding:20px 18px}
   .curso-tarjeta .btn{width:100%}
   .curso-item__cabeza{grid-template-columns:1fr;padding:20px 18px}
