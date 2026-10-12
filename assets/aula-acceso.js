@@ -208,6 +208,20 @@
     return d ? d.textContent : '';
   }
   function horas(h) { return h + (Number(h) === 1 ? ' hora' : ' horas'); }
+  // Nota chilena con coma decimal (5.1 → «5,1»); null si no llega un número
+  function numero(v) {
+    var x = typeof v === 'string' ? Number(v.replace(',', '.')) : v;
+    return typeof x === 'number' && isFinite(x) ? x : null;
+  }
+  function formatoNota(v) {
+    var x = numero(v);
+    return x === null ? '' : (Math.round(x * 10) / 10).toFixed(1).replace('.', ',');
+  }
+  function puntos(p, max) {
+    p = numero(p); max = numero(max);
+    if (p === null) return '';
+    return max === null ? p + ' puntos' : p + ' de ' + max + ' puntos';
+  }
 
   function pasoModulo(texto, boton, extra) {
     var li = el('li', 'paso-modulo');
@@ -293,6 +307,20 @@
       if (test) pasos.appendChild(pasoModulo('Responda el test', botonExterno(test, 'Responder el test', 'btn--secundario btn--test')));
       cuerpo.appendChild(pasos);
     } else if (estado === 'completado') {
+      // Nota destacada; sin botón de test: cada cuestionario tiene un solo intento
+      var nota = formatoNota(m.nota);
+      var pts = puntos(m.puntaje, m.maximo);
+      if (nota || pts) {
+        var pn = el('p', 'modulo__nota');
+        if (nota) pn.appendChild(el('b', null, 'Nota ' + nota));
+        if (nota && pts) pn.appendChild(document.createTextNode(' · '));
+        if (pts) pn.appendChild(document.createTextNode(pts));
+        cuerpo.appendChild(pn);
+      }
+      var resp = el('p', 'respondido');
+      resp.appendChild(icono('i-completado'));
+      resp.appendChild(document.createTextNode('Cuestionario respondido · un solo intento'));
+      cuerpo.appendChild(resp);
       var c = el('div', 'btns');
       var visorC = pres ? visorPresentacion(pres, m, true) : null;
       if (visorC) c.appendChild(visorC.boton);
@@ -329,6 +357,27 @@
     barra.setAttribute('aria-valuemax', String(total));
     barra.setAttribute('aria-valuenow', String(hechos));
     $('aula-progreso-relleno').style.width = Math.round(100 * hechos / total) + '%';
+
+    // Promedio de la etapa en línea, con las notas disponibles
+    var notas = modulos.map(function (m) { return m.estado === 'completado' ? numero(m.nota) : null; })
+      .filter(function (x) { return x !== null; });
+    var promedio = $('aula-promedio');
+    promedio.textContent = '';
+    if (notas.length) {
+      var suma = notas.reduce(function (a, b) { return a + b; }, 0);
+      promedio.appendChild(document.createTextNode('Promedio de la etapa en línea: '));
+      promedio.appendChild(el('b', null, formatoNota(suma / notas.length)));
+      promedio.appendChild(document.createTextNode(notas.length < total
+        ? ' (con ' + notas.length + (notas.length === 1 ? ' nota' : ' notas') + ' de ' + total + ')'
+        : ''));
+    }
+    promedio.hidden = !notas.length;
+
+    // Test de partida respondido: puntaje, sin nota
+    var inicio = d.inicio || {};
+    var ptsInicio = puntos(inicio.puntaje, inicio.maximo);
+    $('aula-inicio').textContent = ptsInicio ? 'Test de partida: ' + ptsInicio + ' (diagnóstico, sin nota).' : '';
+    $('aula-inicio').hidden = !ptsInicio;
 
     // Qué sigue
     var siguiente = $('aula-siguiente');
