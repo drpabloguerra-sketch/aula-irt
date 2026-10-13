@@ -679,3 +679,110 @@ html.con-ventana{overflow:hidden}
   .insc__acciones{margin:18px -16px 0;padding:12px 16px 16px}
   .insc__mensaje .btn{width:100%}
 }
+
+/* --------------------------------------------------------------------------
+   Catálogo de cursos (portada) y página de detalle de cada curso
+   (generados por herramientas/construir-cursos.js desde assets/cursos.json).
+   Solo variables de :root.
+   -------------------------------------------------------------------------- */
+.catalogo{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.curso-ficha{display:flex}
+.curso-ficha[hidden]{display:none}
+.curso-ficha__enlace{display:flex;flex-direction:column;width:100%;background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);box-shadow:var(--sombra);color:var(--texto);text-decoration:none;overflow:hidden}
+.curso-ficha__enlace:hover{color:var(--texto);box-shadow:0 2px 4px rgba(27,42,74,.08),0 14px 32px rgba(27,42,74,.14)}
+.curso-ficha__enlace:focus-visible{outline:3px solid var(--petroleo-osc);outline-offset:3px;border-radius:var(--radio)}
+@media (prefers-reduced-motion:no-preference){
+  .curso-ficha__enlace{transition:transform .2s ease,box-shadow .2s ease}
+  .curso-ficha__enlace:hover{transform:translateY(-4px)}
+}
+.curso-ficha__imagen{position:relative;display:block;aspect-ratio:16/9;background:var(--salvia);border-bottom:1px solid var(--linea)}
+.curso-ficha__imagen img{display:block;width:100%;height:100%;object-fit:cover}
+.curso-ficha__estado{position:absolute;top:12px;right:12px;display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:var(--blanco);color:var(--ocre-osc);font-size:14px;font-weight:700;box-shadow:0 1px 3px rgba(27,42,74,.15)}
+.curso-ficha__estado::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ocre)}
+.curso-ficha__cuerpo{flex:1;display:flex;flex-direction:column;gap:6px;padding:20px 22px 22px}
+.curso-ficha__tipo{font-size:14px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ocre-osc)}
+.curso-ficha__quien{font-size:15px;color:var(--texto-suave)}
+.curso-ficha__titulo{font-family:var(--f-titulo);font-size:22px;font-weight:700;line-height:1.3;color:var(--tinta);margin:4px 0 14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pildora-area{margin-top:auto;align-self:flex-start;padding:5px 12px;border-radius:999px;background:var(--salvia);color:var(--petroleo-osc);font-size:15px;font-weight:700;line-height:1.3}
+
+.filtro-areas{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.filtro-areas__boton{min-height:44px;padding:8px 16px;border:1.5px solid var(--petroleo);border-radius:999px;background:var(--blanco);color:var(--petroleo-osc);font:700 16px/1.2 var(--f-texto);cursor:pointer}
+.filtro-areas__boton:hover{background:var(--salvia)}
+.filtro-areas__boton[aria-pressed="true"]{background:var(--petroleo);color:var(--blanco)}
+
+/* Detalle del curso */
+.curso-cabeza{background:var(--salvia);border-bottom:1px solid var(--linea);padding:52px 0 44px}
+.curso-cabeza h1{font-size:clamp(30px,4.2vw,44px);max-width:900px;margin-bottom:10px}
+.curso-cabeza__dicta{margin:0 0 10px;font-size:17px;font-weight:700;color:var(--petroleo-osc)}
+.curso-cabeza .bajada{max-width:780px}
+.curso-cabeza .datos{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+
+.curso-detalle{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:40px;align-items:start;padding-top:44px;padding-bottom:20px}
+.curso-lateral{grid-column:2;grid-row:1;position:sticky;top:110px}
+.curso-principal{grid-column:1;grid-row:1;min-width:0}
+.curso-lateral__tarjeta{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);box-shadow:var(--sombra);overflow:hidden}
+.curso-lateral__imagen{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--salvia);border-bottom:1px solid var(--linea)}
+.curso-lateral__cuerpo{padding:20px 22px 22px}
+.curso-estado{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:4px 12px;border-radius:999px;background:var(--ocre-claro);color:var(--ocre-osc);font-size:15px;font-weight:700}
+.curso-estado__punto{width:8px;height:8px;border-radius:50%;background:var(--ocre)}
+.datos-clave{margin:0;display:grid;gap:12px}
+.datos-clave div{display:grid;gap:2px}
+.datos-clave dt{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--texto-suave)}
+.datos-clave dt .ico{width:20px;height:20px;color:var(--petroleo)}
+.datos-clave dd{margin:0 0 0 28px;font-size:17px;line-height:1.45;color:var(--texto)}
+.curso-lateral__acciones{display:grid;gap:12px;margin-top:20px}
+.curso-lateral__acciones .btn{width:100%}
+.curso-lateral__ingreso{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;font-weight:700;color:var(--petroleo-osc)}
+.curso-lateral__ingreso .ico{width:18px;height:18px}
+
+.curso-bloque h2{font-size:clamp(26px,3vw,32px);margin-bottom:18px}
+.curso-bloque h3{font-size:22px;margin:30px 0 12px}
+.curso-bloque h2+h3{margin-top:0}
+.curso-bloque p{font-size:18px;max-width:72ch}
+.leer-mas--cerrado{max-height:var(--leer-mas-alto);overflow:hidden;-webkit-mask-image:linear-gradient(180deg,var(--blanco) 70%,transparent);mask-image:linear-gradient(180deg,var(--blanco) 70%,transparent)}
+.leer-mas__boton{min-height:44px;padding:0;border:0;background:none;color:var(--petroleo-osc);font:700 17px/1.2 var(--f-texto);text-decoration:underline;cursor:pointer}
+.aprenderas{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:ap}
+.aprenderas li{counter-increment:ap;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;font-size:18px;line-height:1.5}
+.aprenderas li::before{content:counter(ap);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--ocre);color:var(--ocre-osc);font-family:var(--f-titulo);font-weight:700;font-size:17px}
+.requisitos{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.requisitos li{display:flex;gap:10px;align-items:flex-start;font-size:18px}
+.requisitos .ico{color:var(--petroleo);margin-top:2px}
+
+.banda-certificado{display:flex;gap:18px;align-items:flex-start;margin:40px 0 0;padding:24px 26px;border-radius:var(--radio);background:var(--ocre-claro);border-left:6px solid var(--ocre)}
+.banda-certificado__ico{flex:none;color:var(--ocre-osc)}
+.banda-certificado h2{font-size:24px;margin:0 0 6px}
+.banda-certificado p{margin:0;font-size:18px;color:var(--texto)}
+
+.preguntas h2{margin-bottom:22px}
+.acordeon{display:grid;gap:10px;max-width:860px;margin-bottom:18px}
+.acordeon__item{background:var(--blanco);border:1px solid var(--linea);border-radius:12px}
+.acordeon__item[hidden]{display:none}
+.acordeon__item summary{display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:56px;padding:12px 18px;cursor:pointer;list-style:none;font-weight:700;font-size:18px;color:var(--tinta)}
+.acordeon__item summary::-webkit-details-marker{display:none}
+.acordeon__item summary::after{content:"";flex:none;width:12px;height:12px;border-right:2.5px solid var(--petroleo);border-bottom:2.5px solid var(--petroleo);transform:rotate(45deg) translate(-3px,-3px)}
+.acordeon__item[open] summary::after{transform:rotate(-135deg) translate(-3px,-3px)}
+@media (prefers-reduced-motion:no-preference){ .acordeon__item summary::after{transition:transform .2s ease} }
+.acordeon__item summary:focus-visible{outline:3px solid var(--petroleo-osc);outline-offset:2px;border-radius:12px}
+.acordeon__respuesta{padding:0 18px 16px}
+.acordeon__respuesta p{margin:0;font-size:18px;color:var(--texto)}
+.seccion--compacta{padding:8px 0 64px}
+.error-contenido{display:flex;gap:16px;align-items:flex-start;max-width:860px;padding:20px 22px;border:1px solid var(--linea);border-radius:var(--radio);background:var(--salvia)}
+.error-contenido .ico{color:var(--petroleo);flex:none}
+.error-contenido h2{font-size:21px;margin:0 0 4px}
+.error-contenido p{margin:0;font-size:17px}
+.error-contenido a{font-weight:700;display:inline-flex;align-items:center;min-height:44px}
+#ingresar{padding-top:40px}
+
+@media (max-width:1100px){
+  .catalogo{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .curso-detalle{grid-template-columns:1fr;gap:28px;padding-top:24px}
+  .curso-lateral,.curso-principal{grid-column:1;grid-row:auto;position:static}
+  .curso-lateral{max-width:560px}
+}
+@media (max-width:640px){
+  .catalogo{grid-template-columns:1fr}
+  .curso-cabeza{padding:36px 0 30px}
+  .banda-certificado,.error-contenido{padding:18px 16px}
+}

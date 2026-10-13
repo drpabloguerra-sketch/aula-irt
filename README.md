@@ -10,10 +10,15 @@ El aula es un conjunto de páginas web estáticas. No tiene servidor propio ni b
 
 | Archivo o carpeta | Para qué sirve |
 |---|---|
-| `index.html` | Página de inicio de la Academia IRT (se puede indexar). Enlaza a la lista de cursos `/cursos/` desde la apertura («¿Ya está inscrito en un curso? Ingrese al aula») y desde la tarjeta «Cursos del aula». |
+| `index.html` | Página de inicio de la Academia IRT (se puede indexar). Tiene el **catálogo de cursos** (sección «Cursos y programas»), generado desde `assets/cursos.json` entre las marcas `<!--CATALOGO:INICIO-->` y `<!--CATALOGO:FIN-->`. Enlaza a la lista de ingreso `/cursos/` desde la apertura y desde la tarjeta «Cursos del aula». |
+| `assets/cursos.json` | **Fuente única del catálogo** y de la página de cada curso (sección 3). |
+| `herramientas/construir-cursos.js` | Script que genera el catálogo de la portada, las páginas `cursos/[slug]/` y las portadas de reserva desde `assets/cursos.json` (sección 3). |
+| `plantillas/aula.html` | Bloque del aula (ingreso con RUT o correo y módulos privados) que el script inserta en los cursos con `aula`. |
+| `assets/catalogo.js` | Filtro por área del catálogo (aparece con 5 cursos o más), «Leer más» y preguntas frecuentes de cada curso. |
+| `assets/img/cursos/` | Imagen de cada curso (`[slug].jpg`, 1600×900, menos de 250 KB). Mientras no exista, se usa `[slug]-reserva.svg`, generada por el script. |
 | `404.html` | Página que aparece cuando alguien escribe una dirección que no existe. Sin enlaces a cursos. |
 | `cursos/index.html` | Lista de cursos del aula (`noindex, nofollow`), agrupados por área, con una descripción breve. Al hacer clic en un curso se despliega su formulario de ingreso (RUT o correo); si la persona está inscrita, pasa a sus módulos. |
-| `cursos/entrevista-motivacional/index.html` | Página del curso (`noindex, nofollow`): parte pública con introducción y, tras ingresar con RUT o correo, los módulos de cada participante. |
+| `cursos/[slug]/index.html` | Página de detalle de cada curso (`noindex, nofollow`), **generada por el script**: no la edite a mano. `cursos/entrevista-motivacional/` incluye además el ingreso con RUT o correo y, tras ingresar, los módulos de cada participante. |
 | `donihue-2026-k7q3x9/index.html` | Dirección antigua del curso. Solo redirige a la página nueva (hay correos enviados con ella). |
 | `assets/academia.css` | Hoja de estilos compartida: identidad visual de la Academia para portada, 404 y cursos. |
 | `assets/academia.js` | Script compartido: ventana «Solicitud de capacitación» (`ENDPOINT`) y `URL_SITIO` (ver sección 6). |
@@ -25,7 +30,6 @@ El aula es un conjunto de páginas web estáticas. No tiene servidor propio ni b
 | `assets/sello.svg` | Sello circular «IRT» de la Academia (también es el ícono de la pestaña). |
 | `assets/og-academia.png` | Imagen que aparece al compartir la portada en redes o mensajería. |
 | `docs/capturas/` | Capturas de referencia de la portada, el curso (antes y después de ingresar) y la ventana de solicitud (390 px y 1280 px). Se pueden borrar. |
-| `plantillas/curso.html` | Plantilla documentada para crear cursos nuevos (ver sección 3). |
 | `CNAME` | Dominio del sitio (`cursos.institutoriesgoterritorial.cl`). No modificar. |
 | `robots.txt` | Permite indexar el sitio. **No liste aquí las carpetas de cursos**: cada curso lleva su propia línea `noindex`. No cree un `sitemap.xml`. |
 | `.nojekyll` | Archivo vacío que GitHub Pages necesita. No borrar. |
@@ -66,21 +70,34 @@ Antes de subir cualquier cambio, revise que las páginas no tengan enlaces a Goo
 grep -rnE "docs\.google|drive\.google|forms\.gle" --include=*.html --include=*.js .
 ```
 
-## 3. Cómo crear un curso nuevo
+## 3. Catálogo y páginas de cada curso
 
-Use la plantilla `plantillas/curso.html`: ya tiene la identidad de la Academia, la parte pública, el recuadro «Ingresar a los módulos» y la vista privada de módulos.
+Todo el catálogo de la portada y la página de detalle de cada curso salen de **`assets/cursos.json`**. (No está en `datos/` porque el `.gitignore` bloquea esa carpeta para proteger datos de participantes.) Después de cualquier cambio en ese archivo, ejecute desde la raíz del repositorio:
 
-1. **Cree la página** en `cursos/[carpeta-del-curso]/index.html` (minúsculas, sin tildes ni espacios). Ejemplo: `cursos/primeros-auxilios-psicologicos/index.html`.
-2. **Reemplace todo lo que está entre corchetes** (`[NOMBRE COMPLETO DEL CURSO]`, `[XX] horas`, `[Título del módulo 1]`, etc.), incluidos el `<title>` y la descripción al inicio del archivo. En la parte pública **no nombre a la institución contratante ni la comuna**.
-3. **Módulos:** una fila `<tr data-modulo="N">` por módulo en la tabla. Esa tabla es la vista previa pública y también la fuente de las descripciones que ve cada participante después de ingresar.
-4. **Acceso:** en el formulario `#acceso-form`, cambie `data-curso` por el nombre de la carpeta. Agregue el curso en `assets/aula-cursos.js` con esa misma clave, su página y la URL `/exec` de su Apps Script de acceso (sección 5).
-5. Mantenga la línea `<meta name="robots" content="noindex, nofollow">` y los dos `<script>` del final.
-6. **Lista de cursos:** en `cursos/index.html`, copie un `<li class="curso-item">` completo dentro del grupo (área) que corresponda, o copie un `<div class="grupo-cursos">` para un área nueva. Cambie título, descripción breve, datos, el id del panel (`aria-controls` e `id`), los `id` de los campos y `data-curso`. Sume también el título a la tarjeta «Cursos del aula» de la portada.
-7. **Correos automáticos:** en el Apps Script del curso, `URL_AULA` debe apuntar a la página nueva.
+```
+node herramientas/construir-cursos.js
+```
 
-Las secciones de la página de cada curso tienen anclas: `#introduccion`, `#como`, `#modulos` e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
+El script (solo necesita Node.js, sin instalar nada) revisa los datos, escribe el catálogo en `index.html`, genera `cursos/[slug]/index.html` y crea la portada de reserva de los cursos que aún no tienen imagen. Si un texto público menciona módulos, precios, «gratuito», SENCE, OTEC o `[PENDIENTE]`, se detiene y dice cuál.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261017`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, inscripción, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Para agregar un curso:** copie un bloque de `cursos` en `assets/cursos.json`, cambie sus datos y ejecute el script. Campos:
+
+| Campo | Qué es |
+|---|---|
+| `slug` | Dirección: `/cursos/[slug]/` (minúsculas, sin tildes ni espacios). |
+| `tipo` · `estado` · `area` | «Curso» o «Programa» · «Inscripciones abiertas», «Por invitación», «Próximamente», «Para instituciones» o «Propuesta para instituciones» · una de las áreas de formación (etiqueta y filtro). |
+| `titulo` · `tituloCorto` · `bajada` | Título completo (página del curso), título de la ficha y del botón de solicitud, y una línea de presentación. |
+| `imagen` · `imagenAlt` | `assets/img/cursos/[slug].jpg` (1600×900, menos de 250 KB) y su descripción. Sin descripción se usa el título. |
+| `modalidad` · `horas` · `idioma` · `dirigidoA` · `certificado` | Datos clave de la tarjeta lateral. Un campo vacío no se muestra. |
+| `inscripcion` | `invitacion` (botón «¿Cómo me inscribo?», abre esa pregunta), `abierta` (botón «Inscribirme», abre la ventana de inscripción con `codigoInscripcion`) o `institucional` (botón «Solicitar este curso para mi institución», abre la ventana «Solicitud de capacitación» con `tituloCorto` preseleccionado; agregue ese texto como `<option>` en la ventana de `index.html`). |
+| `sobre` · `aprenderas` · `requisitos` · `faq` | Párrafos, resultados de aprendizaje, requisitos y preguntas frecuentes (`{ "p", "r" }`). Se muestran 5 preguntas y el resto con «Ver más preguntas». |
+| `aula` (opcional) | Solo para cursos con módulos en el aula: agrega el ingreso con RUT o correo y la vista privada (`jornadaHoras`, `jornadaTexto`, `requisito`, `totalModulos`, `descripciones` de cada módulo). Agregue también el curso en `assets/aula-cursos.js` con la misma clave que `slug`, y sus módulos en la hoja «Módulos» del Apps Script. |
+
+**Reglas del contenido público:** sin cantidad de módulos (la estructura en módulos solo se ve dentro del aula), sin precios ni «gratuito», sin SENCE ni OTEC, sin nombrar a la entidad contratante, y sin `[PENDIENTE]`: si falta un dato, deje el campo vacío.
+
+Las secciones de la página de cada curso tienen anclas: `#informacion`, `#certificado`, `#preguntas`, `#pregunta-N` (abre esa pregunta) e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
+
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261019`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -114,7 +131,7 @@ La página del curso tiene dos estados:
 
 ## 5b. Inscripción: ventana flotante
 
-La ficha de inscripción es una **ventana flotante** (`assets/inscripcion.js`), con el mismo patrón que la ventana «Solicitud de capacitación»: `<dialog>` modal con el foco atrapado, cierre con Esc, con «×» o con un clic fuera (si hay datos escritos y no enviados, pide confirmación), y el foco vuelve a lo que la abrió. En el celular ocupa la pantalla completa, con el botón «Confirmar mi inscripción» siempre visible al final. Cualquier página del aula que cargue `aula-cursos.js` e `inscripcion.js` puede abrirla (hoy: portada, `/cursos/`, la página de cada curso, `/inscripcion/` y la plantilla).
+La ficha de inscripción es una **ventana flotante** (`assets/inscripcion.js`), con el mismo patrón que la ventana «Solicitud de capacitación»: `<dialog>` modal con el foco atrapado, cierre con Esc, con «×» o con un clic fuera (si hay datos escritos y no enviados, pide confirmación), y el foco vuelve a lo que la abrió. En el celular ocupa la pantalla completa, con el botón «Confirmar mi inscripción» siempre visible al final. Cualquier página del aula que cargue `aula-cursos.js` e `inscripcion.js` puede abrirla (hoy: portada, `/cursos/`, la página de cada curso e `/inscripcion/`).
 
 Envía los datos a la aplicación web `URL_APPS_SCRIPT_AULA` (`inscripcion_academia_IRT.gs`), que valida, guarda la ficha en «Academia IRT · Inscripciones», marca la nómina y envía los correos. **Este repositorio no guarda datos personales** (ni en los archivos ni en el navegador).
 
@@ -187,7 +204,9 @@ Nada de esta lista aparece en la portada; se completa aquí hasta confirmarlo.
 - **Acceso de participantes:** pegar `acceso_aula_IRT.gs` en el proyecto «Aula IRT», ejecutar `configurarModulos`, completar la hoja «Módulos» (PDF e ID del formulario de cada test), ejecutar `probarAcceso`, publicar una nueva versión de la aplicación web y probar con un RUT real. Fecha, horario y lugar de la jornada presencial: `JORNADAS_ACC` en ese archivo.
 - **Correos automáticos:** cambiar `URL_AULA` a `https://cursos.institutoriesgoterritorial.cl/cursos/entrevista-motivacional/` y agregar la línea de acceso con RUT o correo.
 - **Materiales del Módulo 1:** subir a Drive la presentación «Multimorbilidad y ECICEP» (como Presentaciones de Google) y el PDF «Módulo 1 · ECICEP y multimorbilidad», y anotar sus enlaces en la hoja «Índice de la biblioteca» (sección 2). Faltan los materiales de los módulos 2 a 5.
-- **Jornada presencial:** fecha y lugar por confirmar; se cargan en la constante `AULA` del Apps Script (la página muestra «Fecha por confirmar» mientras tanto).
-- **Módulos I a IV del Programa GRD:** validar las descripciones de cada módulo con su manual (hoy se muestran como texto normal).
-- **Entrevista Motivacional y Consejería Familiar en la portada:** figura como curso ofrecido en «Propuestas formativas disponibles» y como curso en el aula. Si se confirma su ejecución (estado, institución, región y autorización para nombrarla), puede pasar a «Experiencia formativa del IRT».
+- **Jornada presencial:** fecha y lugar por confirmar; se cargan en `JORNADAS_ACC` de `acceso_aula_IRT.gs` (la página muestra «Fecha por confirmar» mientras tanto).
+- **Nombre del programa de GRD:** el catálogo usa «Formación en Gestión del Riesgo de Desastres», el nombre con que aparecía en la portada. Confirmar o cambiar `titulo` en `assets/cursos.json`.
+- **Imágenes de los cursos:** `assets/img/cursos/entrevista-motivacional.jpg` y `assets/img/cursos/gestion-riesgo-desastres.jpg` (1600×900, JPG optimizado, menos de 250 KB), con su `imagenAlt`. Al subirlas, ejecutar `node herramientas/construir-cursos.js`.
+- **Despliegue tras el megaincendio de Valparaíso (2024):** la ficha de «Experiencia formativa» solo dice lo confirmado. Completar con quién, dónde y qué se hizo.
+- **Entrevista Motivacional y Consejería Familiar en la portada:** figura en el catálogo como curso «Por invitación». Si se confirma su ejecución (estado, institución, región y autorización para nombrarla), puede sumarse a «Experiencia formativa del IRT».
 - **Apps Script de solicitudes** (`ENDPOINT`): confirmar que acepta `area: 'academia'` y todas las claves de la sección 6 (`necesidad`, `cargo`, `region`, `acepta`, `web`, `t`, `origen`), que descarta envíos con `web` lleno o con `t` muy bajo, y que avisa a `academia@institutoriesgoterritorial.cl`. Probar un envío real desde el sitio publicado.

@@ -1,0 +1,89 @@
+<!-- ======================================================================
+     Academia IRT · Bloque del aula (ingreso con RUT o correo y módulos privados)
+     Lo inserta herramientas/construir-cursos.js en la página de cada curso que
+     tiene «aula» en assets/cursos.json. Las marcas {{…}} se reemplazan con esos
+     datos. No cambie los id: los usa assets/aula-acceso.js.
+     ====================================================================== -->
+<!--INGRESO-->
+<section class="seccion" id="ingresar" aria-labelledby="titulo-ingresar">
+  <div class="wrap">
+    <!-- Acceso. La URL del Apps Script de este curso se define en assets/aula-cursos.js,
+         con la misma clave que data-curso (README, sección 5). -->
+    <form class="acceso" id="acceso-form" data-curso="{{SLUG}}" novalidate>
+      <div class="acceso__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261019#i-candado"/></svg></div>
+      <h2 id="titulo-ingresar">Ingresar a los módulos</h2>
+      <p class="acceso__bajada">Solo para participantes inscritos.</p>
+      <div class="campo">
+        <label for="acceso-id">RUT o correo electrónico</label>
+        <input id="acceso-id" name="identificador" type="text" inputmode="text" autocomplete="email" autocapitalize="none" spellcheck="false" aria-describedby="acceso-ayuda" required>
+        <p class="campo__ayuda" id="acceso-ayuda">Use el mismo RUT o correo que registró en la ficha de inscripción. RUT sin puntos y con guion: 12345678-9</p>
+      </div>
+      <!-- Solo se muestra si el aula exige RUT y correo (MODO_ACCESO 'RUT_Y_CORREO') -->
+      <div class="campo campo--correo" id="acceso-correo-campo" hidden>
+        <label for="acceso-correo">Correo electrónico</label>
+        <input id="acceso-correo" name="correo" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
+      </div>
+      <div class="aviso" id="acceso-mensaje" role="status" aria-live="polite"></div>
+      <button type="submit" class="btn btn--primario" id="acceso-boton">Ingresar</button>
+    </form>
+  </div>
+</section>
+<!--/INGRESO-->
+<!--AULA-->
+<!-- ======================================================================
+     AULA PRIVADA (se completa con la respuesta del acceso)
+     ====================================================================== -->
+<template id="aula-descripciones">{{DESCRIPCIONES}}</template>
+<div class="aula-cargando" id="aula-cargando" role="status" aria-live="polite" hidden><span class="cargador" aria-hidden="true"></span>Cargando sus módulos…</div>
+
+<section class="seccion aula" id="aula" aria-labelledby="aula-saludo" hidden>
+  <div class="wrap">
+    <div class="aula__cabeza">
+      <div>
+        <span class="antetitulo">Sus módulos</span>
+        <h2 id="aula-saludo" tabindex="-1">Hola</h2>
+        <p class="aula__curso">{{TITULO}}<span id="aula-institucion"></span></p>
+      </div>
+      <button type="button" class="btn btn--secundario btn--chico" id="aula-salir"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261019#i-salir"/></svg>Salir</button>
+    </div>
+
+    <div class="progreso">
+      <p class="progreso__texto" id="aula-progreso-texto">0 de {{TOTAL}} módulos completados</p>
+      <div class="progreso__barra" id="aula-progreso" role="progressbar" aria-labelledby="aula-progreso-texto" aria-valuemin="0" aria-valuemax="{{TOTAL}}" aria-valuenow="0"><span id="aula-progreso-relleno"></span></div>
+      <p class="progreso__promedio" id="aula-promedio" hidden></p>
+      <p class="progreso__inicio" id="aula-inicio" hidden></p>
+      <p class="progreso__siguiente" id="aula-siguiente"></p>
+    </div>
+
+    <article class="partida" id="aula-partida" hidden>
+      <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261019#i-test"/></svg></div>
+      <div>
+        <h3>Primer paso: test de partida</h3>
+        <p>Diagnóstico breve y sin nota. Al responderlo se libera el Módulo 1.</p>
+        <div class="btns"><a class="btn btn--primario btn--test" id="aula-partida-test" target="_blank" rel="noopener">Responder el test de partida<span class="visual-oculto"> (se abre en una pestaña nueva)</span></a></div>
+        <p class="bloqueo" id="aula-partida-pronto" hidden><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261019#i-reloj"/></svg>El test de partida estará disponible pronto. Le avisaremos por correo.</p>
+      </div>
+    </article>
+
+    <div class="modulos" id="aula-modulos"></div>
+
+    <div class="jornada aula__jornada" id="jornada">
+      <div>
+        <span class="antetitulo">{{JORNADA_HORAS}}</span>
+        <h2>Jornada presencial</h2>
+        <p>{{JORNADA_TEXTO}}</p>
+        <div class="btns" id="aula-jornada-pdf" hidden></div>
+      </div>
+      <ul>
+        <li><b>Fecha</b><span id="aula-fecha">Fecha por confirmar</span></li>
+        <li><b>Horario</b><span id="aula-horario">Por confirmar</span></li>
+        <li><b>Lugar</b><span id="aula-lugar">Por confirmar</span></li>
+        <li><b>Requisito</b><span id="aula-requisito">{{REQUISITO}}</span></li>
+      </ul>
+    </div>
+
+    <p class="aula__otros" id="aula-otros-cursos" hidden></p>
+    <p class="aula__ayuda">¿Dudas o problemas? Escriba a <a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a> indicando su nombre y RUT.<span id="aula-programa"></span></p>
+  </div>
+</section>
+<!--/AULA-->

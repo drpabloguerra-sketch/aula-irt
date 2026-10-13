@@ -1,0 +1,100 @@
+{
+  "_instrucciones": "Catálogo de la Academia IRT. Cada curso es un bloque de «cursos». Después de editar, ejecute: node herramientas/construir-cursos.js (README, sección 3). Partes públicas: sin cantidad de módulos, sin precios, sin SENCE/OTEC, sin nombrar a la entidad contratante. Si falta un dato, deje el campo vacío: no se muestra.",
+  "cursos": [
+    {
+      "slug": "entrevista-motivacional",
+      "codigo": "EM",
+      "tipo": "Curso",
+      "estado": "Por invitación",
+      "area": "Equipos de salud en APS",
+      "titulo": "Entrevista Motivacional y Consejería Familiar en el Cuidado de Personas con Multimorbilidad Crónica",
+      "tituloCorto": "Entrevista Motivacional y Consejería Familiar",
+      "bajada": "Herramientas de conversación para acompañar a personas con varias condiciones crónicas y a sus familias.",
+      "imagen": "assets/img/cursos/entrevista-motivacional.jpg",
+      "imagenAlt": "",
+      "modalidad": "En línea a su propio ritmo + jornada presencial",
+      "horas": "20 horas pedagógicas",
+      "idioma": "Español",
+      "dirigidoA": "Equipos de atención primaria de salud",
+      "certificado": "Certificado de aprobación de la Academia IRT, con código QR",
+      "inscripcion": "invitacion",
+      "codigoInscripcion": "",
+      "sobre": [
+        "Las personas que viven con varias condiciones crónicas enfrentan muchos medicamentos, controles repetidos y mensajes que a veces se contradicen. Este curso entrega a los equipos de atención primaria herramientas concretas para conversar de otra manera: entender qué es lo más importante para cada persona, apoyar su motivación para cuidarse e incorporar a la familia como parte del cuidado.",
+        "Combina una etapa en línea, que cada participante realiza a su propio ritmo desde el computador o el celular, con una jornada presencial práctica de simulación y análisis de casos. Se enmarca en la Estrategia de Cuidado Integral Centrado en las Personas (ECICEP)."
+      ],
+      "aprenderas": [
+        "Comprender el marco de la ECICEP y los desafíos de atender a personas con multimorbilidad en APS.",
+        "Reconocer el espíritu y los procesos de la entrevista motivacional.",
+        "Aplicar preguntas abiertas, afirmaciones, reflejos y resúmenes en la consulta.",
+        "Identificar y fortalecer el discurso de cambio de la persona.",
+        "Usar genograma, ecomapa y ciclo vital familiar en la consejería familiar.",
+        "Construir planes de cuidado consensuados con la persona y su familia."
+      ],
+      "requisitos": [
+        "Computador o celular con conexión a internet",
+        "Correo electrónico personal o institucional",
+        "No necesita cuenta de Google"
+      ],
+      "faq": [
+        { "p": "¿Cómo me inscribo?", "r": "Por invitación: si su institución contrató el curso, recibirá un correo de academia@institutoriesgoterritorial.cl con su enlace personal. Si le interesa en forma personal, escríbanos a ese mismo correo." },
+        { "p": "¿Tiene horario fijo?", "r": "La etapa en línea se realiza a su propio ritmo, dentro del plazo informado. La jornada presencial tiene fecha y lugar que se informan con anticipación." },
+        { "p": "¿Cómo se evalúa?", "r": "Con un cuestionario breve al cierre de cada parte de la etapa en línea, una evaluación final y la observación de la práctica en la jornada presencial." },
+        { "p": "¿Recibiré un certificado?", "r": "Sí. Al aprobar recibirá un certificado de la Academia IRT con código QR de verificación." },
+        { "p": "¿Qué necesito para aprobar?", "r": "Nota igual o superior a 4,0, completar la etapa en línea y asistir a la jornada presencial." },
+        { "p": "¿A quién le escribo si tengo un problema?", "r": "A academia@institutoriesgoterritorial.cl." }
+      ],
+      "aula": {
+        "jornadaHoras": "8 horas pedagógicas",
+        "jornadaTexto": "Talleres prácticos con los casos de los módulos: habilidades centrales, simulación de entrevista y consejería familiar. Al cierre se aplica la evaluación final del curso.",
+        "requisito": "Haber completado los cinco módulos en línea",
+        "totalModulos": 5,
+        "descripciones": {
+          "1": "Multimorbilidad crónica y sus desafíos; atención centrada en la persona; rol de la familia y la persona cuidadora; decisiones compartidas y plan consensuado.",
+          "2": "Qué es y qué no es; el reflejo de corregir; espíritu de la entrevista motivacional; procesos: vincular, enfocar, evocar y planificar.",
+          "3": "Preguntas abiertas, afirmaciones, reflejos y resúmenes; discurso de cambio y de mantención; ambivalencia y discordancia.",
+          "4": "Enfoque familiar; ciclo vital y crisis; genograma y ecomapa; estructura de una consejería familiar.",
+          "5": "Adherencia y automanejo; activación de la persona; participación de la familia; del diálogo motivacional al plan de cuidado consensuado."
+        }
+      }
+    },
+    {
+      "slug": "gestion-riesgo-desastres",
+      "codigo": "GRD",
+      "tipo": "Programa",
+      "estado": "Para instituciones",
+      "area": "Gestión del riesgo de desastres",
+      "titulo": "Formación en Gestión del Riesgo de Desastres",
+      "tituloCorto": "Formación en Gestión del Riesgo de Desastres",
+      "bajada": "Comprender el desastre como resultado de amenazas, exposición, vulnerabilidades y capacidades, y preparar a las comunidades para responder y recuperarse.",
+      "imagen": "assets/img/cursos/gestion-riesgo-desastres.jpg",
+      "imagenAlt": "",
+      "modalidad": "Presencial o híbrida, con material de estudio en el aula",
+      "horas": "16 horas cronológicas",
+      "idioma": "Español",
+      "dirigidoA": "Equipos institucionales, organizaciones y comunidades",
+      "certificado": "Certificado de aprobación de la Academia IRT, con código QR",
+      "inscripcion": "institucional",
+      "codigoInscripcion": "",
+      "sobre": [
+        "Programa formativo propio del Instituto de Riesgo Territorial, diseñado por su Dirección Ejecutiva a partir de la experiencia en terreno del IRT. Parte de una idea central: el desastre no es el evento, sino el resultado de la interacción entre amenazas, exposición, vulnerabilidades, desigualdades y capacidades locales.",
+        "Recorre la comprensión del desastre, los riesgos y la vulnerabilidad territorial en Latinoamérica, la preparación comunitaria y la respuesta inicial, y la recuperación con atención a la salud mental y la resiliencia comunitaria. Cuenta con material docente y guías de estudio propias, y puede tomarse completo o por partes, según las necesidades de cada institución."
+      ],
+      "aprenderas": [
+        "Comprender el desastre como un proceso territorial, no como un evento aislado.",
+        "Reconocer los principales riesgos de Latinoamérica y los factores de vulnerabilidad de un territorio.",
+        "Organizar la preparación comunitaria y la respuesta inicial ante una emergencia.",
+        "Identificar los componentes de la recuperación, incluido el cuidado de la salud mental y la resiliencia comunitaria."
+      ],
+      "requisitos": [
+        "No requiere formación previa en gestión del riesgo"
+      ],
+      "faq": [
+        { "p": "¿Cómo se contrata?", "r": "Con el botón «Solicitar este curso para mi institución»: cuéntenos su institución, el número de participantes y la modalidad que le interesa." },
+        { "p": "¿Se puede tomar por partes?", "r": "Sí, el programa puede dictarse completo o por partes, según las necesidades de la institución." },
+        { "p": "¿Es presencial?", "r": "Las sesiones son presenciales o híbridas, y el material de estudio queda disponible en el aula de la Academia." },
+        { "p": "¿Recibiré un certificado?", "r": "Sí, un certificado de aprobación de la Academia IRT con código QR." }
+      ]
+    }
+  ]
+}

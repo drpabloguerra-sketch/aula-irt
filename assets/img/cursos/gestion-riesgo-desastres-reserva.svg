@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Gestión del riesgo de desastres">
+  <rect width="1600" height="900" fill="#EEF5F3"/>
+  <g stroke="#0E5E6F" stroke-width="1" opacity=".08"><path d="M80 0V900"/><path d="M160 0V900"/><path d="M240 0V900"/><path d="M320 0V900"/><path d="M400 0V900"/><path d="M480 0V900"/><path d="M560 0V900"/><path d="M640 0V900"/><path d="M720 0V900"/><path d="M800 0V900"/><path d="M880 0V900"/><path d="M960 0V900"/><path d="M1040 0V900"/><path d="M1120 0V900"/><path d="M1200 0V900"/><path d="M1280 0V900"/><path d="M1360 0V900"/><path d="M1440 0V900"/><path d="M1520 0V900"/><path d="M0 80H1600"/><path d="M0 160H1600"/><path d="M0 240H1600"/><path d="M0 320H1600"/><path d="M0 400H1600"/><path d="M0 480H1600"/><path d="M0 560H1600"/><path d="M0 640H1600"/><path d="M0 720H1600"/><path d="M0 800H1600"/><path d="M0 880H1600"/></g>
+  <g fill="none" stroke="#0E5E6F" stroke-width="2.5" stroke-linecap="round" opacity=".6">
+        <path d="M1010 140c190-14 360 86 386 230s-80 300-268 328-410-30-470-172 150-372 352-386z"/>
+        <path d="M1014 214c142-10 268 64 288 172s-60 226-200 246-308-22-352-128 112-280 264-290z"/>
+        <path d="M1020 288c96-6 180 42 194 114s-40 152-136 166-208-14-238-86 76-188 180-194z"/>
+        <path d="M1028 362c50-4 94 22 100 60s-20 80-70 88-108-8-124-46 40-98 94-102z"/>
+        <path d="M640 900c40-120 10-220-60-300s-90-190-20-300" stroke-dasharray="10 12"/>
+      </g>
+      <g fill="none" stroke="#0E5E6F" stroke-width="2" opacity=".45">
+        <path d="M120 660h420M120 650v20M540 650v20"/><path d="M180 190l26 44h-52z"/><path d="M300 300l26 44h-52z"/>
+      </g>
+      <circle cx="1052" cy="440" r="16" fill="none" stroke="#B7791F" stroke-width="6"/>
+      <path d="M1052 456v70" stroke="#B7791F" stroke-width="6" stroke-linecap="round"/>
+  <rect x="120" y="770" width="56" height="6" rx="3" fill="#B7791F"/>
+  <text x="120" y="830" font-family="Carlito, Calibri, 'Segoe UI', Arial, sans-serif" font-size="38" font-weight="700" letter-spacing="3" fill="#0A4552">GESTIÓN DEL RIESGO DE DESASTRES</text>
+</svg>
