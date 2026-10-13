@@ -17,8 +17,8 @@ El aula es un conjunto de páginas web estáticas. No tiene servidor propio ni b
 | `donihue-2026-k7q3x9/index.html` | Dirección antigua del curso. Solo redirige a la página nueva (hay correos enviados con ella). |
 | `assets/academia.css` | Hoja de estilos compartida: identidad visual de la Academia para portada, 404 y cursos. |
 | `assets/academia.js` | Script compartido: ventana «Solicitud de capacitación» (`ENDPOINT`) y `URL_SITIO` (ver sección 6). |
-| `inscripcion/index.html` | Ficha de inscripción del aula (`noindex, nofollow`). No se enlaza desde la portada: se llega desde el correo de invitación (sección 5b). |
-| `assets/inscripcion.js` | Script de la ficha de inscripción: carga los datos del curso, valida (incluido el dígito verificador del RUT) y envía la ficha (sección 5b). |
+| `inscripcion/index.html` | Página mínima de inscripción (`noindex, nofollow`): explica cómo inscribirse y, con `#inscripcion=TOKEN`, abre la ventana de inscripción (sección 5b). |
+| `assets/inscripcion.js` | **Ventana flotante de inscripción**, reutilizable en cualquier página del aula: se abre con `#inscripcion=TOKEN` o con un botón `data-inscripcion="CODIGO"`, valida (incluido el dígito verificador del RUT) y envía la ficha (sección 5b). |
 | `assets/aula-cursos.js` | **Único lugar** donde está la URL de la aplicación web de Apps Script «Aula IRT» (`URL_APPS_SCRIPT_AULA`) y, para cada curso, su página (secciones 5 y 5b). |
 | `assets/aula-acceso.js` | Script del acceso de participantes: formularios de ingreso de la lista y de cada curso, y módulos de la persona (sección 5). |
 | `assets/iconos.svg` | Iconografía lineal propia (módulos, duración, modalidad, certificado, progreso, candado, completado…). |
@@ -80,7 +80,7 @@ Use la plantilla `plantillas/curso.html`: ya tiene la identidad de la Academia, 
 
 Las secciones de la página de cada curso tienen anclas: `#introduccion`, `#como`, `#modulos` e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261016`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, inscripción, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261017`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, inscripción, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -112,14 +112,29 @@ La página del curso tiene dos estados:
 
 `estado` es `completado`, `disponible` o `bloqueado`; `pdf` y `presentacion` solo llegan cuando no está bloqueado, y `test` solo cuando está `disponible` (cada cuestionario tiene un solo intento). Un módulo `completado` trae `puntaje`, `maximo` y `nota` (primer envío del RUT, escala 1,0 a 7,0, exigencia 60 %): la tarjeta muestra «Nota 5,1 · 12 de 16 puntos» y «Cuestionario respondido · un solo intento», y la barra de avance muestra el promedio de la etapa en línea con las notas disponibles. `inicio` es el puntaje del test de partida, que no lleva nota. `presentacion` es opcional: si llega, el módulo muestra «Ver la presentación» y la abre dentro de la página (el visor se carga recién al abrirla); si no, el primer paso es descargar el PDF. La página solo acepta enlaces `https://` y escribe los textos como texto (nunca como HTML). Si `fecha`, `horario` o `lugar` llegan como `[PENDIENTE…]`, muestra «Fecha por confirmar» o «Por confirmar».
 
-## 5b. Ficha de inscripción (`/inscripcion/`)
+## 5b. Inscripción: ventana flotante
 
-Página propia de inscripción, con el mismo patrón que la ventana «Solicitud de capacitación»: recoge los datos y los envía con `fetch` (`Content-Type: text/plain;charset=utf-8`) a la aplicación web `URL_APPS_SCRIPT_AULA` (`inscripcion_aula_IRT.gs`, proyecto «Aula IRT»). El Apps Script valida, guarda la ficha en «Inscripciones», marca la «Nómina», avisa a academia@ si alguien está fuera de la nómina y envía el correo de bienvenida. **La página no guarda datos personales** (ni en el repositorio ni en el navegador).
+La ficha de inscripción es una **ventana flotante** (`assets/inscripcion.js`), con el mismo patrón que la ventana «Solicitud de capacitación»: `<dialog>` modal con el foco atrapado, cierre con Esc, con «×» o con un clic fuera (si hay datos escritos y no enviados, pide confirmación), y el foco vuelve a lo que la abrió. En el celular ocupa la pantalla completa, con el botón «Confirmar mi inscripción» siempre visible al final. Cualquier página del aula que cargue `aula-cursos.js` e `inscripcion.js` puede abrirla (hoy: portada, `/cursos/`, la página de cada curso, `/inscripcion/` y la plantilla).
 
-- **Datos del curso:** `GET URL?accion=curso` → `{ ok, abierta, curso, cursoCorto, horas, institucion, unidadTitulo, unidades[], plazo, remitente, consentimiento }`. Todo el texto variable sale de ahí, así que la misma página sirve para otro curso o institución sin tocar el repositorio. Si `abierta` es `false`, la página dice que las inscripciones están cerradas; si `plazo` viene vacío, no se muestra.
-- **Envío:** `POST { accion: "inscripcion", nombres, apellidos, rut, cargo, unidad, correo, telefono, consentimiento, website, origen }`. `rut` va normalizado (`12345678-9`, K mayúscula) y con el dígito verificador revisado; `correo` en minúsculas; `unidad` es la opción elegida o el texto de «Otro»; `website` es el campo trampa (debe llegar vacío).
-- **Respuestas:** `{ ok:true, nombre }` (confirmación), `{ ok:true, yaInscrito:true, nombre }`, `{ ok:false, motivo:"validacion", errores:{ campo: "mensaje" } }` (cada mensaje junto a su campo), `"cerrada"`, `"espera"`; cualquier otra respuesta o un fallo de red muestra «No pudimos enviar su ficha…» y conserva lo escrito.
-- **Enlace de invitación con datos ya escritos:** `https://cursos.institutoriesgoterritorial.cl/inscripcion/#n=Ana&a=P%C3%A9rez&c=ana%40x.cl&r=12345678-9&u=CESFAM%20…` (`n` nombres, `a` apellidos, `c` correo, `r` RUT, `u` unidad, solo si coincide con una opción). La página completa los campos y borra el fragmento de la barra de direcciones. El fragmento (`#`) no se envía a ningún servidor. Esa dirección va en `URL_FICHA_AULA` del Apps Script.
+Envía los datos a la aplicación web `URL_APPS_SCRIPT_AULA` (`inscripcion_academia_IRT.gs`), que valida, guarda la ficha en «Academia IRT · Inscripciones», marca la nómina y envía los correos. **Este repositorio no guarda datos personales** (ni en los archivos ni en el navegador).
+
+**Cómo se abre**
+
+1. **Con invitación (institucional o independiente).** El botón del correo lleva a `https://cursos.institutoriesgoterritorial.cl/[página del curso]#inscripcion=TOKEN`. La ventana se abre sola, borra el fragmento de la barra de direcciones y guarda el token solo en memoria. Funciona en cualquier página del aula, también en `/inscripcion/#inscripcion=TOKEN`.
+2. **Desde un botón,** para cursos que aceptan inscripción sin invitación: `<button type="button" class="btn btn--primario" data-inscripcion="CODIGO">Inscribirme</button>`. Si el curso tiene `requiereInvitacion`, la ventana explica que la inscripción es por invitación y no muestra la ficha. **Ojo:** el código queda a la vista en la página; no use un código que nombre a la institución o la comuna.
+
+**Contrato con la aplicación web**
+
+| Petición | Respuesta |
+|---|---|
+| `GET ?accion=invitacion&t=TOKEN` | `{ ok, yaInscrito, curso: { codigo, curso, cursoCorto, horas, modalidad, entidad, unidadTitulo, unidades[], plazo, abierta, pagina, remitente, consentimiento }, invitado: { nombres, apellidos, correo, rut, unidad } }` o `{ ok:false, motivo:"invitacion" }` |
+| `GET ?accion=curso&c=CODIGO` | Lo mismo con `invitado: null` y `requiereInvitacion` |
+| `POST { accion:"inscripcion", token \| curso, nombres, apellidos, rut, cargo, unidad, correo, telefono, consentimiento, website, origen }` | `{ ok:true, nombre, pagina }`, `{ ok:true, yaInscrito:true, nombre, pagina }`, `{ ok:false, motivo:"validacion", errores:{ campo:"mensaje" } }`, `"cerrada"`, `"invitacion"`, `"espera"` u otro |
+
+- **Encabezado:** institucional, «Organizado por [entidad] · [horas]»; independiente (o sin `entidad`), «Formación personal · [horas]»; con `plazo`, «Inscripción hasta el [plazo]». La entidad solo aparece dentro de la ventana, cuando la envía la aplicación web.
+- **Lugar de trabajo:** si `unidades` trae opciones, opciones más «Otro» con texto; si viene vacía, texto libre con el título `unidadTitulo`.
+- **Envío:** `rut` normalizado (`12345678-9`, K mayúscula) y con el dígito verificador revisado; `correo` en minúsculas; `website` es el campo trampa (debe llegar vacío). Con invitación se envía `token`; desde un botón, `curso`.
+- **Respuestas:** confirmación con «Ir al curso» (hacia `pagina`); errores de validación junto a cada campo; un fallo de red o una respuesta desconocida muestran «No pudimos enviar su ficha…» y conservan lo escrito.
 
 ## 6. Solicitudes de capacitación y dirección del sitio institucional
 
@@ -168,7 +183,7 @@ Reglas: proporción aproximada 60-30-10 (fondos claros · petróleo y tinta · o
 
 Nada de esta lista aparece en la portada; se completa aquí hasta confirmarlo.
 
-- **Ficha de inscripción:** la URL `/exec` ya está en `URL_APPS_SCRIPT_AULA`. Probar una inscripción real con un correo propio y poner `https://cursos.institutoriesgoterritorial.cl/inscripcion/` en `URL_FICHA_AULA` del Apps Script.
+- **Inscripción:** la URL `/exec` de `inscripcion_academia_IRT.gs` ya está en `URL_APPS_SCRIPT_AULA`. En la hoja «Cursos», poner la página de cada curso en «Página del curso en el aula» (para Entrevista Motivacional: `https://cursos.institutoriesgoterritorial.cl/cursos/entrevista-motivacional/`) y probar con una invitación real al correo propio.
 - **Acceso de participantes:** agregar `accesoAula_(datos)` al `doPost` de la misma aplicación web (para `accion: "acceso"`), publicar una nueva versión, cambiar `acceso: false` a `true` en `assets/aula-cursos.js` y hacer una prueba con un RUT real inscrito, desde la lista `/cursos/`.
 - **Correos automáticos:** cambiar `URL_AULA` a `https://cursos.institutoriesgoterritorial.cl/cursos/entrevista-motivacional/` y agregar la línea de acceso con RUT o correo.
 - **Materiales del Módulo 1:** subir a Drive la presentación «Multimorbilidad y ECICEP» (como Presentaciones de Google) y el PDF «Módulo 1 · ECICEP y multimorbilidad», y anotar sus enlaces en la hoja «Índice de la biblioteca» (sección 2). Faltan los materiales de los módulos 2 a 5.

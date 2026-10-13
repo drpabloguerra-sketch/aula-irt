@@ -11,14 +11,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/academia.css?v=20261016">
+<link rel="stylesheet" href="/assets/academia.css?v=20261017">
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
-<!-- Ficha de inscripción del aula. No se enlaza desde la portada: se llega desde el
-     correo de invitación. Todo el texto del curso (nombre, horas, institución,
-     unidades, plazo y consentimiento) lo entrega el Apps Script (README, sección 5b).
-     Esta página no guarda datos personales. -->
+<!-- Inscripción. No se enlaza desde la portada. La ficha es la ventana flotante de
+     assets/inscripcion.js: con /inscripcion/#inscripcion=TOKEN (enlace del correo de
+     invitación) se abre sola. Esta página solo explica cómo inscribirse (README, sección 5b). -->
 
 <header class="cabecera">
   <div class="wrap">
@@ -32,116 +31,20 @@
   </div>
 </header>
 
-<main id="contenido" class="inscripcion">
+<main id="contenido" class="simple inscripcion-pagina">
   <div class="wrap">
-
-    <div class="inscripcion__cabeza">
-      <span class="antetitulo">Inscripción · Academia IRT</span>
-      <h1>Ficha de inscripción</h1>
-      <!-- Esqueleto mientras llegan los datos del curso -->
-      <div class="esqueleto" id="insc-esqueleto" aria-hidden="true"><span></span><span></span><span class="esqueleto--corta"></span></div>
-      <p class="visual-oculto" id="insc-cargando" role="status">Cargando los datos del curso…</p>
-      <div id="insc-curso" hidden>
-        <p class="inscripcion__curso" id="insc-curso-nombre"></p>
-        <p class="bajada" id="insc-bajada"></p>
-        <div class="datos">
-          <span class="dato" id="insc-horas"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261014#i-reloj"/></svg><span></span></span>
-          <span class="dato" id="insc-plazo" hidden><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261014#i-test"/></svg><span></span></span>
-        </div>
+    <div class="tarjeta tarjeta--banda">
+      <span class="antetitulo">Academia IRT · Inscripción</span>
+      <h1>Inscripción en los cursos del aula</h1>
+      <p>La inscripción se hace con el <b>enlace personal</b> que le llega por correo desde <a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a>. Al abrirlo, la ficha aparece en una ventana y le toma unos 3 minutos.</p>
+      <div class="recuadro">
+        <p><b>¿No encuentra su invitación?</b> Revise la carpeta de correo no deseado (spam). Si no está ahí, escríbanos indicando su nombre, RUT y el curso.</p>
+      </div>
+      <div class="btns">
+        <a class="btn btn--primario btn--correo" href="mailto:academia@institutoriesgoterritorial.cl?subject=Invitaci%C3%B3n%20de%20inscripci%C3%B3n">Pedir mi invitación</a>
+        <a class="btn btn--secundario" href="/cursos/">Ver los cursos del aula</a>
       </div>
     </div>
-
-    <!-- Inscripciones cerradas o error al cargar el curso -->
-    <div class="aviso aviso--grande" id="insc-estado" role="alert" hidden></div>
-
-    <section class="inscripcion__pasos" id="insc-pasos" aria-labelledby="titulo-pasos" hidden>
-      <h2 class="visual-oculto" id="titulo-pasos">Cómo sigue</h2>
-      <ol class="pasos-insc">
-        <li><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261014#i-test"/></svg><div><b>Complete esta ficha</b><span>Le toma unos 3 minutos.</span></div></li>
-        <li><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261014#i-correo"/></svg><div><b>Reciba un correo</b><span>Con el test de partida, desde <span class="correo" data-remitente>academia@institutoriesgoterritorial.cl</span>.</span></div></li>
-        <li><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261014#i-modulo"/></svg><div><b>Comience los módulos</b><span>En línea y a su ritmo.</span></div></li>
-      </ol>
-    </section>
-
-    <form class="ficha-insc" id="insc-form" novalidate hidden>
-      <h2>Sus datos</h2>
-      <p class="ficha-insc__bajada">Todos los campos son obligatorios.</p>
-
-      <div class="campos">
-        <div class="campo">
-          <label for="f-nombres">Nombres</label>
-          <input id="f-nombres" name="nombres" type="text" autocomplete="given-name" aria-describedby="e-nombres" required>
-          <p class="campo__error" id="e-nombres" aria-live="polite"></p>
-        </div>
-        <div class="campo">
-          <label for="f-apellidos">Apellidos</label>
-          <input id="f-apellidos" name="apellidos" type="text" autocomplete="family-name" aria-describedby="e-apellidos" required>
-          <p class="campo__error" id="e-apellidos" aria-live="polite"></p>
-        </div>
-        <div class="campo">
-          <label for="f-rut">RUT</label>
-          <input id="f-rut" name="rut" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="a-rut e-rut" required>
-          <p class="campo__ayuda" id="a-rut">Sin puntos y con guion, por ejemplo 12345678-9</p>
-          <p class="campo__error" id="e-rut" aria-live="polite"></p>
-        </div>
-        <div class="campo">
-          <label for="f-cargo">Cargo</label>
-          <input id="f-cargo" name="cargo" type="text" autocomplete="organization-title" aria-describedby="e-cargo" required>
-          <p class="campo__error" id="e-cargo" aria-live="polite"></p>
-        </div>
-
-        <fieldset class="campo campo--ancho opciones" id="f-unidad-grupo" aria-describedby="e-unidad">
-          <legend id="f-unidad-titulo">Lugar de trabajo</legend>
-          <div class="opciones__lista" id="f-unidades"></div>
-          <div class="campo opciones__otro" id="f-otra-campo" hidden>
-            <label for="f-otra" id="f-otra-etiqueta">Escriba su lugar de trabajo</label>
-            <input id="f-otra" name="unidad_otra" type="text" aria-describedby="e-unidad">
-          </div>
-          <p class="campo__error" id="e-unidad" aria-live="polite"></p>
-        </fieldset>
-
-        <div class="campo">
-          <label for="f-correo">Correo electrónico</label>
-          <input id="f-correo" name="correo" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" aria-describedby="a-correo e-correo" required>
-          <p class="campo__ayuda" id="a-correo">A este correo llegarán las instrucciones, los módulos y sus resultados</p>
-          <p class="campo__error" id="e-correo" aria-live="polite"></p>
-        </div>
-        <div class="campo">
-          <label for="f-telefono">Teléfono</label>
-          <input id="f-telefono" name="telefono" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="a-telefono e-telefono" required>
-          <p class="campo__ayuda" id="a-telefono">Celular o teléfono de contacto, por ejemplo +56 9 1234 5678</p>
-          <p class="campo__error" id="e-telefono" aria-live="polite"></p>
-        </div>
-      </div>
-
-      <div class="campo campo--consentimiento">
-        <label class="acepta" for="f-consentimiento">
-          <input id="f-consentimiento" name="consentimiento" type="checkbox" aria-describedby="e-consentimiento" required>
-          <span id="f-consentimiento-texto">Acepto el uso de mis datos para el seguimiento académico, la evaluación y la certificación del curso.</span>
-        </label>
-        <p class="campo__error" id="e-consentimiento" aria-live="polite"></p>
-      </div>
-
-      <!-- Campo trampa para robots: debe llegar vacío -->
-      <div class="trampa" aria-hidden="true">
-        <label for="f-website">No complete este campo</label>
-        <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
-      </div>
-
-      <div class="aviso" id="insc-aviso" role="alert"></div>
-
-      <div class="ficha-insc__acciones">
-        <button type="submit" class="btn btn--primario" id="insc-enviar">Enviar mi ficha</button>
-      </div>
-    </form>
-
-    <!-- Confirmación (sin recargar la página) -->
-    <div class="confirmacion" id="insc-confirmacion" hidden>
-      <svg class="ico confirmacion__ico" id="insc-confirmacion-ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261014#i-completado"/></svg>
-      <h2 id="insc-confirmacion-titulo" tabindex="-1">Ficha recibida</h2>
-      <p id="insc-confirmacion-texto"></p>
-    </div>
-
   </div>
 </main>
 
@@ -164,7 +67,7 @@
 </footer>
 
 <script src="/assets/academia.js?v=20261014"></script>
-<script src="/assets/aula-cursos.js?v=20261016"></script>
-<script src="/assets/inscripcion.js?v=20261016"></script>
+<script src="/assets/aula-cursos.js?v=20261017"></script>
+<script src="/assets/inscripcion.js?v=20261017"></script>
 </body>
 </html>
