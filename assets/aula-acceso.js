@@ -25,6 +25,8 @@
   function endpoint(curso) { return (CURSOS[curso] && CURSOS[curso].endpoint) || ''; }
   function configurado(curso) { return !!(CURSOS[curso] && CURSOS[curso].acceso !== false) && /^https:\/\//i.test(endpoint(curso)); }
   function seguro(url) { return typeof url === 'string' && /^https:\/\//i.test(url) ? url : null; }
+  // Página de un curso del aula: dirección https o ruta del propio sitio
+  function paginaCurso(u) { return typeof u === 'string' && (/^https:\/\//i.test(u) || /^\/(?!\/)/.test(u)) ? u : null; }
   function porConfirmar(v, texto) {
     return (typeof v === 'string' && v.trim() && !/PENDIENTE/i.test(v)) ? v.trim() : texto;
   }
@@ -66,7 +68,8 @@
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       // Misma aplicación web que la inscripción: «accion» indica qué hacer
-      body: JSON.stringify(Object.assign({ accion: 'acceso' }, datos))
+      // «pagina» indica al Apps Script qué curso mostrar si la persona tiene varios
+      body: JSON.stringify(Object.assign({ accion: 'acceso', pagina: (CURSOS[curso] && CURSOS[curso].pagina) || location.pathname }, datos))
     }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
@@ -82,6 +85,7 @@
     sesion_vencida: ['Su sesión terminó. Escriba de nuevo su RUT o correo para ingresar.'],
     salio: ['Cerró su sesión. Para volver, escriba su RUT o correo.'],
     sin_configurar: ['El acceso a los módulos se habilitará pronto. Si necesita su material, escríbanos a ', '.'],
+    otro_curso: ['Su inscripción corresponde a otro curso del aula. Ingrese desde su página: '],
     red: ['No pudimos conectar con el aula. Revise su conexión e intente de nuevo. Si el problema sigue, escríbanos a ', '.']
   };
 
@@ -97,7 +101,7 @@
     var mensaje = form.querySelector('.aviso');
     var textoBoton = boton.textContent;
 
-    function avisar(c) {
+    function avisar(c, cursos) {
       var t = TEXTOS[c] || TEXTOS.red;
       var info = c === 'salio';
       mensaje.textContent = '';
@@ -105,6 +109,15 @@
       mensaje.appendChild(icono(info ? 'i-completado' : 'i-aviso'));
       var p = el('p', null, t[0]);
       if (t.length > 1) { p.appendChild(enlaceCorreo()); p.appendChild(document.createTextNode(t[1])); }
+      // Otro curso: enlaces a la página de cada curso de la persona
+      (cursos || []).forEach(function (cu, i) {
+        var url = paginaCurso(cu.pagina);
+        if (!url) return;
+        if (i) p.appendChild(document.createTextNode(' · '));
+        var a = el('a', null, cu.nombre || 'Curso');
+        a.href = url;
+        p.appendChild(a);
+      });
       mensaje.appendChild(p);
     }
     function limpiar() { mensaje.textContent = ''; mensaje.className = 'aviso'; }
@@ -138,7 +151,9 @@
           grupoCorreo.hidden = false;
           campoCorreo.required = true;
         }
-        avisar(TEXTOS[motivo] ? motivo : 'red');
+        // «accion»: la aplicación web aún no tiene instalado el acceso (acceso_aula_IRT.gs)
+        if (motivo === 'accion') motivo = 'sin_configurar';
+        avisar(TEXTOS[motivo] ? motivo : 'red', motivo === 'otro_curso' ? r.cursos : null);
       }).catch(function () {
         esperando(false);
         avisar('red');
@@ -271,7 +286,7 @@
   }
 
   function tarjetaModulo(m, partidaPendiente) {
-    var estado = m.estado === 'completado' || m.estado === 'disponible' ? m.estado : 'bloqueado';
+    var estado = ['completado', 'disponible', 'pronto'].indexOf(m.estado) >= 0 ? m.estado : 'bloqueado';
     var art = el('article', 'modulo modulo--' + estado);
     art.id = 'modulo-' + m.n;
 
@@ -290,6 +305,8 @@
       meta.appendChild(ins);
     } else if (estado === 'disponible') {
       meta.appendChild(el('span', 'etiqueta etiqueta--realizado', 'Disponible'));
+    } else if (estado === 'pronto') {
+      meta.appendChild(el('span', 'etiqueta etiqueta--propuesta', 'Pronto'));
     } else {
       meta.appendChild(el('span', 'etiqueta etiqueta--propuesta', 'Bloqueado'));
     }
@@ -328,6 +345,11 @@
       if (pdf) c.appendChild(botonExterno(pdf, 'Descargar el PDF', 'btn--secundario btn--chico btn--descargar'));
       if (c.children.length) cuerpo.appendChild(c);
       if (visorC) cuerpo.appendChild(visorC.panel);
+    } else if (estado === 'pronto') {
+      var pronto = el('p', 'bloqueo');
+      pronto.appendChild(icono('i-reloj'));
+      pronto.appendChild(document.createTextNode('Los materiales de este módulo estarán disponibles pronto.'));
+      cuerpo.appendChild(pronto);
     } else {
       var bloqueo = el('p', 'bloqueo');
       bloqueo.appendChild(icono('i-candado'));
@@ -398,8 +420,11 @@
     // Test de partida: único paso disponible mientras no se responda
     var cajaPartida = $('aula-partida');
     var urlPartida = seguro(partida.test);
-    cajaPartida.hidden = !(partidaPendiente && urlPartida);
+    cajaPartida.hidden = !partidaPendiente;
+    $('aula-partida-test').hidden = !urlPartida;
     if (urlPartida) $('aula-partida-test').href = urlPartida;
+    var partidaPronto = $('aula-partida-pronto');
+    if (partidaPronto) partidaPronto.hidden = !!urlPartida;
 
     // Módulos
     var lista = $('aula-modulos');
@@ -417,6 +442,23 @@
     var pdfJornada = seguro(j.pdf);
     if (pdfJornada) cajaPdf.appendChild(botonExterno(pdfJornada, 'Información de la jornada (PDF)', 'btn--secundario btn--descargar'));
     cajaPdf.hidden = !pdfJornada;
+
+    // Otros cursos de la persona en el aula
+    var otros = $('aula-otros-cursos');
+    if (otros) {
+      otros.textContent = '';
+      var lista2 = (Array.isArray(d.cursos) ? d.cursos : []).filter(function (cu) { return !cu.actual && paginaCurso(cu.pagina); });
+      if (lista2.length) {
+        otros.appendChild(el('b', null, 'Sus otros cursos: '));
+        lista2.forEach(function (cu, i) {
+          if (i) otros.appendChild(document.createTextNode(' · '));
+          var a = el('a', null, cu.nombre || 'Curso');
+          a.href = paginaCurso(cu.pagina);
+          otros.appendChild(a);
+        });
+      }
+      otros.hidden = !lista2.length;
+    }
 
     // Programa del curso (opcional)
     var prog = $('aula-programa');

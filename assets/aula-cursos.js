@@ -12,8 +12,8 @@ var CURSOS_AULA = {
   'entrevista-motivacional': {
     pagina: '/cursos/entrevista-motivacional/',
     endpoint: URL_APPS_SCRIPT_AULA,
-    // Cambie a true cuando el doPost atienda accion "acceso" (función accesoAula_).
-    // Mientras sea false, «Ingresar» avisa que el acceso se habilitará pronto.
-    acceso: false
+    // false: «Ingresar» avisa que el acceso se habilitará pronto, sin llamar al Apps Script.
+    // Con true, si acceso_aula_IRT.gs aún no está publicado, la página muestra el mismo aviso.
+    acceso: true
   }
 };
