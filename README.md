@@ -17,7 +17,9 @@ El aula es un conjunto de páginas web estáticas. No tiene servidor propio ni b
 | `donihue-2026-k7q3x9/index.html` | Dirección antigua del curso. Solo redirige a la página nueva (hay correos enviados con ella). |
 | `assets/academia.css` | Hoja de estilos compartida: identidad visual de la Academia para portada, 404 y cursos. |
 | `assets/academia.js` | Script compartido: ventana «Solicitud de capacitación» (`ENDPOINT`) y `URL_SITIO` (ver sección 6). |
-| `assets/aula-cursos.js` | **Único lugar** donde se define, para cada curso, su página y la URL del Apps Script de acceso (sección 5). |
+| `inscripcion/index.html` | Ficha de inscripción del aula (`noindex, nofollow`). No se enlaza desde la portada: se llega desde el correo de invitación (sección 5b). |
+| `assets/inscripcion.js` | Script de la ficha de inscripción: carga los datos del curso, valida (incluido el dígito verificador del RUT) y envía la ficha (sección 5b). |
+| `assets/aula-cursos.js` | **Único lugar** donde está la URL de la aplicación web de Apps Script «Aula IRT» (`URL_APPS_SCRIPT_AULA`) y, para cada curso, su página (secciones 5 y 5b). |
 | `assets/aula-acceso.js` | Script del acceso de participantes: formularios de ingreso de la lista y de cada curso, y módulos de la persona (sección 5). |
 | `assets/iconos.svg` | Iconografía lineal propia (módulos, duración, modalidad, certificado, progreso, candado, completado…). |
 | `assets/sello.svg` | Sello circular «IRT» de la Academia (también es el ícono de la pestaña). |
@@ -78,7 +80,7 @@ Use la plantilla `plantillas/curso.html`: ya tiene la identidad de la Academia, 
 
 Las secciones de la página de cada curso tienen anclas: `#introduccion`, `#como`, `#modulos` e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261015`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261016`. Si modifica ese archivo, cambie la fecha de `?v=` en todas las páginas (portada, 404, cursos, inscripción, redirección y plantilla) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -95,7 +97,7 @@ La página del curso tiene dos estados:
 
 **Dos puertas de entrada.** La lista `/cursos/` (al hacer clic en un curso se despliega su formulario y, al ingresar, la persona pasa a la página del curso con sus módulos ya abiertos) y el recuadro «Ingresar a los módulos» de la página de cada curso.
 
-**Dónde va la URL del Apps Script.** En `assets/aula-cursos.js`, campo `endpoint` del curso. Lo usan la lista y la página del curso. Mientras diga `URL_ACCESO_APPS_SCRIPT`, el botón «Ingresar» responde que el acceso se habilitará pronto.
+**Dónde va la URL del Apps Script.** En `assets/aula-cursos.js`, `URL_APPS_SCRIPT_AULA`. Es **la misma aplicación web** que la ficha de inscripción (un solo `doPost`): el acceso envía `accion: "acceso"` y el Apps Script lo atiende en la función `accesoAula_(datos)`. Mientras el curso tenga `acceso: false` en `assets/aula-cursos.js` (o la URL no empiece con `https://`), el botón «Ingresar» responde que el acceso se habilitará pronto.
 
 **Sesión.** Al ingresar, la página guarda un `token` (válido 6 horas en el Apps Script) en `sessionStorage`, para no volver a pedir el dato al recargar. Se borra con «Salir» o al cerrar la pestaña. Si el navegador bloquea el almacenamiento, el aula funciona igual: desde la lista, el token pasa a la página del curso en el fragmento `#sesion=…` (que no se envía a ningún servidor y la página borra de la barra de direcciones), y al recargar se vuelve a pedir el dato.
 
@@ -103,12 +105,21 @@ La página del curso tiene dos estados:
 
 | Envía la página | Responde el Apps Script |
 |---|---|
-| `{ "identificador": "12345678-9" }` o `{ "identificador": "correo@…" }` | Inscrito: `{ "ok": true, "nombre", "token", "institucion"?, "partida": { "completado", "test"? }, "inicio"?: { "puntaje", "maximo" }, "modulos": [ { "n", "titulo", "horas", "estado", "pdf"?, "presentacion"?, "test"?, "puntaje"?, "maximo"?, "nota"? } ], "jornada": { "fecha", "horario", "lugar", "requisito"?, "pdf"? }, "programa"? }` |
-| `{ "identificador": "", "token": "…" }` (al recargar) | Lo mismo, o `{ "ok": false, "motivo": "sesion_vencida" }` |
+| `{ "accion": "acceso", "identificador": "12345678-9" }` o `{ "accion": "acceso", "identificador": "correo@…" }` | Inscrito: `{ "ok": true, "nombre", "token", "institucion"?, "partida": { "completado", "test"? }, "inicio"?: { "puntaje", "maximo" }, "modulos": [ { "n", "titulo", "horas", "estado", "pdf"?, "presentacion"?, "test"?, "puntaje"?, "maximo"?, "nota"? } ], "jornada": { "fecha", "horario", "lugar", "requisito"?, "pdf"? }, "programa"? }` |
+| `{ "accion": "acceso", "identificador": "", "token": "…" }` (al recargar) | Lo mismo, o `{ "ok": false, "motivo": "sesion_vencida" }` |
 | En modo `RUT_Y_CORREO`: `{ "identificador": RUT, "correo": … }` | Si falta uno: `{ "ok": false, "motivo": "faltan_datos" }` (la página muestra el segundo campo) |
 | — | No inscrito: `{ "ok": false, "motivo": "no_inscrito" }` · Demasiados intentos: `{ "ok": false, "motivo": "espera" }` |
 
 `estado` es `completado`, `disponible` o `bloqueado`; `pdf` y `presentacion` solo llegan cuando no está bloqueado, y `test` solo cuando está `disponible` (cada cuestionario tiene un solo intento). Un módulo `completado` trae `puntaje`, `maximo` y `nota` (primer envío del RUT, escala 1,0 a 7,0, exigencia 60 %): la tarjeta muestra «Nota 5,1 · 12 de 16 puntos» y «Cuestionario respondido · un solo intento», y la barra de avance muestra el promedio de la etapa en línea con las notas disponibles. `inicio` es el puntaje del test de partida, que no lleva nota. `presentacion` es opcional: si llega, el módulo muestra «Ver la presentación» y la abre dentro de la página (el visor se carga recién al abrirla); si no, el primer paso es descargar el PDF. La página solo acepta enlaces `https://` y escribe los textos como texto (nunca como HTML). Si `fecha`, `horario` o `lugar` llegan como `[PENDIENTE…]`, muestra «Fecha por confirmar» o «Por confirmar».
+
+## 5b. Ficha de inscripción (`/inscripcion/`)
+
+Página propia de inscripción, con el mismo patrón que la ventana «Solicitud de capacitación»: recoge los datos y los envía con `fetch` (`Content-Type: text/plain;charset=utf-8`) a la aplicación web `URL_APPS_SCRIPT_AULA` (`inscripcion_aula_IRT.gs`, proyecto «Aula IRT»). El Apps Script valida, guarda la ficha en «Inscripciones», marca la «Nómina», avisa a academia@ si alguien está fuera de la nómina y envía el correo de bienvenida. **La página no guarda datos personales** (ni en el repositorio ni en el navegador).
+
+- **Datos del curso:** `GET URL?accion=curso` → `{ ok, abierta, curso, cursoCorto, horas, institucion, unidadTitulo, unidades[], plazo, remitente, consentimiento }`. Todo el texto variable sale de ahí, así que la misma página sirve para otro curso o institución sin tocar el repositorio. Si `abierta` es `false`, la página dice que las inscripciones están cerradas; si `plazo` viene vacío, no se muestra.
+- **Envío:** `POST { accion: "inscripcion", nombres, apellidos, rut, cargo, unidad, correo, telefono, consentimiento, website, origen }`. `rut` va normalizado (`12345678-9`, K mayúscula) y con el dígito verificador revisado; `correo` en minúsculas; `unidad` es la opción elegida o el texto de «Otro»; `website` es el campo trampa (debe llegar vacío).
+- **Respuestas:** `{ ok:true, nombre }` (confirmación), `{ ok:true, yaInscrito:true, nombre }`, `{ ok:false, motivo:"validacion", errores:{ campo: "mensaje" } }` (cada mensaje junto a su campo), `"cerrada"`, `"espera"`; cualquier otra respuesta o un fallo de red muestra «No pudimos enviar su ficha…» y conserva lo escrito.
+- **Enlace de invitación con datos ya escritos:** `https://cursos.institutoriesgoterritorial.cl/inscripcion/#n=Ana&a=P%C3%A9rez&c=ana%40x.cl&r=12345678-9&u=CESFAM%20…` (`n` nombres, `a` apellidos, `c` correo, `r` RUT, `u` unidad, solo si coincide con una opción). La página completa los campos y borra el fragmento de la barra de direcciones. El fragmento (`#`) no se envía a ningún servidor. Esa dirección va en `URL_FICHA_AULA` del Apps Script.
 
 ## 6. Solicitudes de capacitación y dirección del sitio institucional
 
@@ -157,7 +168,8 @@ Reglas: proporción aproximada 60-30-10 (fondos claros · petróleo y tinta · o
 
 Nada de esta lista aparece en la portada; se completa aquí hasta confirmarlo.
 
-- **Acceso de participantes:** publicar `acceso_aula_IRT.gs` y pegar su URL `/exec` en `endpoint` de `assets/aula-cursos.js` (hoy dice `URL_ACCESO_APPS_SCRIPT`). Hacer una prueba con un RUT real inscrito, desde la lista `/cursos/`.
+- **Ficha de inscripción:** la URL `/exec` ya está en `URL_APPS_SCRIPT_AULA`. Probar una inscripción real con un correo propio y poner `https://cursos.institutoriesgoterritorial.cl/inscripcion/` en `URL_FICHA_AULA` del Apps Script.
+- **Acceso de participantes:** agregar `accesoAula_(datos)` al `doPost` de la misma aplicación web (para `accion: "acceso"`), publicar una nueva versión, cambiar `acceso: false` a `true` en `assets/aula-cursos.js` y hacer una prueba con un RUT real inscrito, desde la lista `/cursos/`.
 - **Correos automáticos:** cambiar `URL_AULA` a `https://cursos.institutoriesgoterritorial.cl/cursos/entrevista-motivacional/` y agregar la línea de acceso con RUT o correo.
 - **Materiales del Módulo 1:** subir a Drive la presentación «Multimorbilidad y ECICEP» (como Presentaciones de Google) y el PDF «Módulo 1 · ECICEP y multimorbilidad», y anotar sus enlaces en la hoja «Índice de la biblioteca» (sección 2). Faltan los materiales de los módulos 2 a 5.
 - **Jornada presencial:** fecha y lugar por confirmar; se cargan en la constante `AULA` del Apps Script (la página muestra «Fecha por confirmar» mientras tanto).

@@ -23,7 +23,7 @@
 
   /* ---------- Utilidades ---------- */
   function endpoint(curso) { return (CURSOS[curso] && CURSOS[curso].endpoint) || ''; }
-  function configurado(curso) { return /^https:\/\//i.test(endpoint(curso)); }
+  function configurado(curso) { return !!(CURSOS[curso] && CURSOS[curso].acceso !== false) && /^https:\/\//i.test(endpoint(curso)); }
   function seguro(url) { return typeof url === 'string' && /^https:\/\//i.test(url) ? url : null; }
   function porConfirmar(v, texto) {
     return (typeof v === 'string' && v.trim() && !/PENDIENTE/i.test(v)) ? v.trim() : texto;
@@ -65,7 +65,8 @@
     return fetch(endpoint(curso), {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(datos)
+      // Misma aplicación web que la inscripción: «accion» indica qué hacer
+      body: JSON.stringify(Object.assign({ accion: 'acceso' }, datos))
     }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
