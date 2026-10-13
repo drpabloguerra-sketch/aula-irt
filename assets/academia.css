@@ -479,6 +479,13 @@ html.con-ventana{overflow:hidden}
 .aula__curso{margin:0;font-size:17px;color:var(--texto-suave)}
 .aula__jornada{margin-top:36px}
 .aula__ayuda{margin:28px 0 0;font-size:17px;color:var(--texto-suave)}
+.aula__otros{margin:28px 0 0;font-size:17px;color:var(--texto)}
+.aula__otros b{color:var(--tinta)}
+.aula__otros a{font-weight:700}
+.partida .bloqueo{margin-top:4px!important}
+.modulo--pronto{box-shadow:none}
+.modulo--pronto .num{background:var(--pendiente-fondo);border-right-color:var(--linea)}
+.modulo--pronto .num small,.modulo--pronto .num b{color:var(--pendiente-texto)}
 
 .progreso{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);padding:20px 22px;margin-bottom:24px;box-shadow:var(--sombra)}
 .progreso__texto{margin:0 0 10px;font-weight:700;color:var(--tinta)}
