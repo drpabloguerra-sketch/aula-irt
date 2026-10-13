@@ -12,7 +12,7 @@
 (function () {
   var CURSOS = window.CURSOS_AULA || {};
   var CORREO = 'academia@institutoriesgoterritorial.cl';
-  var ICONOS = '/assets/iconos.svg?v=20261014';
+  var ICONOS = '/assets/iconos.svg?v=20261019';
   var $ = function (id) { return document.getElementById(id); };
 
   /* ---------- Sesión (sessionStorage puede fallar: modo privado, bloqueos) ---------- */
@@ -218,9 +218,12 @@
     cargando.hidden = false;
   }
 
-  // Descripción de cada módulo: se toma de la tabla pública de la página
+  // Descripción de cada módulo
   function descripcion(n) {
-    var d = document.querySelector('tr[data-modulo="' + n + '"] .tabla-modulos__desc');
+    // Descripciones privadas del curso (<template id="aula-descripciones">) o, en páginas antiguas, la tabla pública
+    var t = document.getElementById('aula-descripciones');
+    var d = t && t.content ? t.content.querySelector('[data-modulo="' + n + '"]') : null;
+    d = d || document.querySelector('tr[data-modulo="' + n + '"] .tabla-modulos__desc');
     return d ? d.textContent : '';
   }
   function horas(h) { return h + (Number(h) === 1 ? ' hora' : ' horas'); }
