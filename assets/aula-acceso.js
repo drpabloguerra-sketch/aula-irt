@@ -12,7 +12,7 @@
 (function () {
   var CURSOS = window.CURSOS_AULA || {};
   var CORREO = 'academia@institutoriesgoterritorial.cl';
-  var ICONOS = '/assets/iconos.svg?v=20261019';
+  var ICONOS = '/assets/iconos.svg?v=20261021';
   var $ = function (id) { return document.getElementById(id); };
 
   /* ---------- Sesión (sessionStorage puede fallar: modo privado, bloqueos) ---------- */
@@ -202,6 +202,7 @@
   var vistaPublica = document.querySelectorAll('[data-vista="publica"]');
   var cargando = $('aula-cargando');
   var CURSO = formCurso.getAttribute('data-curso');
+  var sesion = { token: null, codigo: null };      // token y código del curso, para los tests
   var accesoCurso = Acceso(formCurso, function (r) {
     if (r.token) guardarToken(CURSO, r.token);
     mostrarAula(r);
@@ -385,6 +386,107 @@
     return caja;
   }
 
+  /* ---------- Tests dentro del aula (assets/aula-tests.js) ---------- */
+  var numerosModulo = [];   // números de módulo, en orden, para «Continuar con el Módulo N+1»
+  function siguienteDe(n) {
+    if (n === 0) return numerosModulo[0] || null;
+    var i = numerosModulo.indexOf(n);
+    return i >= 0 && i < numerosModulo.length - 1 ? numerosModulo[i + 1] : null;
+  }
+  function abrirTest(item, origen) {
+    if (!window.AulaTests) return;
+    window.AulaTests.abrir({
+      pedir: function (datos) { return pedir(CURSO, datos); },
+      token: sesion.token, curso: sesion.codigo || CURSO, modulo: item.n,
+      titulo: item.n === 0 ? 'Test de inicio' : item.n === 'final' ? 'Evaluación final' : 'Módulo ' + item.n + ' · ' + (item.titulo || ''),
+      siguiente: siguienteDe(item.n), origen: origen,
+      alCerrar: function (enviado) { if (enviado) refrescar(); },
+      alContinuar: function (n, enviado) { refrescar(n, enviado); },
+      alPerderSesion: function () { salir('sesion_vencida'); }
+    });
+  }
+  function botonTest(item, texto, clase) {
+    var b = el('button', 'btn ' + clase + ' btn--test', texto);
+    b.type = 'button';
+    b.setAttribute('aria-haspopup', 'dialog');
+    b.addEventListener('click', function () { abrirTest(item, b); });
+    return b;
+  }
+  // Vuelve a pedir los módulos (lectura fresca) y, si se indica, lleva a la tarjeta de un módulo
+  function refrescar(n, fresco) {
+    var ir = function () {
+      var t = n != null && $('modulo-' + n);
+      if (t) { t.scrollIntoView({ block: 'start' }); var h = t.querySelector('h3'); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); } }
+    };
+    if (fresco === false || !sesion.token) { ir(); return; }
+    pedir(CURSO, { identificador: '', token: sesion.token, fresco: true }).then(function (r) {
+      if (r && r.ok) { if (r.token) { sesion.token = r.token; guardarToken(CURSO, r.token); } mostrarAula(r, true); }
+      ir();
+    }).catch(ir);
+  }
+
+  // Tarjeta del test de inicio, antes del Módulo 1
+  function tarjetaInicio(t) {
+    var estado = t.testRespondido ? 'completado' : t.test ? 'disponible' : 'pronto';
+    var art = el('article', 'modulo modulo--evaluacion modulo--' + estado);
+    art.id = 'modulo-0';
+    var num = el('div', 'num');
+    num.appendChild(icono('i-test', 'ico--g'));
+    num.appendChild(el('small', null, 'Inicio'));
+    art.appendChild(num);
+    var cuerpo = el('div', 'cuerpo');
+    cuerpo.appendChild(insigniaEstado(estado));
+    cuerpo.appendChild(el('h3', null, 'Test de inicio'));
+    cuerpo.appendChild(el('p', null, 'Mide sus conocimientos al comenzar. No tiene nota.'));
+    var acc = el('div', 'btns');
+    if (estado === 'disponible') acc.appendChild(botonTest(t, 'Responder el test de inicio', 'btn--primario'));
+    else if (estado === 'completado') acc.appendChild(botonTest(t, 'Ver mi resultado', 'btn--secundario btn--chico'));
+    else acc.appendChild(textoBloqueo('i-reloj', 'El test de inicio estará disponible pronto.'));
+    cuerpo.appendChild(acc);
+    art.appendChild(cuerpo);
+    return art;
+  }
+
+  // Tarjeta de la evaluación final, al final de la lista
+  function tarjetaFinal(f) {
+    var estado = f.testRespondido ? 'completado' : (f.disponible && f.test) ? 'disponible' : 'bloqueado';
+    var art = el('article', 'modulo modulo--evaluacion modulo--' + estado);
+    art.id = 'modulo-final';
+    var num = el('div', 'num');
+    num.appendChild(icono('i-evaluacion', 'ico--g'));
+    num.appendChild(el('small', null, 'Final'));
+    art.appendChild(num);
+    var cuerpo = el('div', 'cuerpo');
+    cuerpo.appendChild(insigniaEstado(estado));
+    cuerpo.appendChild(el('h3', null, 'Evaluación final'));
+    cuerpo.appendChild(el('p', null, 'Se responde durante la jornada presencial, al cierre del curso.'));
+    if (estado === 'disponible') cuerpo.appendChild(botonTest(f, 'Responder la evaluación final', 'btn--primario'));
+    else if (estado === 'completado') cuerpo.appendChild(botonTest(f, 'Ver mi resultado', 'btn--secundario btn--chico'));
+    else cuerpo.appendChild(textoBloqueo('i-candado', 'Se habilita durante la jornada presencial.'));
+    art.appendChild(cuerpo);
+    return art;
+  }
+  function insigniaEstado(estado) {
+    var meta = el('div', 'modulo__estado');
+    if (estado === 'completado') {
+      var ins = el('span', 'insignia-completado');
+      ins.appendChild(icono('i-completado'));
+      ins.appendChild(document.createTextNode('Respondido'));
+      meta.appendChild(ins);
+    } else if (estado === 'disponible') {
+      meta.appendChild(el('span', 'etiqueta etiqueta--realizado', 'Disponible'));
+    } else {
+      meta.appendChild(el('span', 'etiqueta etiqueta--propuesta', estado === 'pronto' ? 'Pronto' : 'Bloqueado'));
+    }
+    return meta;
+  }
+  function textoBloqueo(ico, texto) {
+    var p = el('p', 'bloqueo');
+    p.appendChild(icono(ico));
+    p.appendChild(document.createTextNode(texto));
+    return p;
+  }
+
   function tarjetaModulo(m, partidaPendiente) {
     var estado = ['completado', 'disponible', 'pronto'].indexOf(m.estado) >= 0 ? m.estado : 'bloqueado';
     var art = el('article', 'modulo modulo--' + estado);
@@ -415,14 +517,15 @@
     var desc = descripcion(m.n);
     if (desc) cuerpo.appendChild(el('p', null, desc));
 
-    var test = seguro(m.test), pres = presentacionSegura(m.presentacion);
+    var pres = presentacionSegura(m.presentacion);
+    var conTest = !!m.test && !m.testRespondido;   // test cargado (true) y sin responder
     if (estado === 'disponible') {
       // Pasos del módulo, en orden: presentación → PDF para estudio → test
       var pasos = el('ol', 'pasos-modulo');
       if (pres) pasos.appendChild(pasoModulo('Vea la presentación', botonPresentacion(pres, m)));
       var descarga = descargaModulo(m);
       if (descarga) pasos.appendChild(pasoModulo('Descargue el módulo para estudiarlo', descarga));
-      if (test) pasos.appendChild(pasoModulo('Responda el test', botonExterno(test, 'Responder el test', 'btn--secundario btn--test')));
+      if (conTest) pasos.appendChild(pasoModulo('Responda el test', botonTest(m, 'Responder el test', 'btn--secundario')));
       cuerpo.appendChild(pasos);
     } else if (estado === 'completado') {
       // Nota destacada; sin botón de test: cada cuestionario tiene un solo intento
@@ -443,6 +546,7 @@
       if (pres) c.appendChild(botonPresentacion(pres, m, true));
       var descargaC = descargaModulo(m, true);
       if (descargaC) c.appendChild(descargaC);
+      if (m.test || m.testRespondido) c.appendChild(botonTest(m, 'Ver mi resultado', 'btn--secundario btn--chico'));
       if (c.children.length) cuerpo.appendChild(c);
     } else if (estado === 'pronto') {
       var pronto = el('p', 'bloqueo');
@@ -454,7 +558,7 @@
       bloqueo.appendChild(icono('i-candado'));
       bloqueo.appendChild(document.createTextNode(
         m.n === 1 && partidaPendiente
-          ? 'Se libera al responder el test de partida.'
+          ? 'Se libera al responder el test de inicio.'
           : 'Se libera al responder el test del módulo anterior.'));
       cuerpo.appendChild(bloqueo);
     }
@@ -462,12 +566,20 @@
     return art;
   }
 
-  function mostrarAula(d) {
-    var modulos = Array.isArray(d.modulos) ? d.modulos : [];
+  function mostrarAula(d, mantener) {
+    var items = Array.isArray(d.modulos) ? d.modulos : [];
+    var modulos = items.filter(function (m) { return typeof m.n === 'number' && m.n > 0; });
+    var partida = d.partida || {};
+    // Test de inicio (n: 0) y evaluación final (n: "final"); con un Apps Script anterior, el inicio sale de «partida»
+    var tInicio = items.filter(function (m) { return m.n === 0; })[0] ||
+      (d.partida ? { n: 0, test: !partida.pronto, testRespondido: partida.completado === true } : null);
+    var tFinal = items.filter(function (m) { return m.n === 'final'; })[0] || null;
     var total = modulos.length || 5;
     var hechos = modulos.filter(function (m) { return m.estado === 'completado'; }).length;
-    var partida = d.partida || {};
-    var partidaPendiente = partida.completado === false;
+    var partidaPendiente = tInicio ? !tInicio.testRespondido : partida.completado === false;
+    sesion.token = d.token || sesion.token;
+    sesion.codigo = (d.curso && d.curso.codigo) || sesion.codigo;
+    numerosModulo = modulos.map(function (m) { return m.n; });
 
     // Saludo e institución (la institución solo aparece aquí, si el endpoint la envía)
     $('aula-saludo').textContent = d.nombre ? 'Hola, ' + d.nombre : 'Hola';
@@ -498,7 +610,7 @@
     // Test de partida respondido: puntaje, sin nota
     var inicio = d.inicio || {};
     var ptsInicio = puntos(inicio.puntaje, inicio.maximo);
-    $('aula-inicio').textContent = ptsInicio ? 'Test de partida: ' + ptsInicio + ' (diagnóstico, sin nota).' : '';
+    $('aula-inicio').textContent = ptsInicio ? 'Test de inicio: ' + ptsInicio + ' (diagnóstico, sin nota).' : '';
     $('aula-inicio').hidden = !ptsInicio;
 
     // Qué sigue
@@ -507,7 +619,7 @@
     var prox = modulos.filter(function (m) { return m.estado === 'disponible'; })[0];
     if (partidaPendiente) {
       siguiente.appendChild(el('b', null, 'Siguiente paso: '));
-      siguiente.appendChild(document.createTextNode('responder el test de partida.'));
+      siguiente.appendChild(document.createTextNode('responder el test de inicio.'));
     } else if (prox) {
       siguiente.appendChild(el('b', null, 'Siguiente paso: '));
       siguiente.appendChild(document.createTextNode('Módulo ' + prox.n + ' · ' + (prox.titulo || '') + ' · ' + horas(prox.horas) + '.'));
@@ -516,19 +628,15 @@
       siguiente.appendChild(document.createTextNode('Lo esperamos en la jornada presencial.'));
     }
 
-    // Test de partida: único paso disponible mientras no se responda
-    var cajaPartida = $('aula-partida');
-    var urlPartida = seguro(partida.test);
-    cajaPartida.hidden = !partidaPendiente;
-    $('aula-partida-test').hidden = !urlPartida;
-    if (urlPartida) $('aula-partida-test').href = urlPartida;
-    var partidaPronto = $('aula-partida-pronto');
-    if (partidaPronto) partidaPronto.hidden = !!urlPartida;
+    // Recuadro antiguo del test de partida (páginas anteriores): ahora es la tarjeta «Test de inicio»
+    if ($('aula-partida')) $('aula-partida').hidden = true;
 
-    // Módulos
+    // Test de inicio → módulos → evaluación final
     var lista = $('aula-modulos');
     lista.textContent = '';
+    if (tInicio) lista.appendChild(tarjetaInicio(tInicio));
     modulos.forEach(function (m) { lista.appendChild(tarjetaModulo(m, partidaPendiente)); });
+    if (tFinal) lista.appendChild(tarjetaFinal(tFinal));
 
     // Jornada presencial
     var j = d.jornada || {};
@@ -573,6 +681,7 @@
     vistaPublica.forEach(function (n) { n.hidden = true; });
     cargando.hidden = true;
     aula.hidden = false;
+    if (mantener) return;                      // al refrescar después de un test, sin mover la página
     window.scrollTo({ top: 0, behavior: 'instant' });
     $('aula-saludo').focus({ preventScroll: true });
   }
@@ -585,14 +694,16 @@
   });
 
   /* ---------- Salir ---------- */
-  $('aula-salir').addEventListener('click', function () {
+  function salir(motivo) {
     borrarToken(CURSO);
+    sesion.token = null;
     $('aula-modulos').textContent = '';
     mostrarPublica();
-    accesoCurso.avisar('salio');
+    accesoCurso.avisar(motivo || 'salio');
     $('ingresar').scrollIntoView();
     accesoCurso.campo.focus({ preventScroll: true });
-  });
+  }
+  $('aula-salir').addEventListener('click', function () { salir('salio'); });
 
   /* ---------- Al cargar: sesión abierta desde la lista o guardada antes ---------- */
   var token = null;

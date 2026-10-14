@@ -10,7 +10,7 @@
     <!-- Acceso. La URL del Apps Script de este curso se define en assets/aula-cursos.js,
          con la misma clave que data-curso (README, sección 5). -->
     <form class="acceso" id="acceso-form" data-curso="{{SLUG}}" novalidate>
-      <div class="acceso__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261019#i-candado"/></svg></div>
+      <div class="acceso__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-candado"/></svg></div>
       <h2 id="titulo-ingresar">Ingresar a los módulos</h2>
       <p class="acceso__bajada">Solo para participantes inscritos.</p>
       <div class="campo">
@@ -44,7 +44,7 @@
         <h2 id="aula-saludo" tabindex="-1">Hola</h2>
         <p class="aula__curso">{{TITULO}}<span id="aula-institucion"></span></p>
       </div>
-      <button type="button" class="btn btn--secundario btn--chico" id="aula-salir"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261019#i-salir"/></svg>Salir</button>
+      <button type="button" class="btn btn--secundario btn--chico" id="aula-salir"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-salir"/></svg>Salir</button>
     </div>
 
     <div class="progreso">
@@ -55,15 +55,6 @@
       <p class="progreso__siguiente" id="aula-siguiente"></p>
     </div>
 
-    <article class="partida" id="aula-partida" hidden>
-      <div class="tarjeta__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261019#i-test"/></svg></div>
-      <div>
-        <h3>Primer paso: test de partida</h3>
-        <p>Diagnóstico breve y sin nota. Al responderlo se libera el Módulo 1.</p>
-        <div class="btns"><a class="btn btn--primario btn--test" id="aula-partida-test" target="_blank" rel="noopener">Responder el test de partida<span class="visual-oculto"> (se abre en una pestaña nueva)</span></a></div>
-        <p class="bloqueo" id="aula-partida-pronto" hidden><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261019#i-reloj"/></svg>El test de partida estará disponible pronto. Le avisaremos por correo.</p>
-      </div>
-    </article>
 
     <div class="modulos" id="aula-modulos"></div>
 

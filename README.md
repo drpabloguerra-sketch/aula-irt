@@ -25,6 +25,7 @@ El aula es un conjunto de páginas web estáticas. No tiene servidor propio ni b
 | `inscripcion/index.html` | Página mínima de inscripción (`noindex, nofollow`): explica cómo inscribirse y, con `#inscripcion=TOKEN`, abre la ventana de inscripción (sección 5b). |
 | `assets/inscripcion.js` | **Ventana flotante de inscripción**, reutilizable en cualquier página del aula: se abre con `#inscripcion=TOKEN` o con un botón `data-inscripcion="CODIGO"`, valida (incluido el dígito verificador del RUT) y envía la ficha (sección 5b). |
 | `assets/aula-cursos.js` | **Único lugar** donde está la URL de la aplicación web de Apps Script «Aula IRT» (`URL_APPS_SCRIPT_AULA`) y, para cada curso, su página (secciones 5 y 5b). |
+| `assets/aula-tests.js` | **Tests dentro del aula**: ventana flotante con una pregunta por pantalla para el test de inicio, los cuestionarios de cada módulo y la evaluación final (sección 5c). |
 | `assets/aula-acceso.js` | Script del acceso de participantes: formularios de ingreso de la lista y de cada curso, y módulos de la persona (sección 5). |
 | `assets/iconos.svg` | Iconografía lineal propia (módulos, duración, modalidad, certificado, progreso, candado, completado…). |
 | `assets/sello.svg` | Sello circular «IRT» de la Academia (también es el ícono de la pestaña). |
@@ -97,7 +98,7 @@ El script (solo necesita Node.js, sin instalar nada) revisa los datos, escribe e
 
 Las secciones de la página de cada curso tienen anclas: `#informacion`, `#certificado`, `#preguntas`, `#pregunta-N` (abre esa pregunta) e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261020`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261021`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -122,7 +123,7 @@ La página del curso tiene dos estados:
 
 | Envía la página | Responde el Apps Script |
 |---|---|
-| `{ "accion": "acceso", "pagina": "/cursos/…/", "identificador": "12345678-9" \| "correo@…" }` | Inscrito: `{ ok:true, nombre, token, institucion, curso:{ nombre, pagina }, partida:{ completado, test?, pronto? }, inicio?:{ puntaje, maximo }, modulos:[ { n, titulo, horas, estado, pdf?, test?, puntaje?, maximo?, nota? } ], jornada:{ fecha, horario, lugar }, cursos:[ { nombre, pagina, actual } ] }` |
+| `{ "accion": "acceso", "pagina": "/cursos/…/", "identificador": "12345678-9" \| "correo@…" }` | Inscrito: `{ ok:true, nombre, token, institucion, curso:{ nombre, pagina, codigo }, partida:{ completado, pronto? }, inicio?:{ puntaje, maximo }, modulos:[ { n: 0, titulo, test, testRespondido, estado }, { n, titulo, horas, estado, pdf?, pdfDescarga?, presentacion?, test, testRespondido, puntaje?, maximo?, nota? }…, { n: "final", titulo, test, testRespondido, disponible, estado } ], jornada:{ fecha, horario, lugar }, cursos:[ { nombre, pagina, actual } ] }` |
 | `{ "accion": "acceso", "pagina", "identificador": "", "token": "…" }` (al recargar) | Lo mismo, o `{ ok:false, motivo:"sesion_vencida" }` |
 | En modo `RUT_Y_CORREO`: `{ …, "identificador": RUT, "correo": … }` | Si falta uno: `{ ok:false, motivo:"faltan_datos" }` (la página muestra el segundo campo) |
 | — | No inscrito: `{ ok:false, motivo:"no_inscrito" }` (igual para RUT o correo) · Inscrita/o en otro curso: `{ ok:false, motivo:"otro_curso", cursos:[…] }` (la página enlaza su curso) · Demasiados intentos: `{ ok:false, motivo:"espera" }` · Acceso aún no instalado en el Apps Script: `{ ok:false, motivo:"accion" }` (la página dice que se habilitará pronto) |
@@ -152,6 +153,17 @@ Envía los datos a la aplicación web `URL_APPS_SCRIPT_AULA` (`inscripcion_acade
 - **Lugar de trabajo:** si `unidades` trae opciones, opciones más «Otro» con texto; si viene vacía, texto libre con el título `unidadTitulo`.
 - **Envío:** `rut` normalizado (`12345678-9`, K mayúscula) y con el dígito verificador revisado; `correo` en minúsculas; `website` es el campo trampa (debe llegar vacío). Con invitación se envía `token`; desde un botón, `curso`.
 - **Respuestas:** confirmación con «Ir al curso» (hacia `pagina`); errores de validación junto a cada campo; un fallo de red o una respuesta desconocida muestran «No pudimos enviar su ficha…» y conservan lo escrito.
+
+## 5c. Tests dentro del aula
+
+El test de inicio, el cuestionario de cada módulo y la evaluación final se responden **dentro del aula**, en una ventana flotante (`assets/aula-tests.js`), sin abrir Google Forms. El formulario de Google de cada test queda solo como almacén interno: `tests_aula_IRT.gs` (proyecto «Aula IRT») entrega las preguntas, recibe las respuestas, las guarda en ese formulario, corrige y devuelve el resultado. **Las respuestas correctas nunca llegan al navegador antes de enviar.**
+
+- **Contrato** (misma URL `/exec`, `text/plain`): `POST { accion: "test", paso: "abrir", token, curso, modulo }` → `{ ok, tipo, modulo, titulo, instrucciones, total, preguntas: [ { n, texto, opciones } ] }` o `{ ok, yaRespondido: true, resultado }`. `POST { accion: "test", paso: "enviar", token, curso, modulo, respuestas: [índices desde 0] }` → `{ ok, resultado }`. `curso` es el código de la hoja «Cursos» (lo entrega el acceso en `curso.codigo`); `modulo` es `0`, `1…N` o `"final"`.
+- **Resultado:** test de inicio y evaluación final, `{ tipo, recibido: true }` (sin puntaje). Módulo: `{ tipo: "modulo", modulo, puntaje, maximo, nota, aprobado, revision: [ { n, texto, opciones, elegida, correcta, explicacion } ] }`.
+- **Errores** (`motivo`): `sesion` (pide ingresar de nuevo), `no_inscrito`, `bloqueado`, `pronto`, `final_cerrada`, `incompleto` (marca la pregunta indicada en `pregunta` o `preguntas`), `error` o fallo de red (las respuestas se conservan para volver a enviar).
+- **Avance:** las respuestas en curso (solo índices, sin datos personales) se guardan en `sessionStorage` con la clave `aulaIRT.test.[curso].[módulo]` y se borran al enviar.
+- **Después de enviar,** la página vuelve a pedir los módulos con `fresco: true`, para que `accesoAula_` relea el formulario sin esperar la caché de un minuto: la nota aparece y el módulo siguiente se libera sin recargar.
+- **Evaluación final:** fila «final» en la hoja «Módulos». Se abre con la propiedad del script `FINAL_ABIERTA_[código del curso]` = `Sí`.
 
 ## 6. Solicitudes de capacitación y dirección del sitio institucional
 
