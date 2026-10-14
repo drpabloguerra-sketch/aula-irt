@@ -93,12 +93,17 @@ El script (solo necesita Node.js, sin instalar nada) revisa los datos, escribe e
 | `inscripcion` | `invitacion` (botón «¿Cómo me inscribo?», abre esa pregunta), `abierta` (botón «Inscribirme», abre la ventana de inscripción con `codigoInscripcion`) o `institucional` (botón «Solicitar este curso para mi institución», abre la ventana «Solicitud de capacitación» con `tituloCorto` preseleccionado; agregue ese texto como `<option>` en la ventana de `index.html`). |
 | `sobre` · `aprenderas` · `requisitos` · `faq` | Párrafos, resultados de aprendizaje, requisitos y preguntas frecuentes (`{ "p", "r" }`). Se muestran 5 preguntas y el resto con «Ver más preguntas». |
 | `aula` (opcional) | Solo para cursos con módulos en el aula: agrega el ingreso con RUT o correo y la vista privada (`jornadaHoras`, `jornadaTexto`, `requisito`, `totalModulos`, `descripciones` de cada módulo). Agregue también el curso en `assets/aula-cursos.js` con la misma clave que `slug`, y sus módulos en la hoja «Módulos» del Apps Script. |
+| `aula.bienvenida` (opcional) | Tarjeta de bienvenida de la sala, entre el saludo y el avance: `texto` (lista de párrafos), `firma`, `cargo` y `video` (YouTube o Drive con `/preview`; vacío, sin botón). La persona puede plegarla; la preferencia queda en su navegador, por curso. |
+| `aula.frases` (opcional) | Frase guía de cada módulo (`{ "1": "…" }`), bajo el título de su tarjeta. |
+| `aula.jornada.texto` (opcional) | Frase destacada de la jornada presencial en la sala. |
+
+Si alguno de estos campos opcionales no está, la sala no dibuja ese bloque. Sus textos solo se ven dentro de la sala, pero el script los revisa igual: sin precios, SENCE, OTEC ni `[PENDIENTE]`.
 
 **Reglas del contenido público:** sin cantidad de módulos (la estructura en módulos solo se ve dentro del aula), sin precios ni «gratuito», sin SENCE ni OTEC, sin nombrar a la entidad contratante, y sin `[PENDIENTE]`: si falta un dato, deje el campo vacío.
 
 Las secciones de la página de cada curso tienen anclas: `#informacion`, `#certificado`, `#preguntas`, `#pregunta-N` (abre esa pregunta) e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261021`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261022`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -111,7 +116,8 @@ La carpeta `donihue-2026-k7q3x9/` se mantiene porque hay correos enviados con es
 La página del curso tiene dos estados:
 
 - **A · Pública:** introducción, cómo funciona, tabla de módulos (sin enlaces) y el recuadro «Ingresar a los módulos».
-- **B · Privada:** al ingresar, la página muestra el saludo, el avance (módulos completados de 5), el siguiente paso, la tarjeta de cada módulo (completado, disponible o bloqueado) y la jornada presencial. Todo se construye con la respuesta del Apps Script; nada de eso está escrito en el HTML.
+- **B · Privada:** al ingresar, la página muestra el saludo, la bienvenida del director, el avance (módulos completados de 5, con una línea de estado), el siguiente paso, la tarjeta de cada módulo (completado, disponible o bloqueado, con su frase guía) y la jornada presencial. El avance, las notas y los materiales se construyen con la respuesta del Apps Script; la bienvenida y las frases salen de `assets/cursos.json`.
+- **Reconocimiento:** cuando un módulo pasa a completado con nota 4,0 o más (al cerrar el resultado del test, o al volver a la página si el test se respondió en Google Forms), aparece un aviso breve bajo la cabecera, sin sonido; se va solo a los 6 segundos o con ✕. Con nota bajo 4,0 no aparece. Un módulo cuenta como completado con `estado: "completado"` o `testRespondido: true`.
 
 **Dos puertas de entrada.** La lista `/cursos/` (al hacer clic en un curso se despliega su formulario y, al ingresar, la persona pasa a la página del curso con sus módulos ya abiertos) y el recuadro «Ingresar a los módulos» de la página de cada curso.
 

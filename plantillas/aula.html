@@ -36,6 +36,9 @@
 <template id="aula-descripciones">{{DESCRIPCIONES}}</template>
 <div class="aula-cargando" id="aula-cargando" role="status" aria-live="polite" hidden><span class="cargador" aria-hidden="true"></span>Cargando sus módulos…</div>
 
+<!-- Reconocimiento al completar un módulo (lo muestra aula-acceso.js) -->
+<div class="aula-aviso" id="aula-aviso" role="status" aria-live="polite"></div>
+
 <section class="seccion aula" id="aula" aria-labelledby="aula-saludo" hidden>
   <div class="wrap">
     <div class="aula__cabeza">
@@ -47,9 +50,12 @@
       <button type="button" class="btn btn--secundario btn--chico" id="aula-salir"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-salir"/></svg>Salir</button>
     </div>
 
+    {{BIENVENIDA}}
+
     <div class="progreso">
       <p class="progreso__texto" id="aula-progreso-texto">0 de {{TOTAL}} módulos completados</p>
       <div class="progreso__barra" id="aula-progreso" role="progressbar" aria-labelledby="aula-progreso-texto" aria-valuemin="0" aria-valuemax="{{TOTAL}}" aria-valuenow="0"><span id="aula-progreso-relleno"></span></div>
+      <p class="progreso__estado" id="aula-estado"></p>
       <p class="progreso__promedio" id="aula-promedio" hidden></p>
       <p class="progreso__inicio" id="aula-inicio" hidden></p>
       <p class="progreso__siguiente" id="aula-siguiente"></p>
@@ -61,7 +67,8 @@
     <div class="jornada aula__jornada" id="jornada">
       <div>
         <span class="antetitulo">{{JORNADA_HORAS}}</span>
-        <h2>Jornada presencial</h2>
+        <h2 class="jornada__titulo"><span class="jornada__ico"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-presencial"/></svg></span>Jornada presencial</h2>
+        {{JORNADA_JUNTOS}}
         <p>{{JORNADA_TEXTO}}</p>
         <div class="btns" id="aula-jornada-pdf" hidden></div>
       </div>

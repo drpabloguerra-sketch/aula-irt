@@ -1,5 +1,5 @@
 {
-  "_instrucciones": "Catálogo de la Academia IRT. Cada curso es un bloque de «cursos». Después de editar, ejecute: node herramientas/construir-cursos.js (README, sección 3). Partes públicas: sin cantidad de módulos, sin precios, sin SENCE/OTEC, sin nombrar a la entidad contratante. Si falta un dato, deje el campo vacío: no se muestra.",
+  "_instrucciones": "Catálogo de la Academia IRT. Cada curso es un bloque de «cursos». Después de editar, ejecute: node herramientas/construir-cursos.js (README, sección 3). Partes públicas: sin cantidad de módulos, sin precios, sin SENCE/OTEC, sin nombrar a la entidad contratante. Si falta un dato, deje el campo vacío: no se muestra. En «aula», «bienvenida», «frases» y «jornada.texto» son opcionales: si no están, la sala no muestra ese bloque.",
   "cursos": [
     {
       "slug": "entrevista-motivacional",
@@ -49,6 +49,26 @@
         "jornadaTexto": "Talleres prácticos con los casos de los módulos: habilidades centrales, simulación de entrevista y consejería familiar. Al cierre se aplica la evaluación final del curso.",
         "requisito": "Haber completado los cinco módulos en línea",
         "totalModulos": 5,
+        "bienvenida": {
+          "texto": [
+            "Le damos la bienvenida a este curso. Lo diseñamos pensando en el trabajo real de los equipos de atención primaria: personas con varias condiciones crónicas, familias que cuidan y conversaciones breves en las que se juega buena parte del tratamiento.",
+            "Estudie a su ritmo. Cada módulo tiene una lectura para descargar, una presentación y un cuestionario corto. Lo que trabaje aquí lo pondremos en práctica juntos en la jornada presencial.",
+            "Si tiene dudas, escríbanos. Estamos para acompañarle."
+          ],
+          "firma": "Pablo Andrés Guerra Cisternas",
+          "cargo": "Director Ejecutivo · Instituto de Riesgo Territorial",
+          "video": ""
+        },
+        "jornada": {
+          "texto": "Lo que estudie aquí lo trabajaremos juntos: casos reales, práctica de entrevista en parejas y construcción de un plan consensuado."
+        },
+        "frases": {
+          "1": "La persona con varias enfermedades no es una suma de diagnósticos: es una vida que cuidamos en conjunto.",
+          "2": "No se trata de convencer, sino de evocar las razones propias de cambio de la persona.",
+          "3": "Lo que la persona dice sobre el cambio anticipa lo que hará: nuestra tarea es escucharlo y fortalecerlo.",
+          "4": "La familia no es solo el contexto del paciente: es parte del cuidado.",
+          "5": "Un plan acordado vale más que una indicación perfecta que nadie seguirá."
+        },
         "descripciones": {
           "1": "Multimorbilidad crónica y sus desafíos; atención centrada en la persona; rol de la familia y la persona cuidadora; decisiones compartidas y plan consensuado.",
           "2": "Qué es y qué no es; el reflejo de corregir; espíritu de la entrevista motivacional; procesos: vincular, enfocar, evocar y planificar.",
