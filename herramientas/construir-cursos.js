@@ -19,8 +19,8 @@ const path = require('path');
 
 const RAIZ = path.resolve(__dirname, '..');
 const SALIDA = path.resolve(process.argv[2] || RAIZ);
-const V = '20261020';                    // versión de academia.css y de los scripts propios
-const VI = '20261019';                   // versión de iconos.svg y sello.svg
+const V = '20261021';                    // versión de academia.css y de los scripts propios
+const VI = '20261021';                   // versión de iconos.svg y sello.svg
 const MIN_FILTRO = Number(process.env.MIN_FILTRO || 5);   // el filtro por área aparece con 5 cursos o más
 const TIPOS_INSCRIPCION = ['invitacion', 'abierta', 'institucional'];
 
@@ -333,7 +333,7 @@ ${ventanaSolicitud}
 <script src="/assets/aula-cursos.js?v=${V}"></script>
 <script src="/assets/inscripcion.js?v=${V}"></script>
 <script src="/assets/catalogo.js?v=${V}"></script>
-${conAula ? `<script src="/assets/aula-acceso.js?v=${V}"></script>\n` : ''}</body>
+${conAula ? `<script src="/assets/aula-tests.js?v=${V}"></script>\n<script src="/assets/aula-acceso.js?v=${V}"></script>\n` : ''}</body>
 </html>
 `.replace(/\n[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n');
 }

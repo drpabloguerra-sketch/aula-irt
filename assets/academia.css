@@ -816,3 +816,106 @@ html.con-ventana{overflow:hidden}
   .visor-pres__marco{width:min(100%,calc((100vh - 92px) * 16 / 9));width:min(100%,calc((100dvh - 92px) * 16 / 9));min-width:0}
   .visor-pres__acciones{flex-direction:column;align-items:stretch;margin-top:0;max-width:180px}
 }
+
+/* --------------------------------------------------------------------------
+   Tests dentro del aula (assets/aula-tests.js): ventana flotante con una
+   pregunta por pantalla. Misma base .ventana. Solo variables de :root;
+   los errores nunca en terracota.
+   -------------------------------------------------------------------------- */
+.test-ventana{width:min(760px,calc(100vw - 32px))}
+.test-ventana__ante{color:var(--ocre-osc)}
+.test-ventana .ventana__cabeza h2{font-size:clamp(21px,2.4vw,25px);line-height:1.25}
+.test-ventana__cuerpo{padding-bottom:0}
+.test-esqueleto{padding-bottom:26px}
+.test-esqueleto span{height:52px;background:var(--salvia);border-radius:12px}
+.test-esqueleto span:first-child{height:24px;width:70%}
+
+.test-portada__instrucciones{font-size:18px;color:var(--texto);margin:0 0 18px}
+.test-datos{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.test-datos li{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--salvia);color:var(--tinta);font-size:16px;font-weight:700}
+.test-datos .ico{width:20px;height:20px;color:var(--petroleo)}
+.test-portada__nota{margin:0 0 12px;font-size:16px;color:var(--texto-suave)}
+
+.test-acciones{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 0;padding-bottom:24px}
+.test-acciones--fijas,.test-navegacion{position:sticky;bottom:0;z-index:1;margin:18px -26px 0;padding:14px 26px 18px;background:var(--blanco);border-top:1px solid var(--linea)}
+.test-navegacion{display:flex;justify-content:space-between;gap:12px}
+.test-navegacion .btn,.test-acciones--fijas .btn{flex:1 1 0;max-width:280px}
+.test-navegacion .btn[disabled],.test-acciones .btn[disabled]{opacity:.55;cursor:not-allowed}
+
+.test-progreso{margin-bottom:16px}
+.test-progreso__texto{margin:0 0 8px;font-size:16px;font-weight:700;color:var(--petroleo-osc)}
+.test-progreso__barra{height:10px;border-radius:999px;background:var(--petroleo-claro);overflow:hidden}
+.test-progreso__barra span{display:block;height:100%;border-radius:999px;background:var(--petroleo)}
+@media (prefers-reduced-motion:no-preference){ .test-progreso__barra span{transition:width .25s ease} }
+.test-enunciado{font-family:var(--f-titulo);font-size:clamp(21px,2.6vw,24px);line-height:1.35;color:var(--tinta);margin:0 0 16px}
+.test-enunciado:focus{outline:none}
+
+.test-alternativas{display:grid;gap:10px}
+.test-alternativa{position:relative;display:flex;align-items:flex-start;gap:14px;min-height:56px;padding:14px 16px;border:1.5px solid var(--texto-suave);border-radius:12px;background:var(--blanco);color:var(--texto);font-size:18px;line-height:1.45;cursor:pointer}
+.test-alternativa:hover{background:var(--salvia)}
+.test-alternativa input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.test-alternativa__letra{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--petroleo);color:var(--petroleo-osc);font-weight:700;font-size:17px;line-height:1}
+.test-alternativa:has(input:checked){border:2px solid var(--petroleo);background:var(--petroleo-claro);color:var(--tinta);font-weight:700}
+.test-alternativa:has(input:checked) .test-alternativa__letra{background:var(--petroleo);color:var(--blanco)}
+.test-alternativa:has(input:focus-visible){outline:3px solid var(--petroleo-osc);outline-offset:2px}
+.test-ayuda{margin:12px 0 0;font-size:15px;color:var(--texto-suave)}
+
+.test-puntos{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.test-puntos__punto{min-width:44px;min-height:44px;padding:0 6px;border:1.5px solid var(--linea);border-radius:999px;background:var(--blanco);color:var(--texto-suave);font:700 15px/1 var(--f-texto);cursor:pointer}
+.test-puntos__punto--respondida{border-color:var(--petroleo);background:var(--petroleo-claro);color:var(--petroleo-osc)}
+.test-puntos__punto[aria-current="step"]{background:var(--petroleo);border-color:var(--petroleo);color:var(--blanco)}
+.test-puntos__punto:hover{border-color:var(--petroleo)}
+
+.test-revision h3,.test-mensaje h3,.test-resultado h3{font-size:23px;margin:0 0 6px}
+.test-revision h3:focus,.test-mensaje h3:focus,.test-resultado h3:focus{outline:none}
+.test-revision__resumen{margin:0 0 12px;color:var(--texto-suave)}
+.test-revision__lista{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.test-revision__item{display:flex;align-items:center;gap:8px;width:100%;min-height:48px;padding:8px 12px;border:1.5px solid var(--linea);border-radius:10px;background:var(--blanco);color:var(--texto);font:400 16px/1.3 var(--f-texto);text-align:left;cursor:pointer}
+.test-revision__item .ico{width:20px;height:20px;color:var(--petroleo)}
+.test-revision__n{font-weight:700;color:var(--tinta)}
+.test-revision__estado{margin-left:auto;font-size:15px;color:var(--texto-suave)}
+.test-revision__item--falta{border-color:var(--ocre-osc);background:var(--ocre-claro)}
+.test-revision__item--falta .ico{color:var(--ocre-osc)}
+.test-revision__item--marcada{border-width:2.5px}
+.test-revision__aviso{margin-bottom:10px}
+
+.test-mensaje,.test-resultado{padding-top:6px}
+.test-mensaje__ico{color:var(--ocre-osc);margin-bottom:8px}
+.test-mensaje p{font-size:18px}
+.test-resultado__ico{width:48px;height:48px;color:var(--ocre);margin-bottom:8px}
+.test-resultado__texto{font-size:19px;line-height:1.55;color:var(--tinta)}
+
+.test-nota{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;padding:18px 20px;margin-bottom:16px;border-radius:var(--radio);background:var(--salvia)}
+.test-nota__valor{display:grid;margin:0;line-height:1}
+.test-nota__etq{font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--texto-suave)}
+.test-nota__valor b{font-family:var(--f-titulo);font-size:64px;color:var(--ocre-osc);line-height:1.05}
+.test-nota__info{display:grid;gap:8px;justify-items:start}
+.test-nota__puntos{margin:0;font-size:19px;font-weight:700;color:var(--tinta)}
+.insignia-neutra{display:inline-flex;align-items:center;gap:6px;padding:3px 12px 3px 8px;border-radius:999px;border:1px solid var(--texto-suave);background:var(--blanco);color:var(--texto);font-size:15px;font-weight:700}
+.insignia-neutra .ico{width:18px;height:18px;color:var(--texto-suave)}
+
+.test-correccion{border:1px solid var(--linea);border-radius:12px;background:var(--blanco)}
+.test-correccion summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:10px 16px;cursor:pointer;list-style:none;font-weight:700;color:var(--petroleo-osc)}
+.test-correccion summary::-webkit-details-marker{display:none}
+.test-correccion summary::after{content:"";flex:none;width:11px;height:11px;border-right:2.5px solid var(--petroleo);border-bottom:2.5px solid var(--petroleo);transform:rotate(45deg) translate(-3px,-3px)}
+.test-correccion[open] summary::after{transform:rotate(-135deg) translate(-3px,-3px)}
+.test-correccion summary:focus-visible{outline:3px solid var(--petroleo-osc);outline-offset:2px;border-radius:12px}
+.test-correccion__lista{margin:0;padding:0 16px 8px 16px;list-style:none;display:grid;gap:14px}
+.test-correccion__item{padding-top:14px;border-top:1px solid var(--linea)}
+.test-correccion__pregunta{margin:0 0 8px;font-weight:700;color:var(--tinta)}
+.test-correccion__linea{display:flex;align-items:flex-start;gap:8px;margin:0 0 6px;font-size:17px}
+.test-correccion__linea .ico{width:20px;height:20px;margin-top:2px}
+.test-correccion__linea--bien .ico{color:var(--petroleo)}
+.test-correccion__linea--mal .ico{color:var(--ocre-osc)}
+.test-correccion__explicacion{margin:6px 0 0;padding:10px 12px;border-radius:8px;background:var(--salvia);font-size:16px;color:var(--texto)}
+
+/* Tarjetas del test de inicio y de la evaluación final en el aula */
+.modulo--evaluacion .num .ico{color:var(--petroleo);margin-bottom:4px}
+.modulo--evaluacion.modulo--bloqueado .num .ico{color:var(--pendiente-texto)}
+
+@media (max-width:560px){
+  .test-ventana{width:100vw}
+  .test-acciones--fijas,.test-navegacion{margin:18px -16px 0;padding:12px 16px 16px}
+  .test-alternativa{font-size:17px;padding:12px 14px}
+  .test-nota__valor b{font-size:54px}
+}
