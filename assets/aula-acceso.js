@@ -227,6 +227,19 @@
     d = d || document.querySelector('tr[data-modulo="' + n + '"] .tabla-modulos__desc');
     return d ? d.textContent : '';
   }
+  // Frase guía del módulo (assets/cursos.json → aula.frases), en el mismo <template>
+  function frase(n) {
+    var t = document.getElementById('aula-descripciones');
+    var d = t && t.content ? t.content.querySelector('[data-frase="' + n + '"]') : null;
+    return d ? d.textContent.trim() : '';
+  }
+  // Mientras los tests estén en Google Forms, «testRespondido» también marca el módulo como completado
+  function completado(m) { return m.estado === 'completado' || m.testRespondido === true; }
+  var PALABRAS = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez'];
+  function quedan(x) { return x === 1 ? 'Le queda 1.' : 'Le quedan ' + x + '.'; }
+  function todos(total) {
+    return 'Completó ' + (total === 1 ? 'el módulo' : 'los ' + (PALABRAS[total] || total) + ' módulos') + '. Nos vemos en la jornada presencial.';
+  }
   function horas(h) { return h + (Number(h) === 1 ? ' hora' : ' horas'); }
   // Nota chilena con coma decimal (5.1 → «5,1»); null si no llega un número
   function numero(v) {
@@ -266,7 +279,7 @@
     d.setAttribute('aria-labelledby', 'visor-titulo');
     d.innerHTML =
       '<div class="ventana__cabeza">' +
-        '<div><span class="antetitulo">Presentación del módulo</span><h2 id="visor-titulo">Presentación</h2></div>' +
+        '<div><span class="antetitulo" id="visor-ante">Presentación del módulo</span><h2 id="visor-titulo">Presentación</h2></div>' +
         '<button type="button" class="ventana__cerrar" data-cerrar-visor aria-label="Cerrar la presentación">×</button>' +
       '</div>' +
       '<div class="ventana__cuerpo">' +
@@ -323,18 +336,20 @@
     return v;
   }
 
-  function abrirVisor(url, m, origen) {
+  // info: { ante, titulo, marco } (antetítulo, título de la ventana y título del iframe)
+  function abrirVisor(url, info, origen) {
     if (!visor) visor = crearVisor();
     if (typeof visor.d.showModal !== 'function') { window.open(url, '_blank', 'noopener'); return; }
     var v = visor;
     v.origen = origen;
-    v.d.querySelector('#visor-titulo').textContent = 'Módulo ' + m.n + ' · Presentación';
+    v.d.querySelector('#visor-ante').textContent = info.ante;
+    v.d.querySelector('#visor-titulo').textContent = info.titulo;
     v.otra.href = url;
     v.otra.hidden = true;
     v.esqueleto.hidden = false;
     v.estado.textContent = 'Cargando la presentación…';
     var f = document.createElement('iframe');
-    f.title = 'Presentación del Módulo ' + m.n + (m.titulo ? ': ' + m.titulo : '');
+    f.title = info.marco;
     f.setAttribute('allowfullscreen', '');
     f.setAttribute('allow', 'fullscreen');
     f.setAttribute('loading', 'lazy');
@@ -364,7 +379,10 @@
     var b = el('button', 'btn btn--secundario btn--presentacion' + (chico ? ' btn--chico' : ''), 'Ver la presentación');
     b.type = 'button';
     b.setAttribute('aria-haspopup', 'dialog');
-    b.addEventListener('click', function () { abrirVisor(url, m, b); });
+    b.addEventListener('click', function () {
+      abrirVisor(url, { ante: 'Presentación del módulo', titulo: 'Módulo ' + m.n + ' · Presentación',
+        marco: 'Presentación del Módulo ' + m.n + (m.titulo ? ': ' + m.titulo : '') }, b);
+    });
     return b;
   }
 
@@ -488,7 +506,7 @@
   }
 
   function tarjetaModulo(m, partidaPendiente) {
-    var estado = ['completado', 'disponible', 'pronto'].indexOf(m.estado) >= 0 ? m.estado : 'bloqueado';
+    var estado = completado(m) ? 'completado' : ['disponible', 'pronto'].indexOf(m.estado) >= 0 ? m.estado : 'bloqueado';
     var art = el('article', 'modulo modulo--' + estado);
     art.id = 'modulo-' + m.n;
 
@@ -503,7 +521,7 @@
     if (estado === 'completado') {
       var ins = el('span', 'insignia-completado');
       ins.appendChild(icono('i-completado'));
-      ins.appendChild(document.createTextNode('Completado'));
+      ins.appendChild(document.createTextNode('Completado' + (formatoNota(m.nota) ? ' · Nota ' + formatoNota(m.nota) : '')));
       meta.appendChild(ins);
     } else if (estado === 'disponible') {
       meta.appendChild(el('span', 'etiqueta etiqueta--realizado', 'Disponible'));
@@ -514,6 +532,8 @@
     }
     cuerpo.appendChild(meta);
     cuerpo.appendChild(el('h3', null, m.titulo || ('Módulo ' + m.n)));
+    var guia = frase(m.n);
+    if (guia) cuerpo.appendChild(el('p', 'modulo__frase', guia));
     var desc = descripcion(m.n);
     if (desc) cuerpo.appendChild(el('p', null, desc));
 
@@ -528,16 +548,9 @@
       if (conTest) pasos.appendChild(pasoModulo('Responda el test', botonTest(m, 'Responder el test', 'btn--secundario')));
       cuerpo.appendChild(pasos);
     } else if (estado === 'completado') {
-      // Nota destacada; sin botón de test: cada cuestionario tiene un solo intento
-      var nota = formatoNota(m.nota);
+      // La nota va en la insignia «Completado»; aquí, el puntaje. Sin botón de test: un solo intento
       var pts = puntos(m.puntaje, m.maximo);
-      if (nota || pts) {
-        var pn = el('p', 'modulo__nota');
-        if (nota) pn.appendChild(el('b', null, 'Nota ' + nota));
-        if (nota && pts) pn.appendChild(document.createTextNode(' · '));
-        if (pts) pn.appendChild(document.createTextNode(pts));
-        cuerpo.appendChild(pn);
-      }
+      if (pts) cuerpo.appendChild(el('p', 'modulo__nota', pts));
       var resp = el('p', 'respondido');
       resp.appendChild(icono('i-completado'));
       resp.appendChild(document.createTextNode('Cuestionario respondido · un solo intento'));
@@ -575,7 +588,7 @@
       (d.partida ? { n: 0, test: !partida.pronto, testRespondido: partida.completado === true } : null);
     var tFinal = items.filter(function (m) { return m.n === 'final'; })[0] || null;
     var total = modulos.length || 5;
-    var hechos = modulos.filter(function (m) { return m.estado === 'completado'; }).length;
+    var hechos = modulos.filter(completado).length;
     var partidaPendiente = tInicio ? !tInicio.testRespondido : partida.completado === false;
     sesion.token = d.token || sesion.token;
     sesion.codigo = (d.curso && d.curso.codigo) || sesion.codigo;
@@ -592,8 +605,20 @@
     barra.setAttribute('aria-valuenow', String(hechos));
     $('aula-progreso-relleno').style.width = Math.round(100 * hechos / total) + '%';
 
+    // Línea de estado: cambia según el avance
+    var ultimo = modulos.filter(completado).map(function (m) { return m.n; }).pop();
+    var estadoTexto = '';
+    if (tFinal && tFinal.testRespondido) estadoTexto = 'Curso completado. Su certificado se emitirá al confirmar la aprobación.';
+    else if (total && hechos === total) estadoTexto = todos(total);
+    else if (hechos) estadoTexto = 'Módulo ' + ultimo + ' completado. ' + quedan(total - hechos);
+    else if (tInicio && tInicio.testRespondido) estadoTexto = 'Punto de partida registrado. Ya puede comenzar el Módulo ' + (numerosModulo[0] || 1) + '.';
+    else if (tInicio) estadoTexto = 'Su recorrido comienza con el test de inicio.';
+    $('aula-estado').textContent = estadoTexto;
+    $('aula-estado').hidden = !estadoTexto;
+    reconocer(modulos, total, hechos);
+
     // Promedio de la etapa en línea, con las notas disponibles
-    var notas = modulos.map(function (m) { return m.estado === 'completado' ? numero(m.nota) : null; })
+    var notas = modulos.map(function (m) { return completado(m) ? numero(m.nota) : null; })
       .filter(function (x) { return x !== null; });
     var promedio = $('aula-promedio');
     promedio.textContent = '';
@@ -623,9 +648,6 @@
     } else if (prox) {
       siguiente.appendChild(el('b', null, 'Siguiente paso: '));
       siguiente.appendChild(document.createTextNode('Módulo ' + prox.n + ' · ' + (prox.titulo || '') + ' · ' + horas(prox.horas) + '.'));
-    } else if (hechos === total && total) {
-      siguiente.appendChild(el('b', null, '¡Completó los módulos en línea! '));
-      siguiente.appendChild(document.createTextNode('Lo esperamos en la jornada presencial.'));
     }
 
     // Recuadro antiguo del test de partida (páginas anteriores): ahora es la tarjeta «Test de inicio»
@@ -686,6 +708,96 @@
     $('aula-saludo').focus({ preventScroll: true });
   }
 
+  /* ---------- Reconocimiento al completar un módulo ----------
+     Compara los módulos completados con los de la vista anterior (en memoria y en
+     sessionStorage, para cuando la persona vuelve de un formulario externo). Si hay
+     uno nuevo y aprobado (nota 4,0 o más, o sin nota), muestra un aviso discreto
+     bajo la cabecera. La primera vista de la sesión no muestra nada. */
+  var vistos = null;
+  function claveVistos() { return 'aulaIRT.completados.' + CURSO; }
+  function leerVistos() {
+    if (vistos) return vistos;
+    try { var v = sessionStorage.getItem(claveVistos()); return v === null ? null : v.split(',').filter(Boolean); } catch (e) { return null; }
+  }
+  function reconocer(modulos, total, hechos) {
+    var ahora = modulos.filter(completado).map(function (m) { return String(m.n); });
+    var antes = leerVistos();
+    vistos = ahora;
+    try { sessionStorage.setItem(claveVistos(), ahora.join(',')); } catch (e) { /* solo en memoria */ }
+    if (!antes) return;
+    var nuevos = modulos.filter(function (m) {
+      var nota = numero(m.nota);
+      return completado(m) && antes.indexOf(String(m.n)) < 0 && (nota === null || nota >= 4);
+    });
+    if (!nuevos.length) return;
+    var n = nuevos[nuevos.length - 1].n;
+    mostrarAviso(hechos >= total ? todos(total) : 'Módulo ' + n + ' completado. ' + quedan(total - hechos));
+  }
+  var avisoEspera = null;
+  function cerrarAviso() {
+    var caja = $('aula-aviso');
+    clearTimeout(avisoEspera);
+    if (!caja || !caja.firstChild) return;
+    var dentro = caja.contains(document.activeElement);
+    caja.textContent = '';
+    if (dentro) $('aula-saludo').focus({ preventScroll: true });
+  }
+  function mostrarAviso(texto) {
+    var caja = $('aula-aviso');
+    if (!caja) return;
+    clearTimeout(avisoEspera);
+    caja.textContent = '';
+    var tarjeta = el('div', 'aula-aviso__tarjeta');
+    // Bajo la cabecera del sitio cuando está fija (escritorio); si no, arriba de la ventana
+    var cab = document.querySelector('.cabecera');
+    var fija = cab && /sticky|fixed/.test(getComputedStyle(cab).position);
+    var abajo = fija ? cab.getBoundingClientRect().bottom : 0;
+    caja.style.top = Math.max(12, abajo + 12) + 'px';
+    var ico = icono('i-completado');
+    ico.setAttribute('class', 'ico aula-aviso__ico');
+    tarjeta.appendChild(ico);
+    tarjeta.appendChild(el('p', 'aula-aviso__texto', texto));
+    var x = el('button', 'aula-aviso__cerrar', '✕');
+    x.type = 'button';
+    x.setAttribute('aria-label', 'Cerrar el aviso');
+    x.addEventListener('click', cerrarAviso);
+    tarjeta.appendChild(x);
+    caja.appendChild(tarjeta);
+    // Se va solo a los 6 segundos, salvo mientras el foco o el puntero están sobre él
+    var programar = function () { clearTimeout(avisoEspera); avisoEspera = setTimeout(cerrarAviso, 6000); };
+    caja.onmouseenter = caja.onfocusin = function () { clearTimeout(avisoEspera); };
+    caja.onmouseleave = caja.onfocusout = function (e) { if (!caja.contains(e.relatedTarget)) programar(); };
+    programar();
+  }
+
+  /* ---------- Bienvenida del director: plegable, con la preferencia por curso ---------- */
+  var bienvenidaCaja = $('aula-bienvenida');
+  if (bienvenidaCaja) {
+    var claveBienvenida = 'aulaIRT.bienvenida.' + (bienvenidaCaja.getAttribute('data-curso') || CURSO);
+    var alternar = bienvenidaCaja.querySelector('[data-bienvenida-alternar]');
+    var plegar = function (oculta, guardar) {
+      $('bienvenida-cuerpo').hidden = oculta;
+      bienvenidaCaja.classList.toggle('bienvenida--plegada', oculta);
+      bienvenidaCaja.querySelector('[data-bienvenida-plegada]').hidden = !oculta;
+      bienvenidaCaja.querySelector('[data-bienvenida-abierta]').hidden = oculta;
+      alternar.textContent = oculta ? 'Mostrar' : 'Ocultar';
+      alternar.setAttribute('aria-expanded', oculta ? 'false' : 'true');
+      if (!guardar) return;
+      try { if (oculta) localStorage.setItem(claveBienvenida, 'oculta'); else localStorage.removeItem(claveBienvenida); } catch (e) { /* sin preferencia guardada */ }
+    };
+    var guardada = null;
+    try { guardada = localStorage.getItem(claveBienvenida); } catch (e) { /* almacenamiento bloqueado */ }
+    plegar(guardada === 'oculta', false);
+    alternar.addEventListener('click', function () { plegar(alternar.getAttribute('aria-expanded') === 'true', true); });
+    var botonVideo = bienvenidaCaja.querySelector('[data-video]');
+    var urlVideo = botonVideo && botonVideo.getAttribute('data-video');
+    if (botonVideo && /^https:\/\/(www\.youtube-nocookie\.com\/embed\/|drive\.google\.com\/file\/d\/)/i.test(urlVideo)) {
+      botonVideo.addEventListener('click', function () {
+        abrirVisor(urlVideo, { ante: 'Bienvenida', titulo: 'Saludo del director', marco: 'Video de bienvenida del director' }, botonVideo);
+      });
+    } else if (botonVideo) botonVideo.remove();
+  }
+
   // Los botones «Ingresar a los módulos» llevan al recuadro y ponen el cursor en el campo
   document.querySelectorAll('[data-ir-acceso]').forEach(function (a) {
     a.addEventListener('click', function () {
@@ -697,6 +809,9 @@
   function salir(motivo) {
     borrarToken(CURSO);
     sesion.token = null;
+    vistos = null;
+    try { sessionStorage.removeItem(claveVistos()); } catch (e) { /* nada que borrar */ }
+    cerrarAviso();
     $('aula-modulos').textContent = '';
     mostrarPublica();
     accesoCurso.avisar(motivo || 'salio');

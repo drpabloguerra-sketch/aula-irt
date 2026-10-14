@@ -19,7 +19,7 @@ const path = require('path');
 
 const RAIZ = path.resolve(__dirname, '..');
 const SALIDA = path.resolve(process.argv[2] || RAIZ);
-const V = '20261021';                    // versión de academia.css y de los scripts propios
+const V = '20261022';                    // versión de academia.css y de los scripts propios
 const VI = '20261021';                   // versión de iconos.svg y sello.svg
 const MIN_FILTRO = Number(process.env.MIN_FILTRO || 5);   // el filtro por área aparece con 5 cursos o más
 const TIPOS_INSCRIPCION = ['invitacion', 'abierta', 'institucional'];
@@ -51,6 +51,10 @@ cursos.forEach(c => {
   const publico = [c.titulo, c.tituloCorto, c.bajada, c.modalidad, c.horas, c.dirigidoA, c.certificado, c.estado, c.area]
     .concat(c.sobre || [], c.aprenderas || [], c.requisitos || [], (c.faq || []).map(f => f.p + ' ' + f.r));
   publico.forEach(t => PROHIBIDO.forEach(re => { if (re.test(t || '')) throw new Error(`Curso ${c.slug}: texto público no permitido (${re}): «${t}»`); }));
+  // Textos de la sala (solo para inscritos): pueden nombrar módulos, pero sin precios, SENCE, OTEC ni [PENDIENTE]
+  const a = c.aula || {}, b = a.bienvenida || {};
+  const sala = [b.firma, b.cargo, (a.jornada || {}).texto].concat(b.texto || [], Object.values(a.frases || {}));
+  sala.forEach(t => PROHIBIDO.slice(1).forEach(re => { if (re.test(t || '')) throw new Error(`Curso ${c.slug}: texto de la sala no permitido (${re}): «${t}»`); }));
 });
 
 /* ---------- Imagen: la indicada o la portada de reserva ---------- */
@@ -59,6 +63,39 @@ function imagenDe(c) {
   return { src: `/assets/img/cursos/${c.slug}-reserva.svg`, reserva: true };
 }
 const altDe = c => hay(c.imagenAlt) ? c.imagenAlt : c.titulo;
+
+/* ---------- Sala del curso: bienvenida y jornada (opcionales) ---------- */
+// Video del saludo: YouTube (se pasa a youtube-nocookie.com/embed) o Drive con /preview
+function videoSaludo(url) {
+  const u = String(url || '').trim();
+  if (!u) return '';
+  const yt = u.match(/^https:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/)|youtube-nocookie\.com\/embed\/|youtu\.be\/)([\w-]{11})/i);
+  if (yt) return 'https://www.youtube-nocookie.com/embed/' + yt[1];
+  if (/^https:\/\/drive\.google\.com\/file\/d\/[\w-]+\/preview/i.test(u)) return u;
+  avisar(`el video de la bienvenida no es de YouTube ni de Drive con /preview: no se muestra (${u}).`);
+  return '';
+}
+function bienvenida(c) {
+  const b = (c.aula || {}).bienvenida || {};
+  const parrafos = (b.texto || []).filter(hay);
+  if (!parrafos.length) return '';
+  const video = videoSaludo(b.video);
+  return `<section class="bienvenida" id="aula-bienvenida" data-curso="${esc(c.slug)}" aria-labelledby="bienvenida-titulo">
+      <div class="bienvenida__barra">
+        <h3 class="bienvenida__ante" id="bienvenida-titulo"><span data-bienvenida-plegada hidden>Bienvenida del director</span><span data-bienvenida-abierta>Bienvenida</span></h3>
+        <button type="button" class="bienvenida__alternar" aria-expanded="true" aria-controls="bienvenida-cuerpo" data-bienvenida-alternar>Ocultar</button>
+      </div>
+      <div class="bienvenida__cuerpo" id="bienvenida-cuerpo">
+${parrafos.map(p => `        <p>${esc(p)}</p>`).join('\n')}
+        ${hay(b.firma) ? `<p class="bienvenida__firma"><b>${esc(b.firma)}</b>${hay(b.cargo) ? `<span>${esc(b.cargo)}</span>` : ''}</p>` : ''}
+        ${video ? `<button type="button" class="btn btn--secundario btn--chico bienvenida__video" aria-haspopup="dialog" data-video="${esc(video)}">${ico('i-presentacion')}Ver el saludo (1 min)</button>` : ''}
+      </div>
+    </section>`;
+}
+function jornadaJuntos(c) {
+  const t = ((c.aula || {}).jornada || {}).texto;
+  return hay(t) ? `<p class="jornada__juntos">${esc(t)}</p>` : '';
+}
 
 // Portada de reserva: fondo salvia, trazos técnicos en petróleo y un acento ocre
 function svgReserva(c) {
@@ -163,11 +200,13 @@ function paginaCurso(c) {
   let aulaIngreso = '', aulaPrivada = '';
   if (conAula) {
     const a = c.aula;
-    const desc = Object.keys(a.descripciones || {}).map(n => `<p data-modulo="${esc(n)}">${esc(a.descripciones[n])}</p>`).join('');
+    const desc = Object.keys(a.descripciones || {}).map(n => `<p data-modulo="${esc(n)}">${esc(a.descripciones[n])}</p>`).join('')
+      + Object.keys(a.frases || {}).filter(n => hay(a.frases[n])).map(n => `<p data-frase="${esc(n)}">${esc(a.frases[n])}</p>`).join('');
     const rellenar = t => t.replace(/\{\{SLUG\}\}/g, c.slug).replace(/\{\{TITULO\}\}/g, esc(c.titulo))
       .replace(/\{\{TOTAL\}\}/g, String(a.totalModulos || 5)).replace(/\{\{JORNADA_HORAS\}\}/g, esc(a.jornadaHoras || ''))
       .replace(/\{\{JORNADA_TEXTO\}\}/g, esc(a.jornadaTexto || '')).replace(/\{\{REQUISITO\}\}/g, esc(a.requisito || ''))
-      .replace(/\{\{DESCRIPCIONES\}\}/g, desc);
+      .replace(/\{\{DESCRIPCIONES\}\}/g, desc).replace(/\{\{BIENVENIDA\}\}/g, bienvenida(c))
+      .replace(/\{\{JORNADA_JUNTOS\}\}/g, jornadaJuntos(c));
     aulaIngreso = rellenar(entre(bloqueAula, '<!--INGRESO-->', '<!--/INGRESO-->')).trim();
     aulaPrivada = rellenar(entre(bloqueAula, '<!--AULA-->', '<!--/AULA-->')).trim();
   }

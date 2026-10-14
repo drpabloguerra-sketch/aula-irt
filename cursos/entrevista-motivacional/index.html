@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/academia.css?v=20261021">
+<link rel="stylesheet" href="/assets/academia.css?v=20261022">
 </head>
 <body>
 <!-- Página generada por herramientas/construir-cursos.js desde assets/cursos.json.
@@ -190,8 +190,11 @@
 <!-- ======================================================================
      AULA PRIVADA (se completa con la respuesta del acceso)
      ====================================================================== -->
-<template id="aula-descripciones"><p data-modulo="1">Multimorbilidad crónica y sus desafíos; atención centrada en la persona; rol de la familia y la persona cuidadora; decisiones compartidas y plan consensuado.</p><p data-modulo="2">Qué es y qué no es; el reflejo de corregir; espíritu de la entrevista motivacional; procesos: vincular, enfocar, evocar y planificar.</p><p data-modulo="3">Preguntas abiertas, afirmaciones, reflejos y resúmenes; discurso de cambio y de mantención; ambivalencia y discordancia.</p><p data-modulo="4">Enfoque familiar; ciclo vital y crisis; genograma y ecomapa; estructura de una consejería familiar.</p><p data-modulo="5">Adherencia y automanejo; activación de la persona; participación de la familia; del diálogo motivacional al plan de cuidado consensuado.</p></template>
+<template id="aula-descripciones"><p data-modulo="1">Multimorbilidad crónica y sus desafíos; atención centrada en la persona; rol de la familia y la persona cuidadora; decisiones compartidas y plan consensuado.</p><p data-modulo="2">Qué es y qué no es; el reflejo de corregir; espíritu de la entrevista motivacional; procesos: vincular, enfocar, evocar y planificar.</p><p data-modulo="3">Preguntas abiertas, afirmaciones, reflejos y resúmenes; discurso de cambio y de mantención; ambivalencia y discordancia.</p><p data-modulo="4">Enfoque familiar; ciclo vital y crisis; genograma y ecomapa; estructura de una consejería familiar.</p><p data-modulo="5">Adherencia y automanejo; activación de la persona; participación de la familia; del diálogo motivacional al plan de cuidado consensuado.</p><p data-frase="1">La persona con varias enfermedades no es una suma de diagnósticos: es una vida que cuidamos en conjunto.</p><p data-frase="2">No se trata de convencer, sino de evocar las razones propias de cambio de la persona.</p><p data-frase="3">Lo que la persona dice sobre el cambio anticipa lo que hará: nuestra tarea es escucharlo y fortalecerlo.</p><p data-frase="4">La familia no es solo el contexto del paciente: es parte del cuidado.</p><p data-frase="5">Un plan acordado vale más que una indicación perfecta que nadie seguirá.</p></template>
 <div class="aula-cargando" id="aula-cargando" role="status" aria-live="polite" hidden><span class="cargador" aria-hidden="true"></span>Cargando sus módulos…</div>
+
+<!-- Reconocimiento al completar un módulo (lo muestra aula-acceso.js) -->
+<div class="aula-aviso" id="aula-aviso" role="status" aria-live="polite"></div>
 
 <section class="seccion aula" id="aula" aria-labelledby="aula-saludo" hidden>
   <div class="wrap">
@@ -204,9 +207,23 @@
       <button type="button" class="btn btn--secundario btn--chico" id="aula-salir"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-salir"/></svg>Salir</button>
     </div>
 
+    <section class="bienvenida" id="aula-bienvenida" data-curso="entrevista-motivacional" aria-labelledby="bienvenida-titulo">
+      <div class="bienvenida__barra">
+        <h3 class="bienvenida__ante" id="bienvenida-titulo"><span data-bienvenida-plegada hidden>Bienvenida del director</span><span data-bienvenida-abierta>Bienvenida</span></h3>
+        <button type="button" class="bienvenida__alternar" aria-expanded="true" aria-controls="bienvenida-cuerpo" data-bienvenida-alternar>Ocultar</button>
+      </div>
+      <div class="bienvenida__cuerpo" id="bienvenida-cuerpo">
+        <p>Le damos la bienvenida a este curso. Lo diseñamos pensando en el trabajo real de los equipos de atención primaria: personas con varias condiciones crónicas, familias que cuidan y conversaciones breves en las que se juega buena parte del tratamiento.</p>
+        <p>Estudie a su ritmo. Cada módulo tiene una lectura para descargar, una presentación y un cuestionario corto. Lo que trabaje aquí lo pondremos en práctica juntos en la jornada presencial.</p>
+        <p>Si tiene dudas, escríbanos. Estamos para acompañarle.</p>
+        <p class="bienvenida__firma"><b>Pablo Andrés Guerra Cisternas</b><span>Director Ejecutivo · Instituto de Riesgo Territorial</span></p>
+      </div>
+    </section>
+
     <div class="progreso">
       <p class="progreso__texto" id="aula-progreso-texto">0 de 5 módulos completados</p>
       <div class="progreso__barra" id="aula-progreso" role="progressbar" aria-labelledby="aula-progreso-texto" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><span id="aula-progreso-relleno"></span></div>
+      <p class="progreso__estado" id="aula-estado"></p>
       <p class="progreso__promedio" id="aula-promedio" hidden></p>
       <p class="progreso__inicio" id="aula-inicio" hidden></p>
       <p class="progreso__siguiente" id="aula-siguiente"></p>
@@ -217,7 +234,8 @@
     <div class="jornada aula__jornada" id="jornada">
       <div>
         <span class="antetitulo">8 horas pedagógicas</span>
-        <h2>Jornada presencial</h2>
+        <h2 class="jornada__titulo"><span class="jornada__ico"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-presencial"/></svg></span>Jornada presencial</h2>
+        <p class="jornada__juntos">Lo que estudie aquí lo trabajaremos juntos: casos reales, práctica de entrevista en parejas y construcción de un plan consensuado.</p>
         <p>Talleres prácticos con los casos de los módulos: habilidades centrales, simulación de entrevista y consejería familiar. Al cierre se aplica la evaluación final del curso.</p>
         <div class="btns" id="aula-jornada-pdf" hidden></div>
       </div>
@@ -255,11 +273,11 @@
   </div>
 </footer>
 
-<script src="/assets/academia.js?v=20261021"></script>
-<script src="/assets/aula-cursos.js?v=20261021"></script>
-<script src="/assets/inscripcion.js?v=20261021"></script>
-<script src="/assets/catalogo.js?v=20261021"></script>
-<script src="/assets/aula-tests.js?v=20261021"></script>
-<script src="/assets/aula-acceso.js?v=20261021"></script>
+<script src="/assets/academia.js?v=20261022"></script>
+<script src="/assets/aula-cursos.js?v=20261022"></script>
+<script src="/assets/inscripcion.js?v=20261022"></script>
+<script src="/assets/catalogo.js?v=20261022"></script>
+<script src="/assets/aula-tests.js?v=20261022"></script>
+<script src="/assets/aula-acceso.js?v=20261022"></script>
 </body>
 </html>
