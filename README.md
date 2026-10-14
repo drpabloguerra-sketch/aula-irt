@@ -55,14 +55,14 @@ Para cambiar un PDF o un test: actualice el enlace en la hoja o en la propiedad 
 
 ### Materiales de cada módulo
 
-Cada módulo tiene tres pasos para la persona: **1. ver la presentación** dentro de la página, **2. descargar el documento en PDF** para estudio independiente y **3. responder el test**. Los archivos nunca se suben a este repositorio.
+Cada módulo tiene tres pasos para la persona, en este orden: **1. ver la presentación** dentro del aula (en una ventana flotante), **2. descargar el módulo en PDF** para estudio independiente y **3. responder el test**. Los archivos nunca se suben a este repositorio: van en Google Drive y sus enlaces se anotan en la hoja «Módulos» de la planilla «Academia IRT · Inscripciones».
 
-| Material | Dónde va | Enlace que entrega el Apps Script |
-|---|---|---|
-| Presentación (`.pptx`) | Súbala a Google Drive y ábrala con **Presentaciones de Google** (Archivo → Guardar como Presentaciones de Google). Compártala como «Cualquier persona con el enlace · Lector». | `https://docs.google.com/presentation/d/ID/embed?start=false&loop=false&delayms=5000` (campo `presentacion`). En Presentaciones de Google: Archivo → Compartir → Publicar en la Web → Insertar, y copie solo la dirección del `src`. |
-| Documento de estudio (`.pdf`) | Google Drive, compartido como «Cualquier persona con el enlace · Lector». | `https://drive.google.com/uc?export=download&id=ID` (campo `pdf`), para que se descargue directo. |
+| Material | Columna de «Módulos» | Qué entrega el Apps Script | Qué ve la persona |
+|---|---|---|---|
+| Lectura del módulo (`.pdf`), en Drive como «Cualquier persona con el enlace · Lector» | «Enlace del PDF»: `https://drive.google.com/file/d/ID/view` | `pdf` (ese enlace) y `pdfDescarga`: `https://drive.google.com/uc?export=download&id=ID`, armado con el ID | Botón «Descargar el módulo (PDF)» (descarga directa) y enlace «Ver en línea» (pestaña nueva) |
+| Presentación | «Presentación (opcional)», con un enlace **listo para incrustar**: `https://docs.google.com/presentation/d/ID/embed?…` (Presentaciones de Google; Archivo → Compartir → Publicar en la Web → Insertar, copie solo la dirección del `src`) o, como respaldo, `https://drive.google.com/file/d/ID/preview` (visor de PDF de Drive) | `presentacion`, tal cual, solo si el módulo está disponible o completado. Cualquier enlace de otro dominio se descarta | Botón «Ver la presentación»: abre un visor dentro del aula, con «Pantalla completa» y, si no carga en 15 segundos, «Abrir la presentación en otra pestaña» |
 
-`ID` es el código largo que aparece en la dirección del archivo en Drive. Anote ambos enlaces en la hoja «Índice de la biblioteca», junto al módulo. Solo las personas inscritas reciben esos enlaces, pero quien tenga un enlace puede abrirlo: no ponga en esos archivos datos de participantes.
+`ID` es el código largo que aparece en la dirección del archivo en Drive. Solo las personas inscritas reciben esos enlaces, pero quien tenga un enlace puede abrirlo: no ponga en esos archivos datos de participantes.
 
 Antes de subir cualquier cambio, revise que las páginas no tengan enlaces a Google Docs, Drive ni Forms:
 
@@ -97,7 +97,7 @@ El script (solo necesita Node.js, sin instalar nada) revisa los datos, escribe e
 
 Las secciones de la página de cada curso tienen anclas: `#informacion`, `#certificado`, `#preguntas`, `#pregunta-N` (abre esa pregunta) e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261019`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261020`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 

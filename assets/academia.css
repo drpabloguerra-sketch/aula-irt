@@ -527,19 +527,12 @@ html.con-ventana{overflow:hidden}
 .apertura__aula a{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-weight:700;color:var(--petroleo-osc)}
 .apertura__aula .ico{width:20px;height:20px}
 
-/* Pasos de un módulo disponible y visor de la presentación */
+/* Pasos de un módulo disponible */
 .pasos-modulo{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:14px;counter-reset:pm}
 .paso-modulo{counter-increment:pm;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:8px;align-items:center}
 .paso-modulo::before{content:counter(pm);grid-row:1;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--petroleo-claro);color:var(--petroleo-osc);font-weight:700;font-size:16px}
 .paso-modulo__texto{grid-column:2;margin:0!important;font-weight:700;color:var(--tinta)!important}
-.paso-modulo .btn,.paso-modulo .visor{grid-column:2;justify-self:start}
-.paso-modulo .visor{justify-self:stretch}
-.visor{margin-top:2px}
-.modulo .cuerpo>.visor{margin-top:14px}
-.visor__marco{position:relative;aspect-ratio:16/9;background:var(--salvia);border:1px solid var(--linea);border-radius:10px;overflow:hidden}
-.visor__marco iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.visor__pie{margin-top:8px;font-size:16px}
-.visor__pie a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}
+.paso-modulo .btn,.paso-modulo .descarga-modulo{grid-column:2;justify-self:start}
 
 /* Lista de cursos (/cursos/): cursos agrupados por área; cada uno despliega su ingreso */
 .grupo-cursos{margin-bottom:40px}
@@ -582,7 +575,6 @@ html.con-ventana{overflow:hidden}
   .partida{flex-direction:column;padding:20px 18px}
   .partida .btn,.modulo .btns .btn,.paso-modulo .btn{width:100%}
   .paso-modulo .btn{justify-self:stretch}
-  .paso-modulo .visor{grid-column:1/-1}
   .curso-tarjeta{padding:20px 18px}
   .curso-tarjeta .btn{width:100%}
   .curso-item__cabeza{grid-template-columns:1fr;padding:20px 18px}
@@ -785,4 +777,42 @@ html.con-ventana{overflow:hidden}
   .catalogo{grid-template-columns:1fr}
   .curso-cabeza{padding:36px 0 30px}
   .banda-certificado,.error-contenido{padding:18px 16px}
+}
+
+/* --------------------------------------------------------------------------
+   Materiales del módulo: descarga del PDF y visor de la presentación
+   (ventana flotante, misma base .ventana que la inscripción). Solo variables de :root.
+   -------------------------------------------------------------------------- */
+.descarga-modulo{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px}
+.descarga-modulo__ver{display:inline-flex;align-items:center;min-height:44px;font-size:16px;font-weight:700;color:var(--petroleo-osc)}
+.modulo__materiales{align-items:center}
+
+.visor-pres{width:min(960px,calc(100vw - 32px))}
+.visor-pres .ventana__cabeza h2{font-size:clamp(21px,2.4vw,25px)}
+.visor-pres .ventana__cuerpo{padding-top:18px}
+.visor-pres__marco{position:relative;width:min(100%,calc((100vh - 230px) * 16 / 9));width:min(100%,calc((100dvh - 230px) * 16 / 9));min-width:260px;margin:0 auto;aspect-ratio:16/9;background:var(--salvia);border:1px solid var(--linea);border-radius:12px;overflow:hidden}
+.visor-pres__marco iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px;background:var(--salvia)}
+.visor-pres__marco:fullscreen{width:100%;border-radius:0;background:var(--tinta)}
+.visor-pres__esqueleto{position:absolute;inset:0;padding:8% 7%;align-content:start;z-index:1}
+.visor-pres__esqueleto span{background:var(--petroleo-claro)}
+.visor-pres__girar{display:none;align-items:center;gap:8px;margin:12px 0 0;font-size:16px;color:var(--texto-suave)}
+.visor-pres__girar .ico{width:20px;height:20px;color:var(--petroleo);transform:rotate(90deg)}
+.visor-pres__acciones{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin-top:14px}
+.visor-pres__otra{display:inline-flex;align-items:center;min-height:44px;font-weight:700;color:var(--petroleo-osc)}
+@media (max-width:560px) and (orientation:portrait){
+  .visor-pres__girar{display:flex}
+}
+@media (max-width:560px){
+  .visor-pres{width:100vw}
+  .visor-pres__marco{width:100%;min-width:0}
+}
+/* Teléfono en horizontal: cabecera compacta y diapositivas del alto de la pantalla */
+@media (max-height:500px) and (orientation:landscape){
+  .visor-pres{width:100vw;max-width:100vw;height:100vh;height:100dvh;max-height:none;margin:0;border-radius:0}
+  .visor-pres .ventana__cabeza{padding:8px 16px}
+  .visor-pres .ventana__cabeza .antetitulo{display:none}
+  .visor-pres .ventana__cabeza h2{font-size:18px}
+  .visor-pres .ventana__cuerpo{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:12px;padding:8px 16px 10px}
+  .visor-pres__marco{width:min(100%,calc((100vh - 92px) * 16 / 9));width:min(100%,calc((100dvh - 92px) * 16 / 9));min-width:0}
+  .visor-pres__acciones{flex-direction:column;align-items:stretch;margin-top:0;max-width:180px}
 }

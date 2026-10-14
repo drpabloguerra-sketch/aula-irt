@@ -250,42 +250,139 @@
     return li;
   }
 
-  /* Presentación del módulo, vista dentro de la página.
-     El iframe se crea al abrirla por primera vez (ahorra datos en el celular). */
-  var numeroVisor = 0;
-  function visorPresentacion(url, m, chico) {
-    var id = 'presentacion-' + m.n + '-' + (++numeroVisor);
-    var boton = el('button', 'btn ' + (chico ? 'btn--secundario btn--chico' : 'btn--primario') + ' btn--presentacion', 'Ver la presentación');
-    boton.type = 'button';
-    boton.setAttribute('aria-expanded', 'false');
-    boton.setAttribute('aria-controls', id);
-    var panel = el('div', 'visor');
-    panel.id = id;
-    panel.hidden = true;
-    var marco = el('div', 'visor__marco');
-    panel.appendChild(marco);
-    var pie = el('div', 'visor__pie');
-    var abrir = el('a', null, 'Abrir en pantalla completa');
-    abrir.href = url; abrir.target = '_blank'; abrir.rel = 'noopener';
-    abrir.appendChild(el('span', 'visual-oculto', ' (se abre en una pestaña nueva)'));
-    pie.appendChild(abrir);
-    panel.appendChild(pie);
-    boton.addEventListener('click', function () {
-      var abrirla = panel.hidden;
-      if (abrirla && !marco.firstChild) {
-        var f = document.createElement('iframe');
-        f.src = url;
-        f.title = 'Presentación del Módulo ' + m.n + (m.titulo ? ': ' + m.titulo : '');
-        f.setAttribute('allowfullscreen', '');
-        f.setAttribute('allow', 'fullscreen');
-        f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-        marco.appendChild(f);
-      }
-      panel.hidden = !abrirla;
-      boton.setAttribute('aria-expanded', abrirla ? 'true' : 'false');
-      boton.textContent = abrirla ? 'Ocultar la presentación' : 'Ver la presentación';
+  /* ---------- Visor de la presentación (ventana flotante) ----------
+     Mismo patrón que la ventana de inscripción: <dialog class="ventana">, foco
+     atrapado, Esc, «×» o clic fuera para cerrar, y el foco vuelve al botón.
+     El iframe se crea al abrir y se elimina al cerrar (ahorra datos en el celular).
+     Solo se aceptan visores de Presentaciones de Google o de Drive. */
+  var PRES_PERMITIDAS = /^https:\/\/(docs\.google\.com\/presentation\/d\/|drive\.google\.com\/file\/d\/)/i;
+  function presentacionSegura(url) { return typeof url === 'string' && PRES_PERMITIDAS.test(url) ? url : null; }
+
+  var visor = null;
+  function crearVisor() {
+    var d = el('dialog', 'ventana visor-pres');
+    d.id = 'visor-presentacion';
+    d.setAttribute('aria-labelledby', 'visor-titulo');
+    d.innerHTML =
+      '<div class="ventana__cabeza">' +
+        '<div><span class="antetitulo">Presentación del módulo</span><h2 id="visor-titulo">Presentación</h2></div>' +
+        '<button type="button" class="ventana__cerrar" data-cerrar-visor aria-label="Cerrar la presentación">×</button>' +
+      '</div>' +
+      '<div class="ventana__cuerpo">' +
+        '<div class="visor-pres__marco" id="visor-marco">' +
+          '<div class="esqueleto visor-pres__esqueleto" id="visor-esqueleto" aria-hidden="true"><span></span><span></span><span class="esqueleto--corta"></span></div>' +
+        '</div>' +
+        '<p class="visual-oculto" id="visor-estado" role="status"></p>' +
+        '<p class="visor-pres__girar">' +
+          '<svg class="ico" aria-hidden="true"><use href="' + ICONOS + '#i-movil"/></svg>Gire el teléfono para ver las diapositivas más grandes</p>' +
+        '<div class="visor-pres__acciones">' +
+          '<button type="button" class="btn btn--secundario btn--chico" id="visor-completa" hidden>Pantalla completa</button>' +
+          '<a class="visor-pres__otra" id="visor-otra" target="_blank" rel="noopener" hidden>Abrir la presentación en otra pestaña<span class="visual-oculto"> (se abre en una pestaña nueva)</span></a>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(d);
+    var v = { d: d, marco: d.querySelector('#visor-marco'), esqueleto: d.querySelector('#visor-esqueleto'),
+      estado: d.querySelector('#visor-estado'), completa: d.querySelector('#visor-completa'), otra: d.querySelector('#visor-otra'),
+      origen: null, espera: null };
+
+    function cerrar() { if (d.open) d.close(); }
+    d.addEventListener('close', function () {
+      clearTimeout(v.espera);
+      var f = v.marco.querySelector('iframe');
+      if (f) { f.src = 'about:blank'; f.remove(); }        // deja de cargar y de consumir datos
+      document.documentElement.classList.remove('con-ventana');
+      if (v.origen && document.contains(v.origen)) v.origen.focus();
     });
-    return { boton: boton, panel: panel };
+    d.addEventListener('cancel', function (e) { e.preventDefault(); cerrar(); });
+    d.addEventListener('click', function (e) {
+      if (e.target.closest('[data-cerrar-visor]')) { cerrar(); return; }
+      if (e.target !== d) return;
+      var r = d.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) cerrar();
+    });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { e.preventDefault(); cerrar(); return; }
+      if (e.key !== 'Tab') return;
+      var focos = Array.prototype.filter.call(d.querySelectorAll('a[href],button:not([disabled]),iframe'),
+        function (n) { return n.offsetParent !== null; });
+      if (!focos.length) return;
+      var primero = focos[0], ultimo = focos[focos.length - 1];
+      if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
+    });
+    // Pantalla completa sobre el contenedor, solo si el navegador lo permite
+    var pedirCompleta = v.marco.requestFullscreen || v.marco.webkitRequestFullscreen;
+    var permitida = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+    if (pedirCompleta && permitida) {
+      v.completa.hidden = false;
+      v.completa.addEventListener('click', function () {
+        try { var r = pedirCompleta.call(v.marco); if (r && r.catch) r.catch(function () {}); } catch (err) { /* no permitido */ }
+      });
+    }
+    return v;
+  }
+
+  function abrirVisor(url, m, origen) {
+    if (!visor) visor = crearVisor();
+    if (typeof visor.d.showModal !== 'function') { window.open(url, '_blank', 'noopener'); return; }
+    var v = visor;
+    v.origen = origen;
+    v.d.querySelector('#visor-titulo').textContent = 'Módulo ' + m.n + ' · Presentación';
+    v.otra.href = url;
+    v.otra.hidden = true;
+    v.esqueleto.hidden = false;
+    v.estado.textContent = 'Cargando la presentación…';
+    var f = document.createElement('iframe');
+    f.title = 'Presentación del Módulo ' + m.n + (m.titulo ? ': ' + m.titulo : '');
+    f.setAttribute('allowfullscreen', '');
+    f.setAttribute('allow', 'fullscreen');
+    f.setAttribute('loading', 'lazy');
+    f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    f.addEventListener('load', function () {
+      if (!f.isConnected || f.getAttribute('src') !== url) return;
+      clearTimeout(v.espera);
+      v.esqueleto.hidden = true;
+      v.estado.textContent = 'Presentación cargada.';
+    });
+    document.documentElement.classList.add('con-ventana');
+    v.d.showModal();
+    // El iframe entra al documento ya con su dirección: así su único «load» es el de la presentación
+    f.src = url;
+    v.marco.appendChild(f);
+    // Si no carga en 15 segundos, se ofrece abrirla en otra pestaña
+    clearTimeout(v.espera);
+    v.espera = setTimeout(function () {
+      if (!v.d.open) return;
+      v.otra.hidden = false;
+      v.estado.textContent = 'La presentación está tardando. Puede abrirla en otra pestaña.';
+    }, 15000);
+    v.d.querySelector('[data-cerrar-visor]').focus({ preventScroll: true });
+  }
+
+  function botonPresentacion(url, m, chico) {
+    var b = el('button', 'btn btn--secundario btn--presentacion' + (chico ? ' btn--chico' : ''), 'Ver la presentación');
+    b.type = 'button';
+    b.setAttribute('aria-haspopup', 'dialog');
+    b.addEventListener('click', function () { abrirVisor(url, m, b); });
+    return b;
+  }
+
+  // Descarga del módulo (pdfDescarga) y enlace secundario «Ver en línea» (pdf)
+  function descargaModulo(m, chico) {
+    var pdf = seguro(m.pdf), descarga = seguro(m.pdfDescarga) || pdf;
+    if (!descarga) return null;
+    var caja = el('div', 'descarga-modulo');
+    var a = el('a', 'btn ' + (chico ? 'btn--secundario btn--chico' : 'btn--primario') + ' btn--descargar', 'Descargar el módulo (PDF)');
+    a.href = descarga;
+    a.rel = 'noopener';
+    caja.appendChild(a);
+    if (pdf && pdf !== descarga) {
+      var ver = el('a', 'descarga-modulo__ver', 'Ver en línea');
+      ver.href = pdf; ver.target = '_blank'; ver.rel = 'noopener';
+      ver.appendChild(el('span', 'visual-oculto', ' (se abre en una pestaña nueva)'));
+      caja.appendChild(ver);
+    }
+    return caja;
   }
 
   function tarjetaModulo(m, partidaPendiente) {
@@ -318,13 +415,13 @@
     var desc = descripcion(m.n);
     if (desc) cuerpo.appendChild(el('p', null, desc));
 
-    var pdf = seguro(m.pdf), test = seguro(m.test), pres = seguro(m.presentacion);
+    var test = seguro(m.test), pres = presentacionSegura(m.presentacion);
     if (estado === 'disponible') {
-      // Pasos del módulo, en orden: presentación en línea → PDF para estudio → test
+      // Pasos del módulo, en orden: presentación → PDF para estudio → test
       var pasos = el('ol', 'pasos-modulo');
-      var visor = pres ? visorPresentacion(pres, m) : null;
-      if (visor) pasos.appendChild(pasoModulo('Vea la presentación', visor.boton, visor.panel));
-      if (pdf) pasos.appendChild(pasoModulo('Descargue el módulo para estudiarlo', botonExterno(pdf, 'Descargar el PDF', (visor ? 'btn--secundario' : 'btn--primario') + ' btn--descargar')));
+      if (pres) pasos.appendChild(pasoModulo('Vea la presentación', botonPresentacion(pres, m)));
+      var descarga = descargaModulo(m);
+      if (descarga) pasos.appendChild(pasoModulo('Descargue el módulo para estudiarlo', descarga));
       if (test) pasos.appendChild(pasoModulo('Responda el test', botonExterno(test, 'Responder el test', 'btn--secundario btn--test')));
       cuerpo.appendChild(pasos);
     } else if (estado === 'completado') {
@@ -342,12 +439,11 @@
       resp.appendChild(icono('i-completado'));
       resp.appendChild(document.createTextNode('Cuestionario respondido · un solo intento'));
       cuerpo.appendChild(resp);
-      var c = el('div', 'btns');
-      var visorC = pres ? visorPresentacion(pres, m, true) : null;
-      if (visorC) c.appendChild(visorC.boton);
-      if (pdf) c.appendChild(botonExterno(pdf, 'Descargar el PDF', 'btn--secundario btn--chico btn--descargar'));
+      var c = el('div', 'btns modulo__materiales');
+      if (pres) c.appendChild(botonPresentacion(pres, m, true));
+      var descargaC = descargaModulo(m, true);
+      if (descargaC) c.appendChild(descargaC);
       if (c.children.length) cuerpo.appendChild(c);
-      if (visorC) cuerpo.appendChild(visorC.panel);
     } else if (estado === 'pronto') {
       var pronto = el('p', 'bloqueo');
       pronto.appendChild(icono('i-reloj'));
