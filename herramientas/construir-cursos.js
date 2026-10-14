@@ -19,7 +19,7 @@ const path = require('path');
 
 const RAIZ = path.resolve(__dirname, '..');
 const SALIDA = path.resolve(process.argv[2] || RAIZ);
-const V = '20261019';                    // versión de academia.css y de los scripts propios
+const V = '20261020';                    // versión de academia.css y de los scripts propios
 const VI = '20261019';                   // versión de iconos.svg y sello.svg
 const MIN_FILTRO = Number(process.env.MIN_FILTRO || 5);   // el filtro por área aparece con 5 cursos o más
 const TIPOS_INSCRIPCION = ['invitacion', 'abierta', 'institucional'];
