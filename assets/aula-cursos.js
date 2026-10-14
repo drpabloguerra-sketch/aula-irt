@@ -6,7 +6,7 @@
    - el acceso a los módulos, en /cursos/ y en la página de cada curso (accion: "acceso").
    Después de publicarla, pegue aquí su URL /exec (README, sección 5).
    ========================================================================== */
-var URL_APPS_SCRIPT_AULA = 'https://script.google.com/macros/s/AKfycbw0-zV6ETywMeJWl82A8y7f3ciUwG1HJt2vpwXOkigWW9XMJJbObQXPqMkrWYELvLlC/exec';
+var URL_APPS_SCRIPT_AULA = 'https://script.google.com/macros/s/AKfycbz7MpT6VoCUo3HCFY8138z6lYC4DfdVIBKXRXI6k7zoMELdHorJPF0rCUKW3uhnizA/exec';
 
 var CURSOS_AULA = {
   'entrevista-motivacional': {
