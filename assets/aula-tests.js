@@ -49,6 +49,14 @@
     return typeof x === 'number' && isFinite(x) ? (Math.round(x * 10) / 10).toFixed(1).replace('.', ',') : '';
   }
   function tipoDe(modulo) { return modulo === 0 || modulo === '0' ? 'inicio' : modulo === 'final' ? 'final' : 'modulo'; }
+  // Tiempo estimado: un minuto por pregunta, redondeado a múltiplos de 5, con un mínimo de 10
+  function minutos(n) { return Math.max(10, Math.round(n / 5) * 5); }
+  function cantidad(n) { return n + (n === 1 ? ' pregunta' : ' preguntas'); }
+  // Texto bajo el título de la portada, según el tipo de test
+  var NIVEL = {
+    modulo: 'Cuestionario de nivel medio: casos y situaciones de la práctica en APS. Lea cada alternativa completa antes de elegir.',
+    final: 'Evaluación integradora de los cinco módulos, de nivel medio. Tiene un solo intento y no muestra respuestas correctas.'
+  };
   function antetitulo(tipo, modulo) {
     return tipo === 'inicio' ? 'Test de inicio' : tipo === 'final' ? 'Evaluación final' : 'Cuestionario · Módulo ' + modulo;
   }
@@ -176,6 +184,9 @@
       E.preguntas = Array.isArray(r.preguntas) ? r.preguntas : [];
       if (!E.preguntas.length) { pantallaMotivo('pronto'); return; }
       E.instrucciones = r.instrucciones || '';
+      // Cantidad y tiempo salen de lo que entrega el Apps Script, nunca de un número fijo
+      E.total = Number(r.total) > 0 ? Number(r.total) : E.preguntas.length;
+      E.minutos = Number(r.minutos) > 0 ? Math.round(Number(r.minutos)) : minutos(E.total);
       var g = recuperar(E.preguntas.length);
       E.respuestas = g ? g.r : E.preguntas.map(function () { return null; });
       E.actual = g ? Math.min(Math.max(0, g.a || 0), E.preguntas.length - 1) : 0;
@@ -239,10 +250,11 @@
     var h = el('h3', 'visual-oculto', 'Antes de comenzar');
     h.tabIndex = -1;
     caja.appendChild(h);
+    if (NIVEL[E.tipo]) caja.appendChild(el('p', 'test-portada__nivel', NIVEL[E.tipo]));
     if (E.instrucciones) caja.appendChild(el('p', 'test-portada__instrucciones', E.instrucciones));
     var datos = el('ul', 'test-datos');
-    [['i-test', n + (n === 1 ? ' pregunta' : ' preguntas')],
-     ['i-reloj', 'Unos ' + n + (n === 1 ? ' minuto' : ' minutos')],
+    [['i-test', cantidad(E.total)],
+     ['i-reloj', 'Unos ' + E.minutos + ' minutos'],
      ['i-candado', 'Un solo intento']].forEach(function (x) {
       var li = el('li');
       li.appendChild(icono(x[0]));
@@ -258,7 +270,7 @@
     acc.appendChild(b);
     caja.appendChild(acc);
     mostrar([caja], b);
-    anunciar(n + ' preguntas. Un solo intento.');
+    anunciar(cantidad(E.total) + ', unos ' + E.minutos + ' minutos. Un solo intento.');
   }
 
   function elegir(i, desdeTeclado) {
@@ -301,7 +313,8 @@
     barra.appendChild(relleno);
     prog.appendChild(txt); prog.appendChild(barra);
 
-    var enun = el('h3', 'test-enunciado', p.texto || '');
+    // Los casos clínicos de 2 o 3 líneas usan una letra algo menor para leerse completos
+    var enun = el('h3', 'test-enunciado' + ((p.texto || '').length > 140 ? ' test-enunciado--largo' : ''), p.texto || '');
     enun.id = 'test-enunciado';
     enun.tabIndex = -1;
 
@@ -460,6 +473,7 @@
       nb.appendChild(el('span', 'test-nota__etq', 'Nota'));
       nb.appendChild(el('b', null, nota(res.nota) || '—'));
       cab.appendChild(nb);
+      nb.appendChild(el('small', 'test-nota__aprobacion', 'Aprobación: 4,0'));
       var info = el('div', 'test-nota__info');
       if (res.puntaje != null && res.maximo != null) info.appendChild(el('p', 'test-nota__puntos', res.puntaje + ' de ' + res.maximo + ' puntos'));
       var ins = el('span', aprobado ? 'insignia-completado' : 'insignia-neutra');
@@ -471,18 +485,24 @@
       caja.appendChild(h);
       caja.appendChild(cab);
       if (ya) caja.appendChild(el('p', 'test-resultado__texto', 'Este cuestionario ya fue respondido. Tiene un solo intento.'));
-      anuncio = 'Nota ' + (nota(res.nota) || '') + '. ' + (aprobado ? 'Aprobado.' : 'Bajo 4,0.');
+      anuncio = 'Nota ' + (nota(res.nota) || '') + '. ' + (aprobado ? 'Aprobado.' : 'Bajo 4,0.') + ' Aprobación: 4,0.';
 
       var rev = Array.isArray(res.revision) ? res.revision : [];
       if (rev.length) {
+        var esBien = function (q) { return q.elegida != null && q.elegida === q.correcta; };
+        var buenas = rev.filter(esBien).length, malas = rev.length - buenas;
+        var resumen = buenas + (buenas === 1 ? ' correcta' : ' correctas') + (malas ? ' · ' + malas + ' por revisar' : '');
+        caja.appendChild(el('p', 'test-correccion__resumen', resumen));
+        // Plegada al abrir; al desplegar, primero las incorrectas (en su orden original)
+        var orden = rev.filter(function (q) { return !esBien(q); }).concat(rev.filter(esBien));
         var det = el('details', 'test-correccion');
-        det.appendChild(el('summary', null, 'Revisar mis respuestas, pregunta a pregunta'));
+        det.appendChild(el('summary', null, malas ? 'Revisar mis respuestas, primero las incorrectas' : 'Revisar mis respuestas, pregunta a pregunta'));
         var ol = el('ol', 'test-correccion__lista');
-        rev.forEach(function (q) {
+        orden.forEach(function (q) {
           var li = el('li', 'test-correccion__item');
           li.appendChild(el('p', 'test-correccion__pregunta', (q.n ? q.n + '. ' : '') + (q.texto || '')));
           var op = q.opciones || [];
-          var bien = q.elegida === q.correcta;
+          var bien = esBien(q);
           var suya = el('p', 'test-correccion__linea ' + (bien ? 'test-correccion__linea--bien' : 'test-correccion__linea--mal'));
           suya.appendChild(icono(bien ? 'i-completado' : 'i-error'));
           var ts = el('span');
@@ -522,5 +542,5 @@
     if (cb) cb(n, enviado);
   }
 
-  window.AulaTests = { abrir: abrir };
+  window.AulaTests = { abrir: abrir, minutos: minutos };
 })();

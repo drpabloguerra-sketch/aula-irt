@@ -867,6 +867,7 @@ html.con-ventana{overflow:hidden}
 .test-esqueleto span{height:52px;background:var(--salvia);border-radius:12px}
 .test-esqueleto span:first-child{height:24px;width:70%}
 
+.test-portada__nivel{margin:0 0 14px;font-size:18px;line-height:1.5;color:var(--tinta)}
 .test-portada__instrucciones{font-size:18px;color:var(--texto);margin:0 0 18px}
 .test-datos{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-wrap:wrap;gap:10px}
 .test-datos li{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--salvia);color:var(--tinta);font-size:16px;font-weight:700}
@@ -886,6 +887,10 @@ html.con-ventana{overflow:hidden}
 @media (prefers-reduced-motion:no-preference){ .test-progreso__barra span{transition:width .25s ease} }
 .test-enunciado{font-family:var(--f-titulo);font-size:clamp(21px,2.6vw,24px);line-height:1.35;color:var(--tinta);margin:0 0 16px}
 .test-enunciado:focus{outline:none}
+/* Casos de 2 o 3 líneas: texto completo, sin cortes ni puntos suspensivos */
+.test-enunciado,.test-alternativa__texto{overflow-wrap:anywhere;white-space:normal}
+.test-enunciado--largo{font-family:var(--f-texto);font-size:20px;line-height:1.5;font-weight:700}
+.test-alternativa__texto{flex:1 1 auto;min-width:0;padding-top:3px}
 
 .test-alternativas{display:grid;gap:10px}
 .test-alternativa{position:relative;display:flex;align-items:flex-start;gap:14px;min-height:56px;padding:14px 16px;border:1.5px solid var(--texto-suave);border-radius:12px;background:var(--blanco);color:var(--texto);font-size:18px;line-height:1.45;cursor:pointer}
@@ -926,11 +931,13 @@ html.con-ventana{overflow:hidden}
 .test-nota__valor{display:grid;margin:0;line-height:1}
 .test-nota__etq{font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--texto-suave)}
 .test-nota__valor b{font-family:var(--f-titulo);font-size:64px;color:var(--ocre-osc);line-height:1.05}
+.test-nota__aprobacion{margin-top:4px;font-size:14px;line-height:1.3;color:var(--texto-suave)}
 .test-nota__info{display:grid;gap:8px;justify-items:start}
 .test-nota__puntos{margin:0;font-size:19px;font-weight:700;color:var(--tinta)}
 .insignia-neutra{display:inline-flex;align-items:center;gap:6px;padding:3px 12px 3px 8px;border-radius:999px;border:1px solid var(--texto-suave);background:var(--blanco);color:var(--texto);font-size:15px;font-weight:700}
 .insignia-neutra .ico{width:18px;height:18px;color:var(--texto-suave)}
 
+.test-correccion__resumen{margin:0 0 10px;font-size:18px;font-weight:700;color:var(--tinta)}
 .test-correccion{border:1px solid var(--linea);border-radius:12px;background:var(--blanco)}
 .test-correccion summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:10px 16px;cursor:pointer;list-style:none;font-weight:700;color:var(--petroleo-osc)}
 .test-correccion summary::-webkit-details-marker{display:none}
@@ -949,10 +956,12 @@ html.con-ventana{overflow:hidden}
 /* Tarjetas del test de inicio y de la evaluación final en el aula */
 .modulo--evaluacion .num .ico{color:var(--petroleo);margin-bottom:4px}
 .modulo--evaluacion.modulo--bloqueado .num .ico{color:var(--pendiente-texto)}
+.modulo .modulo__ficha-test{display:inline-block;margin:0 0 14px;padding:4px 12px;border-radius:999px;background:var(--salvia);font-size:16px;font-weight:700;color:var(--tinta)}
 
 @media (max-width:560px){
   .test-ventana{width:100vw}
   .test-acciones--fijas,.test-navegacion{margin:18px -16px 0;padding:12px 16px 16px}
   .test-alternativa{font-size:17px;padding:12px 14px}
+  .test-enunciado--largo{font-size:18px}
   .test-nota__valor b{font-size:54px}
 }

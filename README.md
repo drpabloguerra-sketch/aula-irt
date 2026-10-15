@@ -91,7 +91,7 @@ El script (solo necesita Node.js, sin instalar nada) revisa los datos, escribe e
 | `imagen` · `imagenAlt` | `assets/img/cursos/[slug].jpg` (1600×900, menos de 250 KB) y su descripción. Sin descripción se usa el título. |
 | `modalidad` · `horas` · `idioma` · `dirigidoA` · `certificado` | Datos clave de la tarjeta lateral. Un campo vacío no se muestra. |
 | `inscripcion` | `invitacion` (botón «¿Cómo me inscribo?», abre esa pregunta), `abierta` (botón «Inscribirme», abre la ventana de inscripción con `codigoInscripcion`) o `institucional` (botón «Solicitar este curso para mi institución», abre la ventana «Solicitud de capacitación» con `tituloCorto` preseleccionado; agregue ese texto como `<option>` en la ventana de `index.html`). |
-| `sobre` · `aprenderas` · `requisitos` · `faq` | Párrafos, resultados de aprendizaje, requisitos y preguntas frecuentes (`{ "p", "r" }`). Se muestran 5 preguntas y el resto con «Ver más preguntas». |
+| `sobre` · `aprenderas` · `requisitos` · `faq` | Párrafos, resultados de aprendizaje, requisitos y preguntas frecuentes (`{ "p", "r" }`). Se muestran las cinco primeras y el resto con «Ver más preguntas». |
 | `aula` (opcional) | Solo para cursos con módulos en el aula: agrega el ingreso con RUT o correo y la vista privada (`jornadaHoras`, `jornadaTexto`, `requisito`, `totalModulos`, `descripciones` de cada módulo). Agregue también el curso en `assets/aula-cursos.js` con la misma clave que `slug`, y sus módulos en la hoja «Módulos» del Apps Script. |
 | `aula.bienvenida` (opcional) | Tarjeta de bienvenida de la sala, entre el saludo y el avance: `texto` (lista de párrafos), `firma`, `cargo` y `video` (YouTube o Drive con `/preview`; vacío, sin botón). La persona puede plegarla; la preferencia queda en su navegador, por curso. |
 | `aula.frases` (opcional) | Frase guía de cada módulo (`{ "1": "…" }`), bajo el título de su tarjeta. |
@@ -103,7 +103,7 @@ Si alguno de estos campos opcionales no está, la sala no dibuja ese bloque. Sus
 
 Las secciones de la página de cada curso tienen anclas: `#informacion`, `#certificado`, `#preguntas`, `#pregunta-N` (abre esa pregunta) e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261022`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261023`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`).
 
 ## 4. Direcciones antiguas
 
@@ -170,6 +170,11 @@ El test de inicio, el cuestionario de cada módulo y la evaluación final se res
 - **Avance:** las respuestas en curso (solo índices, sin datos personales) se guardan en `sessionStorage` con la clave `aulaIRT.test.[curso].[módulo]` y se borran al enviar.
 - **Después de enviar,** la página vuelve a pedir los módulos con `fresco: true`, para que `accesoAula_` relea el formulario sin esperar la caché de un minuto: la nota aparece y el módulo siguiente se libera sin recargar.
 - **Evaluación final:** fila «final» en la hoja «Módulos». Se abre con la propiedad del script `FINAL_ABIERTA_[código del curso]` = `Sí`.
+- **Cantidad de preguntas y tiempo: nunca fijos en el sitio.** La ventana usa el `total` que devuelve `abrir`. El tiempo es 1 minuto por pregunta, redondeado al múltiplo de 5 más cercano, con un mínimo de 10 (10 → 10 min, 16 → 15 min, 20 → 20 min). Si el Apps Script envía `minutos`, se usa ese valor. Para cambiar un test de 10 a 16 preguntas basta con cambiar el formulario: el sitio no se toca.
+- **Tarjeta de la evaluación final** en la sala: muestra «N preguntas · M min · un solo intento» si el acceso trae `total` (y opcionalmente `minutos`) en el elemento `{ n: "final" }`; sin `total`, solo «Un solo intento». Cerrada: «Se habilita durante la jornada presencial».
+- **Portada de la ventana (nivel medio):** los módulos muestran «Cuestionario de nivel medio: casos y situaciones de la práctica en APS. Lea cada alternativa completa antes de elegir.»; la final, «Evaluación integradora de los cinco módulos, de nivel medio. Tiene un solo intento y no muestra respuestas correctas.». Los textos están en `NIVEL`, al inicio de `aula-tests.js`.
+- **Enunciados largos:** los casos de más de 140 caracteres usan una letra algo menor; enunciado y alternativas se ven completos (la tarjeta crece en alto, nunca corta el texto).
+- **Resultado de un módulo:** nota, puntaje y, en letra pequeña bajo la nota, «Aprobación: 4,0» (60 % de exigencia: 6 de 10, 10 de 16). Arriba de la revisión, un resumen («8 correctas · 2 por revisar»); la revisión parte plegada y, al desplegarla, muestra primero las incorrectas. El test de inicio y la evaluación final solo muestran «recibido», sin nota.
 
 ## 6. Solicitudes de capacitación y dirección del sitio institucional
 
