@@ -478,11 +478,21 @@
     cuerpo.appendChild(insigniaEstado(estado));
     cuerpo.appendChild(el('h3', null, 'Evaluación final'));
     cuerpo.appendChild(el('p', null, 'Se responde durante la jornada presencial, al cierre del curso.'));
+    var ficha = fichaTest(f);
+    if (ficha) cuerpo.appendChild(ficha);
     if (estado === 'disponible') cuerpo.appendChild(botonTest(f, 'Responder la evaluación final', 'btn--primario'));
     else if (estado === 'completado') cuerpo.appendChild(botonTest(f, 'Ver mi resultado', 'btn--secundario btn--chico'));
     else cuerpo.appendChild(textoBloqueo('i-candado', 'Se habilita durante la jornada presencial.'));
     art.appendChild(cuerpo);
     return art;
+  }
+  // «N preguntas · M min · un solo intento», con la cantidad que informa el Apps Script (total)
+  function fichaTest(t) {
+    var n = Number(t.total);
+    if (!(n > 0)) return el('p', 'modulo__ficha-test', 'Un solo intento');
+    var min = Number(t.minutos) > 0 ? Math.round(Number(t.minutos))
+      : window.AulaTests && window.AulaTests.minutos ? window.AulaTests.minutos(n) : Math.max(10, Math.round(n / 5) * 5);
+    return el('p', 'modulo__ficha-test', n + (n === 1 ? ' pregunta' : ' preguntas') + ' · ' + min + ' min · un solo intento');
   }
   function insigniaEstado(estado) {
     var meta = el('div', 'modulo__estado');
