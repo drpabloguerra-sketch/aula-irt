@@ -103,7 +103,7 @@ El script también revisa cada `curso.json` del repositorio (en `cursos/[slug]/`
 
 Las secciones de la página de cada curso tienen anclas: `#informacion`, `#certificado`, `#preguntas`, `#pregunta-N` (abre esa pregunta) e `#ingresar`. Ejemplo: `…/cursos/entrevista-motivacional/#ingresar`.
 
-**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261025`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `aula.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`, `aula.js`, `aula-tests.js` e `inscripcion.js`). Las salas por institución (`plantillas/sala/index.html` y sus copias) llevan las fechas escritas a mano: cámbielas también ahí.
+**Estilos compartidos.** Todas las páginas cargan `/assets/academia.css?v=20261025b`. Si modifica ese archivo, cambie la fecha de `?v=` en las páginas escritas a mano (portada, 404, `/cursos/`, inscripción y redirección) y en `V` de `herramientas/construir-cursos.js` (y vuelva a ejecutarlo) para que los navegadores descarguen la versión nueva. Lo mismo para `academia.js`, `aula-cursos.js`, `aula-acceso.js`, `aula.js`, `inscripcion.js` e `iconos.svg` (este último también está en `ICONOS`, al inicio de `aula-acceso.js`, `aula.js`, `aula-tests.js` e `inscripcion.js`). Las salas por institución (`plantillas/sala/index.html` y sus copias) llevan las fechas escritas a mano: cámbielas también ahí.
 
 ## 4. Direcciones antiguas
 
@@ -201,7 +201,12 @@ Después de ingresar con RUT o correo, la página del curso muestra la **sala**:
 {
   "curso": "Nombre del curso",
   "institucion": "Institución",
-  "relator": { "nombre": "", "cargo": "" },
+  "relator": {
+    "nombre": "", "iniciales": "", "foto": "", "rol": "Relator", "cargo": "", "resena": "",
+    "formacion": [], "formacionComplementaria": [],
+    "contacto": "academia@institutoriesgoterritorial.cl",
+    "enlace": { "texto": "Ver perfil en LinkedIn", "url": "https://…" }
+  },
   "acceso": "entrevista-motivacional",
   "fechas": { "plazoEnLinea": "2026-11-30", "jornada": "2026-12-05", "horario": "09:00 a 17:00 horas", "lugar": "" },
   "jornada": { "horas": "8 horas pedagógicas", "texto": "", "juntos": "", "requisito": "" },
@@ -214,7 +219,8 @@ Después de ingresar con RUT o correo, la página del curso muestra la **sala**:
 
 | Campo | Qué es |
 |---|---|
-| `curso` · `institucion` · `relator` | Banda del curso y «Equipo docente». Sin `institucion`, se usa la que envía el Apps Script al ingresar (así lo hace la página compartida de Entrevista Motivacional, que no nombra a la entidad contratante en el repositorio). |
+| `relator` | Ficha destacada, primera del «Equipo docente» en Personas: `rol` (etiqueta), `nombre` (en Caladea), `cargo` (una línea), `resena` (párrafos separados por una línea en blanco), `formacion` y `formacionComplementaria` (listas breves, se muestran juntas bajo «Formación»), `contacto` (solo correos `@institutoriesgoterritorial.cl`; **nunca teléfono**) y `enlace` (`texto` y `url` https, se abre en una pestaña nueva). Sin `foto`, muestra un círculo petróleo con anillo ocre y las `iniciales` (si faltan, nombre y primer apellido sin el título). `foto`: ruta del sitio (`/assets/img/relatores/…`, cuadrada, al menos 240×240) o dirección https. El `nombre` también aparece en la banda del curso y como autor de los avisos. |
+| `curso` · `institucion` | Banda del curso y «Equipo docente». Sin `institucion`, se usa la que envía el Apps Script al ingresar (así lo hace la página compartida de Entrevista Motivacional, que no nombra a la entidad contratante en el repositorio). |
 | `acceso` | Clave del curso en `assets/aula-cursos.js` (qué aplicación web valida el ingreso). |
 | `fechas` | Plazo de la etapa en línea, fecha, horario y lugar de la jornada. Fechas como `AAAA-MM-DD` (se muestran «5 de diciembre de 2026»). Si el Apps Script envía fecha, horario o lugar de la jornada, mandan esos. |
 | `jornada` · `bienvenida` | Textos del tema «Jornada presencial» y de la bienvenida del Tablón (`video`: YouTube o Drive con `/preview`). |

@@ -393,7 +393,7 @@
     avisos.forEach(function (a) {
       var art = el('article', 'tarjeta-sala aviso-sala');
       var cab = el('div', 'aviso-sala__cab');
-      var av = el('span', 'avatar', inicial((cfg.relator || {}).nombre || 'A'));
+      var av = el('span', 'avatar', hay((cfg.relator || {}).nombre) ? iniciales(cfg.relator) : 'A');
       av.setAttribute('aria-hidden', 'true');
       cab.appendChild(av);
       var quien = el('div');
@@ -900,10 +900,10 @@
     eq.appendChild(he);
     var ul = el('ul', 'personas__lista');
     var r = cfg.relator || {};
-    if (hay(r.nombre)) ul.appendChild(persona(texto(r.nombre), texto(r.cargo) || 'Relator del curso', null));
+    if (hay(r.nombre)) ul.appendChild(fichaRelator(r));
     var inst = texto(cfg.institucion) || texto((sesion.datos || {}).institucion);
     if (inst) ul.appendChild(persona(inst, 'Institución', 'i-territorio'));
-    var irt = persona('Academia IRT', 'Coordinación del curso', 'i-certificado');
+    var irt = persona('Academia IRT', 'Coordinación académica', 'i-certificado');
     var dato = irt.querySelector('.persona__dato');
     dato.appendChild(document.createTextNode(' · '));
     dato.appendChild(enlaceCorreo());
@@ -933,6 +933,72 @@
     }
     p.appendChild(pa);
   }
+  // Iniciales del relator: «iniciales» de curso.json o, si no está, nombre y primer apellido sin el título
+  function iniciales(r) {
+    var i = texto(r.iniciales);
+    if (i) return i.slice(0, 3).toUpperCase();
+    var p = texto(r.nombre).replace(/^(dr|dra|prof|profa|sr|sra)\.?\s+/i, '').split(/\s+/).filter(Boolean);
+    return ((p[0] || '').charAt(0) + (p.length > 3 ? p[2] : p[1] || '').charAt(0)).toUpperCase();
+  }
+  // Foto del relator: dirección https o ruta del propio sitio (/assets/…)
+  function fotoSegura(u) { var t = texto(u); return /^https:\/\//i.test(t) || /^\/(?!\/)/.test(t) ? t : null; }
+
+  // Ficha destacada del relator (curso.json → relator). Sin teléfono: solo el correo de la Academia.
+  function fichaRelator(r) {
+    var li = el('li', 'relator');
+    var foto = fotoSegura(r.foto);
+    var av;
+    if (foto) {
+      av = el('img', 'relator__foto');
+      av.src = foto;
+      av.alt = '';
+      av.width = 120; av.height = 120;
+      av.loading = 'lazy';
+    } else {
+      av = el('span', 'relator__iniciales', iniciales(r));
+      av.setAttribute('aria-hidden', 'true');
+    }
+    li.appendChild(av);
+
+    var tx = el('div', 'relator__texto');
+    if (hay(r.rol)) tx.appendChild(el('p', 'relator__rol', texto(r.rol)));
+    tx.appendChild(el('p', 'relator__nombre', texto(r.nombre)));
+    if (hay(r.cargo)) tx.appendChild(el('p', 'relator__cargo', texto(r.cargo)));
+    if (hay(r.resena)) { var re = el('div', 'relator__resena'); parrafos(re, texto(r.resena)); tx.appendChild(re); }
+
+    var formacion = [].concat(r.formacion || [], r.formacionComplementaria || []).filter(hay);
+    if (formacion.length) {
+      tx.appendChild(el('p', 'relator__subtitulo', 'Formación'));
+      var ul = el('ul', 'relator__formacion');
+      formacion.forEach(function (f) { ul.appendChild(el('li', null, texto(f))); });
+      tx.appendChild(ul);
+    }
+
+    var acc = el('p', 'relator__contacto');
+    var correo = texto(r.contacto);
+    if (/^[^\s@]+@institutoriesgoterritorial\.cl$/i.test(correo)) {
+      var c = el('span', 'relator__correo');
+      var a = el('a', 'correo', correo);
+      a.href = 'mailto:' + correo;
+      c.appendChild(icono('i-correo'));
+      c.appendChild(a);
+      acc.appendChild(c);
+    }
+    var enlace = r.enlace || {};
+    var url = seguro(enlace.url);
+    if (url) {
+      var l = el('a', 'relator__enlace', texto(enlace.texto) || 'Ver perfil');
+      l.href = url;
+      l.target = '_blank';
+      l.rel = 'noopener noreferrer';
+      l.appendChild(el('span', 'visual-oculto', ' (se abre en una pestaña nueva)'));
+      acc.appendChild(l);
+    }
+    if (acc.children.length) tx.appendChild(acc);
+    li.appendChild(tx);
+    return li;
+  }
+
   function persona(nombre, dato, ico) {
     var li = el('li', 'persona');
     var av = el('span', 'avatar' + (ico ? ' avatar--ico' : ''));
