@@ -1109,6 +1109,25 @@ html.con-sala .cabecera{position:relative}
 .persona{display:flex;align-items:center;gap:14px;padding:12px 4px;border-bottom:1px solid var(--linea)}
 .persona__nombre{margin:0;font-weight:700;color:var(--tinta);line-height:1.3}
 .persona__dato{margin:0;font-size:16px;color:var(--texto-suave)}
+/* Ficha destacada del relator (primera del «Equipo docente») */
+.relator{display:flex;align-items:flex-start;gap:28px;margin:16px 0 8px;padding:26px 28px;background:var(--blanco);border:1px solid var(--linea);border-top:5px solid var(--petroleo);border-radius:12px}
+.relator__iniciales,.relator__foto{flex:none;width:120px;height:120px;border-radius:50%}
+.relator__iniciales{display:grid;place-items:center;background:var(--petroleo);color:var(--blanco);font:700 44px/1 var(--f-titulo);letter-spacing:1px;box-shadow:0 0 0 5px var(--blanco),0 0 0 9px var(--ocre)}
+.relator__foto{object-fit:cover;box-shadow:0 0 0 5px var(--blanco),0 0 0 9px var(--ocre)}
+.relator__texto{flex:1;min-width:0}
+.relator__rol{display:inline-block;margin:0 0 6px;padding:2px 12px;border-radius:999px;background:var(--ocre-claro);border:1px solid var(--ocre);color:var(--ocre-osc);font-size:15px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.relator__nombre{margin:0 0 4px;font-family:var(--f-titulo);font-size:clamp(24px,2.6vw,30px);font-weight:700;line-height:1.2;color:var(--tinta)}
+.relator__cargo{margin:0 0 14px;font-weight:700;color:var(--petroleo-osc)}
+.relator__resena p{margin:0 0 12px}
+.relator__subtitulo{margin:4px 0 6px;font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--texto-suave)}
+.relator__formacion{margin:0 0 14px;padding-left:22px;font-size:17px}
+.relator__formacion li{margin-bottom:4px}
+.relator__formacion li::marker{color:var(--ocre)}
+.relator__contacto{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;margin:0;padding-top:14px;border-top:1px solid var(--linea)}
+.relator__correo{display:inline-flex;align-items:center;gap:8px}
+.relator__correo .ico{width:22px;height:22px;color:var(--petroleo)}
+.relator__enlace{display:inline-flex;align-items:center;min-height:44px;font-weight:700;color:var(--petroleo-osc)}
+.relator__enlace::after{content:"↗";margin-left:6px;font-weight:400}
 .personas__vacio{margin:12px 0 0;color:var(--texto-suave)}
 .personas__nota{margin:10px 0 0;font-size:15px;color:var(--texto-suave)}
 
@@ -1189,5 +1208,8 @@ html.con-sala .cabecera{position:relative}
   .aporte-ventana__datos{grid-template-columns:1fr}
   .aporte-ventana{width:100vw;max-width:100vw;max-height:100dvh;height:100dvh;margin:0;border-radius:0}
   .aportes--respuestas{margin-left:4px;padding-left:12px}
+  .relator{flex-direction:column;align-items:center;gap:18px;padding:22px 18px;text-align:left}
+  .relator__iniciales,.relator__foto{width:96px;height:96px;font-size:36px}
+  .relator__texto{width:100%}
   .aula-aviso{top:auto!important;bottom:calc(84px + env(safe-area-inset-bottom))}
 }
