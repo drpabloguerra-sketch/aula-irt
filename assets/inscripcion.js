@@ -18,7 +18,7 @@
 (function () {
   var URL = window.URL_APPS_SCRIPT_AULA || '';
   var CORREO = 'academia@institutoriesgoterritorial.cl';
-  var ICONOS = '/assets/iconos.svg?v=20261021';
+  var ICONOS = '/assets/iconos.svg?v=20261025';
 
   /* ---------- RUT: normalizar y verificar el dígito (módulo 11) ---------- */
   function normalizarRut(v) {

@@ -17,7 +17,7 @@
                        alCerrar(enviado), alContinuar(n), alPerderSesion() })
    ========================================================================== */
 (function () {
-  var ICONOS = '/assets/iconos.svg?v=20261021';
+  var ICONOS = '/assets/iconos.svg?v=20261025';
   var CORREO = 'academia@institutoriesgoterritorial.cl';
   var LETRAS = 'abcdefghij';
 

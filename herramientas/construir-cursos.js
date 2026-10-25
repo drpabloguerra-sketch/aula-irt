@@ -19,8 +19,8 @@ const path = require('path');
 
 const RAIZ = path.resolve(__dirname, '..');
 const SALIDA = path.resolve(process.argv[2] || RAIZ);
-const V = '20261023';                    // versión de academia.css y de los scripts propios
-const VI = '20261021';                   // versión de iconos.svg y sello.svg
+const V = '20261025';                    // versión de academia.css y de los scripts propios
+const VI = '20261025';                   // versión de iconos.svg y sello.svg
 const MIN_FILTRO = Number(process.env.MIN_FILTRO || 5);   // el filtro por área aparece con 5 cursos o más
 const TIPOS_INSCRIPCION = ['invitacion', 'abierta', 'institucional'];
 
@@ -51,10 +51,43 @@ cursos.forEach(c => {
   const publico = [c.titulo, c.tituloCorto, c.bajada, c.modalidad, c.horas, c.dirigidoA, c.certificado, c.estado, c.area]
     .concat(c.sobre || [], c.aprenderas || [], c.requisitos || [], (c.faq || []).map(f => f.p + ' ' + f.r));
   publico.forEach(t => PROHIBIDO.forEach(re => { if (re.test(t || '')) throw new Error(`Curso ${c.slug}: texto público no permitido (${re}): «${t}»`); }));
-  // Textos de la sala (solo para inscritos): pueden nombrar módulos, pero sin precios, SENCE, OTEC ni [PENDIENTE]
-  const a = c.aula || {}, b = a.bienvenida || {};
-  const sala = [b.firma, b.cargo, (a.jornada || {}).texto].concat(b.texto || [], Object.values(a.frases || {}));
-  sala.forEach(t => PROHIBIDO.slice(1).forEach(re => { if (re.test(t || '')) throw new Error(`Curso ${c.slug}: texto de la sala no permitido (${re}): «${t}»`); }));
+});
+
+/* ---------- Salas del curso: cada curso.json (cursos/[slug]/ y carpetas por institución) ----------
+   La sala (assets/aula.js) se arma con ese archivo. Como el repositorio es público,
+   se revisa que no tenga enlaces a Drive, Docs o Forms, datos personales ni [PENDIENTE]. */
+function salas() {
+  const lista = [];
+  const mirar = dir => { const f = path.join(dir, 'curso.json'); if (fs.existsSync(f)) lista.push(f); };
+  fs.readdirSync(RAIZ, { withFileTypes: true }).filter(d => d.isDirectory() && !/^(\.|node_modules$|assets$|docs$|herramientas$)/.test(d.name))
+    .forEach(d => { mirar(path.join(RAIZ, d.name)); fs.readdirSync(path.join(RAIZ, d.name), { withFileTypes: true }).filter(e => e.isDirectory()).forEach(e => mirar(path.join(RAIZ, d.name, e.name))); });
+  return lista;
+}
+const PROHIBIDO_SALA = [
+  [/docs\.google|drive\.google|forms\.gle|forms\.google/i, 'enlace a Google Docs, Drive o Forms (los entrega el Apps Script)'],
+  [/ENLACE_/, 'código ENLACE_ (los materiales ya no van en el repositorio)'],
+  [/PENDIENTE/i, '[PENDIENTE] (deje el campo vacío)'],
+  [/\b\d{1,2}\.?\d{3}\.?\d{3}-[\dkK]\b/, 'algo que parece un RUT'],
+  [/[\w.+-]+@(?!institutoriesgoterritorial\.cl)[\w-]+\.[\w.]+/i, 'un correo personal'],
+  [/(\+?56)?\s?9\s?\d{4}\s?\d{4}/, 'algo que parece un teléfono'],
+  [/\bSENCE\b|\bOTEC\b|\$\s?\d|\bCLP\b/, 'precios, SENCE u OTEC']
+];
+salas().forEach(f => {
+  const rel = path.relative(RAIZ, f);
+  let c;
+  try { c = JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { throw new Error(`${rel}: no es un JSON válido (${e.message}).`); }
+  const textos = [];
+  (function recorrer(v, clave) {
+    if (typeof v === 'string') { if (!/^_/.test(clave)) textos.push(v); }
+    else if (Array.isArray(v)) v.forEach(x => recorrer(x, clave));
+    else if (v && typeof v === 'object') Object.keys(v).forEach(k => recorrer(v[k], k));
+  })(c, '');
+  textos.forEach(t => PROHIBIDO_SALA.forEach(([re, que]) => { if (re.test(t)) throw new Error(`${rel}: ${que}: «${t.slice(0, 80)}»`); }));
+  const ep = String(c.ENDPOINT_FORO || '');
+  if (ep && !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(ep)) throw new Error(`${rel}: ENDPOINT_FORO debe ser la URL /exec de un Apps Script (https://script.google.com/macros/s/…/exec) o quedar vacío.`);
+  if (c.modulos && !Array.isArray(c.modulos)) throw new Error(`${rel}: «modulos» debe ser una lista.`);
+  (c.avisos || []).forEach(a => { if (a.fecha && !/^\d{4}-\d{2}-\d{2}$/.test(a.fecha)) throw new Error(`${rel}: la fecha de un aviso debe ir como AAAA-MM-DD («${a.fecha}»).`); });
+  console.log('  revisado ' + rel);
 });
 
 /* ---------- Imagen: la indicada o la portada de reserva ---------- */
@@ -63,39 +96,6 @@ function imagenDe(c) {
   return { src: `/assets/img/cursos/${c.slug}-reserva.svg`, reserva: true };
 }
 const altDe = c => hay(c.imagenAlt) ? c.imagenAlt : c.titulo;
-
-/* ---------- Sala del curso: bienvenida y jornada (opcionales) ---------- */
-// Video del saludo: YouTube (se pasa a youtube-nocookie.com/embed) o Drive con /preview
-function videoSaludo(url) {
-  const u = String(url || '').trim();
-  if (!u) return '';
-  const yt = u.match(/^https:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/)|youtube-nocookie\.com\/embed\/|youtu\.be\/)([\w-]{11})/i);
-  if (yt) return 'https://www.youtube-nocookie.com/embed/' + yt[1];
-  if (/^https:\/\/drive\.google\.com\/file\/d\/[\w-]+\/preview/i.test(u)) return u;
-  avisar(`el video de la bienvenida no es de YouTube ni de Drive con /preview: no se muestra (${u}).`);
-  return '';
-}
-function bienvenida(c) {
-  const b = (c.aula || {}).bienvenida || {};
-  const parrafos = (b.texto || []).filter(hay);
-  if (!parrafos.length) return '';
-  const video = videoSaludo(b.video);
-  return `<section class="bienvenida" id="aula-bienvenida" data-curso="${esc(c.slug)}" aria-labelledby="bienvenida-titulo">
-      <div class="bienvenida__barra">
-        <h3 class="bienvenida__ante" id="bienvenida-titulo"><span data-bienvenida-plegada hidden>Bienvenida del director</span><span data-bienvenida-abierta>Bienvenida</span></h3>
-        <button type="button" class="bienvenida__alternar" aria-expanded="true" aria-controls="bienvenida-cuerpo" data-bienvenida-alternar>Ocultar</button>
-      </div>
-      <div class="bienvenida__cuerpo" id="bienvenida-cuerpo">
-${parrafos.map(p => `        <p>${esc(p)}</p>`).join('\n')}
-        ${hay(b.firma) ? `<p class="bienvenida__firma"><b>${esc(b.firma)}</b>${hay(b.cargo) ? `<span>${esc(b.cargo)}</span>` : ''}</p>` : ''}
-        ${video ? `<button type="button" class="btn btn--secundario btn--chico bienvenida__video" aria-haspopup="dialog" data-video="${esc(video)}">${ico('i-presentacion')}Ver el saludo (1 min)</button>` : ''}
-      </div>
-    </section>`;
-}
-function jornadaJuntos(c) {
-  const t = ((c.aula || {}).jornada || {}).texto;
-  return hay(t) ? `<p class="jornada__juntos">${esc(t)}</p>` : '';
-}
 
 // Portada de reserva: fondo salvia, trazos técnicos en petróleo y un acento ocre
 function svgReserva(c) {
@@ -199,14 +199,9 @@ function paginaCurso(c) {
   const ventanaSolicitud = institucional ? '\n' + extraerVentanaSolicitud() + '\n' : '';
   let aulaIngreso = '', aulaPrivada = '';
   if (conAula) {
-    const a = c.aula;
-    const desc = Object.keys(a.descripciones || {}).map(n => `<p data-modulo="${esc(n)}">${esc(a.descripciones[n])}</p>`).join('')
-      + Object.keys(a.frases || {}).filter(n => hay(a.frases[n])).map(n => `<p data-frase="${esc(n)}">${esc(a.frases[n])}</p>`).join('');
-    const rellenar = t => t.replace(/\{\{SLUG\}\}/g, c.slug).replace(/\{\{TITULO\}\}/g, esc(c.titulo))
-      .replace(/\{\{TOTAL\}\}/g, String(a.totalModulos || 5)).replace(/\{\{JORNADA_HORAS\}\}/g, esc(a.jornadaHoras || ''))
-      .replace(/\{\{JORNADA_TEXTO\}\}/g, esc(a.jornadaTexto || '')).replace(/\{\{REQUISITO\}\}/g, esc(a.requisito || ''))
-      .replace(/\{\{DESCRIPCIONES\}\}/g, desc).replace(/\{\{BIENVENIDA\}\}/g, bienvenida(c))
-      .replace(/\{\{JORNADA_JUNTOS\}\}/g, jornadaJuntos(c));
+    // La sala lee cursos/[slug]/curso.json (README, sección 5d)
+    if (!fs.existsSync(path.join(RAIZ, 'cursos', c.slug, 'curso.json'))) avisar(`falta cursos/${c.slug}/curso.json: la sala se mostrará solo con lo que entrega el Apps Script.`);
+    const rellenar = t => t.replace(/\{\{SLUG\}\}/g, c.slug);
     aulaIngreso = rellenar(entre(bloqueAula, '<!--INGRESO-->', '<!--/INGRESO-->')).trim();
     aulaPrivada = rellenar(entre(bloqueAula, '<!--AULA-->', '<!--/AULA-->')).trim();
   }
@@ -372,7 +367,7 @@ ${ventanaSolicitud}
 <script src="/assets/aula-cursos.js?v=${V}"></script>
 <script src="/assets/inscripcion.js?v=${V}"></script>
 <script src="/assets/catalogo.js?v=${V}"></script>
-${conAula ? `<script src="/assets/aula-tests.js?v=${V}"></script>\n<script src="/assets/aula-acceso.js?v=${V}"></script>\n` : ''}</body>
+${conAula ? `<script src="/assets/aula-tests.js?v=${V}"></script>\n<script src="/assets/aula-acceso.js?v=${V}"></script>\n<script src="/assets/aula.js?v=${V}"></script>\n` : ''}</body>
 </html>
 `.replace(/\n[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n');
 }

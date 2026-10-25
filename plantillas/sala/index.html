@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Academia IRT · Sala del curso</title>
+<meta name="theme-color" content="#0E5E6F">
+<link rel="icon" href="/assets/sello.svg?v=20261025" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/academia.css?v=20261025">
+</head>
+<body>
+<!-- ======================================================================
+     PLANTILLA DE SALA POR INSTITUCIÓN (README, sección 5d)
+     Para un curso nuevo: copie esta carpeta completa a la raíz con un nombre
+     difícil de adivinar (institucion-año-6 letras/números al azar, por ejemplo
+     elquisco-2027-p4m8t2/) y edite SOLO su curso.json. Esta página no se toca:
+     assets/aula.js la arma leyendo ese archivo.
+     ====================================================================== -->
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="cabecera">
+  <div class="wrap">
+    <a class="marca" href="/">
+      <svg class="sello" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0E5E6F"/><circle cx="32" cy="32" r="25.5" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><path d="M14 45.5a22 22 0 0 0 36 0" fill="none" stroke="#B7791F" stroke-width="3" stroke-linecap="round"/><text x="32" y="38" text-anchor="middle" font-family="Caladea, Cambria, Georgia, serif" font-weight="700" font-size="19" fill="#fff">IRT</text></svg>
+      <span><b>Academia IRT</b><small>Aula virtual del Instituto de Riesgo Territorial</small></span>
+    </a>
+    <div class="cabecera__extra">
+      <a class="volver-irt" href="https://institutoriesgoterritorial.cl" data-sitio="/"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-volver"/></svg>Instituto de Riesgo Territorial<span class="visual-oculto"> (sitio institucional)</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="contenido">
+
+<!-- Antes de ingresar: banda del curso (desde curso.json) y recuadro de ingreso -->
+<section class="sala-portada" id="ingresar" data-vista="publica" aria-labelledby="titulo-ingresar">
+  <div id="sala-portada"></div>
+  <div class="wrap">
+    <form class="acceso" id="acceso-form" data-curso="" novalidate>
+      <div class="acceso__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-candado"/></svg></div>
+      <h2 id="titulo-ingresar">Ingresar al curso</h2>
+      <p class="acceso__bajada">Solo para participantes inscritos.</p>
+      <div class="campo">
+        <label for="acceso-id">RUT o correo electrónico</label>
+        <input id="acceso-id" name="identificador" type="text" inputmode="text" autocomplete="email" autocapitalize="none" spellcheck="false" aria-describedby="acceso-ayuda" required>
+        <p class="campo__ayuda" id="acceso-ayuda">Use el mismo RUT o correo que registró en la ficha de inscripción. RUT sin puntos y con guion: 12345678-9</p>
+      </div>
+      <div class="campo campo--correo" id="acceso-correo-campo" hidden>
+        <label for="acceso-correo">Correo electrónico</label>
+        <input id="acceso-correo" name="correo" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
+      </div>
+      <div class="aviso" id="acceso-mensaje" role="status" aria-live="polite"></div>
+      <button type="submit" class="btn btn--primario" id="acceso-boton">Ingresar</button>
+    </form>
+  </div>
+  <div class="seccion--compacta"></div>
+</section>
+
+<div class="aula-cargando" id="aula-cargando" role="status" aria-live="polite" hidden><span class="cargador" aria-hidden="true"></span>Cargando su sala…</div>
+<div class="aula-aviso" id="aula-aviso" role="status" aria-live="polite"></div>
+<!-- data-pagina-propia: el Apps Script recibe la dirección de esta carpeta como «pagina» -->
+<div class="sala" id="sala" data-config="curso.json" data-pagina-propia hidden></div>
+
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <div>
+      <div class="pie__marca"><b>Academia IRT · Instituto de Riesgo Territorial</b></div>
+      <p><a class="pie__irt" href="https://institutoriesgoterritorial.cl" data-sitio="/">Sitio institucional del IRT</a></p>
+      <small>Los datos personales registrados en este curso se usan solo para su seguimiento académico, evaluación y certificación, y se informan a la institución que contrata la capacitación. En el foro, use casos ficticios o anonimizados.</small>
+    </div>
+    <div>
+      <p>Contacto de la Academia</p>
+      <p><a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a></p>
+    </div>
+    <p class="pie__copy">© 2026 Instituto de Riesgo Territorial · Academia IRT</p>
+  </div>
+</footer>
+<script src="/assets/academia.js?v=20261014"></script>
+<script src="/assets/aula-cursos.js?v=20261025"></script>
+<script src="/assets/aula-tests.js?v=20261025"></script>
+<script src="/assets/aula-acceso.js?v=20261025"></script>
+<script src="/assets/aula.js?v=20261025"></script>
+</body>
+</html>
