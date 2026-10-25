@@ -1,0 +1,17 @@
+{
+  "_instrucciones": "Copie la carpeta plantillas/sala/ a la raíz con un nombre difícil de adivinar y complete este archivo. Un campo vacío no se muestra. Sin enlaces a PDF ni tests (los entrega el Apps Script a personas inscritas), sin datos personales y sin [PENDIENTE]. Fechas como AAAA-MM-DD. Revise con: node herramientas/construir-cursos.js. README, sección 5d.",
+  "curso": "",
+  "institucion": "",
+  "relator": { "nombre": "", "cargo": "" },
+  "acceso": "entrevista-motivacional",
+  "fechas": { "plazoEnLinea": "", "jornada": "", "horario": "", "lugar": "" },
+  "jornada": { "horas": "", "texto": "", "juntos": "", "requisito": "" },
+  "bienvenida": { "texto": [], "firma": "", "cargo": "", "video": "" },
+  "modulos": [
+    { "n": 1, "titulo": "", "horas": "", "descripcion": "", "frase": "" }
+  ],
+  "ENDPOINT_FORO": "",
+  "avisos": [
+    { "fecha": "", "titulo": "", "texto": "" }
+  ]
+}

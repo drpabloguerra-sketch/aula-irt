@@ -4,7 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta http-equiv="refresh" content="0; url=/cursos/entrevista-motivacional/">
+<script>
+  // Lleva al curso conservando el ancla de los correos antiguos (#modulo-3, #jornada, #modulos…):
+  // la sala del curso abre la pestaña y el tema que corresponde después de ingresar.
+  location.replace('/cursos/entrevista-motivacional/' + (/^#[\w-]+$/.test(location.hash) ? location.hash : ''));
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=/cursos/entrevista-motivacional/"></noscript>
 <link rel="canonical" href="https://cursos.institutoriesgoterritorial.cl/cursos/entrevista-motivacional/">
 <title>Academia IRT · El curso cambió de dirección</title>
 <meta name="theme-color" content="#0E5E6F">
@@ -12,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/academia.css?v=20261023">
+<link rel="stylesheet" href="/assets/academia.css?v=20261025">
 </head>
 <body>
 <!-- Dirección antigua del curso. Se mantiene porque hay correos enviados con ella:
@@ -24,7 +29,7 @@
       <span><b>Academia IRT</b><small>Aula virtual del Instituto de Riesgo Territorial</small></span>
     </a>
     <div class="cabecera__extra">
-      <a class="volver-irt" href="https://institutoriesgoterritorial.cl" data-sitio="/"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-volver"/></svg>Instituto de Riesgo Territorial<span class="visual-oculto"> (sitio institucional)</span></a>
+      <a class="volver-irt" href="https://institutoriesgoterritorial.cl" data-sitio="/"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-volver"/></svg>Instituto de Riesgo Territorial<span class="visual-oculto"> (sitio institucional)</span></a>
     </div>
   </div>
 </header>

@@ -1,8 +1,8 @@
 <!-- ======================================================================
-     Academia IRT · Bloque del aula (ingreso con RUT o correo y módulos privados)
+     Academia IRT · Bloque del aula (ingreso con RUT o correo y sala del curso)
      Lo inserta herramientas/construir-cursos.js en la página de cada curso que
      tiene «aula» en assets/cursos.json. Las marcas {{…}} se reemplazan con esos
-     datos. No cambie los id: los usa assets/aula-acceso.js.
+     datos. No cambie los id: los usan assets/aula-acceso.js y assets/aula.js.
      ====================================================================== -->
 <!--INGRESO-->
 <section class="seccion" id="ingresar" aria-labelledby="titulo-ingresar">
@@ -10,7 +10,7 @@
     <!-- Acceso. La URL del Apps Script de este curso se define en assets/aula-cursos.js,
          con la misma clave que data-curso (README, sección 5). -->
     <form class="acceso" id="acceso-form" data-curso="{{SLUG}}" novalidate>
-      <div class="acceso__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-candado"/></svg></div>
+      <div class="acceso__ico"><svg class="ico ico--g" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-candado"/></svg></div>
       <h2 id="titulo-ingresar">Ingresar a los módulos</h2>
       <p class="acceso__bajada">Solo para participantes inscritos.</p>
       <div class="campo">
@@ -31,57 +31,11 @@
 <!--/INGRESO-->
 <!--AULA-->
 <!-- ======================================================================
-     AULA PRIVADA (se completa con la respuesta del acceso)
+     SALA DEL CURSO (la dibuja assets/aula.js después de ingresar)
+     Lee curso.json de esta misma carpeta: avisos, relator, fechas, módulos y
+     ENDPOINT_FORO (README, sección 5d). Los PDF y tests los entrega el Apps Script.
      ====================================================================== -->
-<template id="aula-descripciones">{{DESCRIPCIONES}}</template>
-<div class="aula-cargando" id="aula-cargando" role="status" aria-live="polite" hidden><span class="cargador" aria-hidden="true"></span>Cargando sus módulos…</div>
-
-<!-- Reconocimiento al completar un módulo (lo muestra aula-acceso.js) -->
+<div class="aula-cargando" id="aula-cargando" role="status" aria-live="polite" hidden><span class="cargador" aria-hidden="true"></span>Cargando su sala…</div>
 <div class="aula-aviso" id="aula-aviso" role="status" aria-live="polite"></div>
-
-<section class="seccion aula" id="aula" aria-labelledby="aula-saludo" hidden>
-  <div class="wrap">
-    <div class="aula__cabeza">
-      <div>
-        <span class="antetitulo">Sus módulos</span>
-        <h2 id="aula-saludo" tabindex="-1">Hola</h2>
-        <p class="aula__curso">{{TITULO}}<span id="aula-institucion"></span></p>
-      </div>
-      <button type="button" class="btn btn--secundario btn--chico" id="aula-salir"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-salir"/></svg>Salir</button>
-    </div>
-
-    {{BIENVENIDA}}
-
-    <div class="progreso">
-      <p class="progreso__texto" id="aula-progreso-texto">0 de {{TOTAL}} módulos completados</p>
-      <div class="progreso__barra" id="aula-progreso" role="progressbar" aria-labelledby="aula-progreso-texto" aria-valuemin="0" aria-valuemax="{{TOTAL}}" aria-valuenow="0"><span id="aula-progreso-relleno"></span></div>
-      <p class="progreso__estado" id="aula-estado"></p>
-      <p class="progreso__promedio" id="aula-promedio" hidden></p>
-      <p class="progreso__inicio" id="aula-inicio" hidden></p>
-      <p class="progreso__siguiente" id="aula-siguiente"></p>
-    </div>
-
-
-    <div class="modulos" id="aula-modulos"></div>
-
-    <div class="jornada aula__jornada" id="jornada">
-      <div>
-        <span class="antetitulo">{{JORNADA_HORAS}}</span>
-        <h2 class="jornada__titulo"><span class="jornada__ico"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261021#i-presencial"/></svg></span>Jornada presencial</h2>
-        {{JORNADA_JUNTOS}}
-        <p>{{JORNADA_TEXTO}}</p>
-        <div class="btns" id="aula-jornada-pdf" hidden></div>
-      </div>
-      <ul>
-        <li><b>Fecha</b><span id="aula-fecha">Fecha por confirmar</span></li>
-        <li><b>Horario</b><span id="aula-horario">Por confirmar</span></li>
-        <li><b>Lugar</b><span id="aula-lugar">Por confirmar</span></li>
-        <li><b>Requisito</b><span id="aula-requisito">{{REQUISITO}}</span></li>
-      </ul>
-    </div>
-
-    <p class="aula__otros" id="aula-otros-cursos" hidden></p>
-    <p class="aula__ayuda">¿Dudas o problemas? Escriba a <a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a> indicando su nombre y RUT.<span id="aula-programa"></span></p>
-  </div>
-</section>
+<div class="sala" id="sala" data-config="curso.json" hidden></div>
 <!--/AULA-->

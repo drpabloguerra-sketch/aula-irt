@@ -1,0 +1,72 @@
+{
+  "_instrucciones": "Sala del curso (assets/aula.js). Un campo vacío no se muestra. Sin enlaces a PDF ni tests (los entrega el Apps Script a personas inscritas), sin datos personales y sin [PENDIENTE]. Fechas de avisos como AAAA-MM-DD. Después de editar, ejecute: node herramientas/construir-cursos.js (revisa este archivo). README, sección 5d.",
+  "curso": "Entrevista Motivacional y Consejería Familiar en el Cuidado de Personas con Multimorbilidad Crónica",
+  "institucion": "",
+  "_institucion": "Vacío en esta página compartida: la sala muestra la institución que informa el Apps Script al ingresar.",
+  "relator": {
+    "nombre": "",
+    "cargo": ""
+  },
+  "acceso": "entrevista-motivacional",
+  "fechas": {
+    "plazoEnLinea": "",
+    "jornada": "",
+    "horario": "",
+    "lugar": ""
+  },
+  "jornada": {
+    "horas": "8 horas pedagógicas",
+    "texto": "Talleres prácticos con los casos de los módulos: habilidades centrales, simulación de entrevista y consejería familiar. Al cierre se aplica la evaluación final del curso.",
+    "juntos": "Lo que estudie aquí lo trabajaremos juntos: casos reales, práctica de entrevista en parejas y construcción de un plan consensuado.",
+    "requisito": "Haber completado los cinco módulos en línea"
+  },
+  "bienvenida": {
+    "texto": [
+      "Le damos la bienvenida a este curso. Lo diseñamos pensando en el trabajo real de los equipos de atención primaria: personas con varias condiciones crónicas, familias que cuidan y conversaciones breves en las que se juega buena parte del tratamiento.",
+      "Estudie a su ritmo. Cada módulo tiene una lectura para descargar, una presentación y un cuestionario corto. Lo que trabaje aquí lo pondremos en práctica juntos en la jornada presencial.",
+      "Si tiene dudas, escríbanos. Estamos para acompañarle."
+    ],
+    "firma": "Pablo Andrés Guerra Cisternas",
+    "cargo": "Director Ejecutivo · Instituto de Riesgo Territorial",
+    "video": ""
+  },
+  "modulos": [
+    {
+      "n": 1,
+      "titulo": "ECICEP y multimorbilidad en APS",
+      "horas": 2,
+      "descripcion": "Multimorbilidad crónica y sus desafíos; atención centrada en la persona; rol de la familia y la persona cuidadora; decisiones compartidas y plan consensuado.",
+      "frase": "La persona con varias enfermedades no es una suma de diagnósticos: es una vida que cuidamos en conjunto."
+    },
+    {
+      "n": 2,
+      "titulo": "Fundamentos de la entrevista motivacional",
+      "horas": 3,
+      "descripcion": "Qué es y qué no es; el reflejo de corregir; espíritu de la entrevista motivacional; procesos: vincular, enfocar, evocar y planificar.",
+      "frase": "No se trata de convencer, sino de evocar las razones propias de cambio de la persona."
+    },
+    {
+      "n": 3,
+      "titulo": "Habilidades centrales y discurso de cambio",
+      "horas": 3,
+      "descripcion": "Preguntas abiertas, afirmaciones, reflejos y resúmenes; discurso de cambio y de mantención; ambivalencia y discordancia.",
+      "frase": "Lo que la persona dice sobre el cambio anticipa lo que hará: nuestra tarea es escucharlo y fortalecerlo."
+    },
+    {
+      "n": 4,
+      "titulo": "Consejería familiar en APS",
+      "horas": 2,
+      "descripcion": "Enfoque familiar; ciclo vital y crisis; genograma y ecomapa; estructura de una consejería familiar.",
+      "frase": "La familia no es solo el contexto del paciente: es parte del cuidado."
+    },
+    {
+      "n": 5,
+      "titulo": "Integración aplicada a la multimorbilidad",
+      "horas": 2,
+      "descripcion": "Adherencia y automanejo; activación de la persona; participación de la familia; del diálogo motivacional al plan de cuidado consensuado.",
+      "frase": "Un plan acordado vale más que una indicación perfecta que nadie seguirá."
+    }
+  ],
+  "ENDPOINT_FORO": "",
+  "avisos": []
+}
