@@ -1,0 +1,179 @@
+/* ==========================================================================
+   Academia IRT · Funcionamiento académico y Catálogo comunitario
+   Complementa /assets/academia.css (se carga después). Usa sus tokens y
+   agrega los colores de la marca madre IRT como acentos de las líneas.
+   Al modificarlo, cambie la versión en los <link>: comunitario.css?v=AAAAMMDD
+   ========================================================================== */
+:root{
+  --irt-marino:#1B2A4A;
+  --irt-terracota:#C0392B;
+  --irt-dorado:#B8902F;
+  --irt-dorado-osc:#7A5E14;     /* dorado como texto (contraste AA sobre blanco) */
+}
+
+/* Marcador de dato por confirmar: visible a propósito, solo para revisión */
+.pendiente-dato{display:inline;background:#FFF4C2;color:#5C4400;border:1px dashed #B8902F;border-radius:6px;padding:1px 6px;font-size:.92em;font-weight:700;font-family:var(--f-texto)}
+.pendiente-bloque{display:block;margin:14px 0 0;padding:10px 14px}
+
+/* Apertura con imagen */
+.apertura-com{background:linear-gradient(180deg,var(--salvia) 0%,var(--blanco) 100%);border-bottom:1px solid var(--linea);padding:52px 0 56px}
+.apertura-com .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:center}
+.apertura-com h1{font-size:clamp(30px,4.2vw,44px)}
+.apertura-com .bajada{color:var(--texto);margin-bottom:22px}
+.apertura-com figure{margin:0;border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra);border-bottom:5px solid var(--irt-terracota)}
+.apertura-com img{display:block;width:100%;height:auto;aspect-ratio:1376/768;object-fit:cover}
+
+/* Texto de presentación */
+.presentacion{max-width:860px;font-family:var(--f-titulo);font-size:clamp(20px,2.3vw,24px);line-height:1.5;color:var(--tinta);border-left:5px solid var(--irt-dorado);padding:4px 0 4px 22px;margin:0 0 28px}
+.principios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none}
+.principios li{background:var(--blanco);border:1px solid var(--linea);border-radius:12px;padding:18px 20px;font-size:17px;color:var(--texto)}
+.principios b{display:block;font-family:var(--f-titulo);font-size:19px;color:var(--tinta);margin-bottom:4px}
+
+/* Modalidades */
+.modalidades{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:start}
+.modalidad{background:var(--blanco);border:1px solid var(--linea);border-top:6px solid var(--acento,var(--irt-marino));border-radius:var(--radio);padding:24px 22px;box-shadow:var(--sombra)}
+.modalidad--a{--acento:var(--irt-marino)}
+.modalidad--b{--acento:var(--irt-terracota)}
+.modalidad--c{--acento:var(--irt-dorado)}
+.modalidad__letra{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--acento);color:#fff;font-family:var(--f-titulo);font-weight:700;font-size:20px;margin-bottom:12px}
+.modalidad--c .modalidad__letra{color:var(--irt-marino)}
+.modalidad h3{font-size:22px;margin-bottom:.2em}
+.modalidad__para{margin:0 0 14px;color:var(--texto-suave);font-size:16px}
+.modalidad dl{margin:0;display:grid;gap:12px}
+.modalidad dt{font-weight:700;color:var(--tinta);font-size:16px}
+.modalidad dd{margin:2px 0 0;font-size:16px;line-height:1.5;color:var(--texto)}
+
+/* Ruta del participante (línea de tiempo vertical) */
+.recorridos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+.recorrido{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);padding:24px 22px;box-shadow:var(--sombra)}
+.recorrido h3{display:flex;align-items:center;gap:10px;font-size:21px;margin-bottom:16px}
+.recorrido h3 .ico{color:var(--acento,var(--irt-marino))}
+.recorrido ol{list-style:none;margin:0;padding:0;counter-reset:r}
+.recorrido li{counter-increment:r;position:relative;padding:0 0 18px 54px;min-height:40px;font-size:17px;color:var(--texto)}
+.recorrido li:last-child{padding-bottom:0}
+.recorrido li::before{content:counter(r);position:absolute;left:0;top:-4px;width:36px;height:36px;border-radius:50%;background:var(--acento,var(--irt-marino));color:#fff;font-weight:700;display:grid;place-items:center;font-size:16px}
+.recorrido li:not(:last-child)::after{content:"";position:absolute;left:17px;top:34px;bottom:0;width:2px;background:var(--linea)}
+.recorrido li b{display:block;color:var(--tinta)}
+.recorrido--linea{--acento:var(--irt-marino)}
+.recorrido--presencial{--acento:var(--irt-terracota)}
+
+/* Catálogo: filtro y buscador */
+.cat-herramientas{display:grid;gap:14px;margin:0 0 24px;padding:18px;background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio)}
+.cat-herramientas[hidden]{display:none}
+.cat-buscador label{display:block;font-weight:700;color:var(--tinta);font-size:16px;margin-bottom:6px}
+.cat-buscador input{width:100%;min-height:50px;padding:10px 14px;font:inherit;font-size:18px;border:1.5px solid #9DB3AE;border-radius:10px;color:var(--texto);background:var(--blanco)}
+.cat-buscador input:focus{outline:3px solid var(--petroleo-osc);outline-offset:1px;border-color:var(--petroleo)}
+.cat-filtros{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;border:0}
+.cat-filtros legend{font-weight:700;color:var(--tinta);font-size:16px;margin-bottom:6px;padding:0;width:100%}
+.cat-filtro{min-height:44px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--linea);background:var(--blanco);color:var(--tinta);font:inherit;font-size:16px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-align:left}
+.cat-filtro i{width:10px;height:10px;border-radius:50%;background:var(--acento,var(--irt-marino));flex:none}
+.cat-filtro:hover{background:var(--salvia)}
+.cat-filtro[aria-pressed="true"]{background:var(--irt-marino);border-color:var(--irt-marino);color:#fff}
+.cat-filtro[aria-pressed="true"] i{box-shadow:0 0 0 2px #fff}
+.cat-estado{margin:0;font-size:16px;color:var(--texto-suave)}
+.cat-vacio{padding:18px 20px;border:1px dashed var(--texto-suave);border-radius:12px;color:var(--texto-suave);background:var(--blanco)}
+
+/* Colores de acento por línea (paleta IRT y sus derivados) */
+[data-linea="GRD"]{--acento:#C0392B;--acento-texto:#A93226;--acento-claro:#FBEDEB}
+[data-linea="SMC"]{--acento:#0E5E6F;--acento-texto:#0A4552;--acento-claro:#E3F0EE}
+[data-linea="LID"]{--acento:#1B2A4A;--acento-texto:#1B2A4A;--acento-claro:#E8ECF4}
+[data-linea="LOG"]{--acento:#B8902F;--acento-texto:#7A5E14;--acento-claro:#F8F0DC}
+[data-linea="SAP"]{--acento:#8E2A20;--acento-texto:#8E2A20;--acento-claro:#F6E6E3}
+[data-linea="ADM"]{--acento:#3A5078;--acento-texto:#2E4063;--acento-claro:#E9EDF5}
+[data-linea="PRY"]{--acento:#9A7424;--acento-texto:#6E5212;--acento-claro:#F6EFDF}
+[data-linea="HER"]{--acento:#4A6670;--acento-texto:#36505A;--acento-claro:#E8EFF1}
+
+/* Tarjeta de línea (desplegable) */
+.lineas{display:grid;gap:14px}
+.linea{background:var(--blanco);border:1px solid var(--linea);border-left:8px solid var(--acento);border-radius:var(--radio);box-shadow:var(--sombra)}
+.linea[hidden]{display:none}
+.linea>summary{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px;padding:18px 20px;cursor:pointer;list-style:none}
+.linea>summary::-webkit-details-marker{display:none}
+.linea>summary::after{content:"";width:12px;height:12px;border-right:2.5px solid var(--acento-texto);border-bottom:2.5px solid var(--acento-texto);transform:rotate(45deg) translate(-3px,-3px)}
+.linea[open]>summary::after{transform:rotate(-135deg) translate(-3px,-3px)}
+@media (prefers-reduced-motion:no-preference){ .linea>summary::after{transition:transform .2s ease} }
+.linea>summary:focus-visible{outline:3px solid var(--petroleo-osc);outline-offset:2px;border-radius:var(--radio)}
+.linea__num{display:grid;place-items:center;width:52px;height:52px;border-radius:12px;background:var(--acento-claro);color:var(--acento-texto);font-family:var(--f-titulo);font-weight:700;font-size:15px;line-height:1.05;text-align:center}
+.linea__num b{display:block;font-size:22px}
+.linea__titulo{display:block;font-family:var(--f-titulo);font-weight:700;font-size:21px;color:var(--tinta);line-height:1.25}
+.linea__meta{display:block;font-size:16px;color:var(--texto-suave);margin-top:2px}
+.linea__cuerpo{padding:0 20px 20px}
+.linea__sub{margin:0 0 14px;font-style:italic;color:var(--texto)}
+.linea__nota{margin:0 0 14px;padding:12px 16px;background:var(--acento-claro);border-left:4px solid var(--acento);border-radius:8px;font-size:16px;color:var(--texto)}
+.linea__itinerario{margin:14px 0 0;padding:12px 16px;border:1px dashed var(--acento);border-radius:10px;font-size:16px;color:var(--texto)}
+.linea__itinerario b{color:var(--acento-texto)}
+
+.cursos-com{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.curso-com{display:grid;grid-template-columns:86px minmax(0,1fr);gap:14px;align-items:start;padding:14px 16px;border:1px solid var(--linea);border-radius:12px;background:var(--blanco)}
+.curso-com[hidden]{display:none}
+.curso-com:target{border-color:var(--acento);box-shadow:0 0 0 3px var(--acento-claro)}
+.curso-com__codigo{display:inline-block;text-align:center;padding:4px 6px;border-radius:8px;border:1.5px solid var(--acento);color:var(--acento-texto);background:var(--acento-claro);font-weight:700;font-size:15px;letter-spacing:.4px;white-space:nowrap}
+.curso-com h4{font-family:var(--f-texto);font-size:18px;color:var(--tinta);margin:0 0 2px;line-height:1.35}
+.curso-com p{margin:0;font-size:16px;line-height:1.5;color:var(--texto-suave)}
+.curso-com__tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag-com{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--salvia);color:var(--petroleo-osc)}
+.tag-com--certificado{background:var(--ocre-claro);color:var(--ocre-osc)}
+.tag-com--abierto{background:#E8ECF4;color:var(--irt-marino)}
+.tag-com .ico{width:16px;height:16px}
+
+/* Packs */
+.packs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pack{display:flex;flex-direction:column;background:var(--blanco);border:1px solid var(--linea);border-top:6px solid var(--irt-dorado);border-radius:var(--radio);padding:22px 22px 20px;box-shadow:var(--sombra)}
+.pack--integral{grid-column:1/-1;border-top-color:var(--irt-marino)}
+.pack h3{font-size:22px;margin-bottom:.15em}
+.pack__para{margin:0 0 14px;font-size:16px;color:var(--texto-suave)}
+.pack__para b{color:var(--tinta)}
+.pack ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.pack li{font-size:16px;line-height:1.45;color:var(--texto)}
+.pack li a{font-weight:700;color:var(--irt-marino);text-decoration:none;border-bottom:1px solid currentColor;margin-right:4px}
+.pack li a:hover{color:var(--irt-terracota)}
+.ejes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:6px}
+.eje{border:1px solid var(--linea);border-radius:12px;padding:16px 18px;background:var(--salvia)}
+.eje h4{font-size:19px;margin:0 0 8px}
+.eje small{display:block;font-size:14px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--texto-suave);margin:10px 0 4px}
+.eje small:first-of-type{margin-top:0}
+
+.cierre-com{margin-top:36px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;padding:26px 28px;border-radius:var(--radio);background:var(--irt-marino);color:#fff}
+.cierre-com p{margin:0;max-width:640px;font-size:18px}
+.cierre-com b{font-family:var(--f-titulo);font-size:22px;display:block;margin-bottom:4px}
+.btn--irt{background:var(--irt-terracota);color:#fff}
+.btn--irt:hover{background:#A93226;color:#fff}
+
+/* Portada: bloque «Oferta comunitaria» */
+.oferta-com{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:0;background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra)}
+.oferta-com img{display:block;width:100%;height:100%;min-height:240px;object-fit:cover}
+.oferta-com__texto{padding:30px 30px 28px;border-left:6px solid var(--irt-terracota)}
+.oferta-com__texto h3{font-size:clamp(22px,2.6vw,28px)}
+.oferta-com__texto p{color:var(--texto);font-size:18px}
+.oferta-com .datos{margin-bottom:22px}
+
+/* Pantallas */
+@media (max-width:980px){
+  .modalidades,.packs{grid-template-columns:1fr}
+  .recorridos,.principios,.ejes{grid-template-columns:1fr}
+  .apertura-com .wrap{grid-template-columns:1fr;gap:28px}
+}
+@media (max-width:860px){
+  .oferta-com{grid-template-columns:1fr}
+  .oferta-com img{min-height:0;aspect-ratio:16/9;height:auto}
+  .oferta-com__texto{border-left:0;border-top:6px solid var(--irt-terracota)}
+}
+@media (max-width:560px){
+  .apertura-com{padding:36px 0 40px}
+  .linea>summary{gap:12px;padding:16px 14px}
+  .linea__num{width:44px;height:44px;font-size:13px}
+  .linea__num b{font-size:19px}
+  .linea__titulo{font-size:19px}
+  .linea__cuerpo{padding:0 12px 14px}
+  .curso-com{grid-template-columns:1fr;gap:8px;padding:12px 14px}
+  .curso-com__codigo{justify-self:start}
+  .modalidad,.recorrido,.pack{padding:20px 16px}
+  .recorrido li{padding-left:48px}
+  .cierre-com{padding:22px 18px}
+  .cierre-com .btn,.oferta-com .btn{width:100%}
+  .oferta-com__texto{padding:22px 18px}
+}
+@media print{
+  .cat-herramientas{display:none}
+  .linea>summary::after{display:none}
+}
