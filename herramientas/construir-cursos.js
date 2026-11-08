@@ -359,7 +359,7 @@ ${conAula ? aulaPrivada : ''}
       <p>Contacto de la Academia</p>
       <p><a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a></p>
     </div>
-    <p class="pie__copy">© 2026 Instituto de Riesgo Territorial · Academia IRT</p>
+    <p class="pie__copy">© 2026 Instituto de Riesgo Territorial · Academia IRT · <a href="/privacidad/">Privacidad y datos personales</a></p>
   </div>
 </footer>
 ${ventanaSolicitud}
