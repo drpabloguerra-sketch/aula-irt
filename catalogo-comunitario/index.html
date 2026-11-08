@@ -3,10 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Página en revisión: contiene marcas [PENDIENTE]. Quite noindex al publicarla. -->
-<meta name="robots" content="noindex, nofollow">
 <title>Catálogo comunitario · Academia IRT</title>
-<meta name="description" content="Catálogo formativo de la Academia IRT para juntas de vecinos y organizaciones territoriales: 8 líneas y 40 cursos presenciales, y packs formativos.">
+<meta name="description" content="Catálogo formativo de la Academia IRT para juntas de vecinos y organizaciones territoriales: 8 líneas y 40 cursos presenciales teórico-prácticos, y packs formativos.">
 <link rel="canonical" href="https://cursos.institutoriesgoterritorial.cl/catalogo-comunitario/">
 <meta name="theme-color" content="#0E5E6F">
 <link rel="icon" href="/assets/sello.svg?v=20261014" type="image/svg+xml">
@@ -14,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/academia.css?v=20261025b">
-<link rel="stylesheet" href="/assets/comunitario.css?v=20261108">
+<link rel="stylesheet" href="/assets/comunitario.css?v=20261108b">
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -45,7 +43,7 @@
     <div>
       <span class="antetitulo">Oferta comunitaria · Juntas de vecinos</span>
       <h1 id="titulo-catalogo">Catálogo formativo comunitario</h1>
-      <p class="bajada">Cursos presenciales para juntas de vecinos y organizaciones territoriales, organizados en 8 líneas y 40 cursos. Cada curso se realiza en la sede vecinal o en un espacio comunitario y termina con un producto concreto que se queda en la junta.</p>
+      <p class="bajada">Cursos presenciales y teórico-prácticos para juntas de vecinos y organizaciones territoriales, organizados en 8 líneas y 40 cursos. Cada curso se realiza en la sede vecinal o en un espacio comunitario y termina con un producto concreto que se queda en la junta.</p>
       <div class="datos">
         <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Presencial, hasta 15 personas</span>
         <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>Sesiones de 3 horas</span>
@@ -67,8 +65,7 @@
     <div class="encabezado">
       <span class="antetitulo">Catálogo</span>
       <h2 id="titulo-lineas">8 líneas formativas, 40 cursos</h2>
-      <p class="bajada">Elija una línea para ver sus cursos. Salvo indicación, cada curso es una sesión de 3 horas: un bloque expositivo de máximo 45 minutos y trabajo participativo.</p>
-      <span class="pendiente-dato">[PENDIENTE: confirmar que los prefijos SMC, LOG, SAP, ADM y PRY coinciden con los códigos de los Word del catálogo; GRD, LID y HER ya están confirmados]</span>
+      <p class="bajada">Elija una línea para ver sus cursos. Cada curso indica su duración. Las sesiones son de 3 horas: un bloque expositivo de máximo 45 minutos y el resto, trabajo práctico.</p>
     </div>
 
     <div class="cat-herramientas" data-cat-herramientas hidden>
@@ -81,9 +78,9 @@
         <button type="button" class="cat-filtro" data-cat-filtro="" aria-pressed="true">Todas</button>
         <button type="button" class="cat-filtro" data-cat-filtro="GRD" data-linea="GRD" aria-pressed="false"><i aria-hidden="true"></i>Gestión del Riesgo de Desastres</button>
         <button type="button" class="cat-filtro" data-cat-filtro="SMC" data-linea="SMC" aria-pressed="false"><i aria-hidden="true"></i>Salud mental comunitaria</button>
-        <button type="button" class="cat-filtro" data-cat-filtro="LID" data-linea="LID" aria-pressed="false"><i aria-hidden="true"></i>Liderazgo</button>
+        <button type="button" class="cat-filtro" data-cat-filtro="LID" data-linea="LID" aria-pressed="false"><i aria-hidden="true"></i>Liderazgo comunitario</button>
         <button type="button" class="cat-filtro" data-cat-filtro="LOG" data-linea="LOG" aria-pressed="false"><i aria-hidden="true"></i>Logística y respuesta comunitaria</button>
-        <button type="button" class="cat-filtro" data-cat-filtro="SAP" data-linea="SAP" aria-pressed="false"><i aria-hidden="true"></i>Salud y primeros auxilios</button>
+        <button type="button" class="cat-filtro" data-cat-filtro="SAL" data-linea="SAL" aria-pressed="false"><i aria-hidden="true"></i>Salud y primeros auxilios</button>
         <button type="button" class="cat-filtro" data-cat-filtro="ADM" data-linea="ADM" aria-pressed="false"><i aria-hidden="true"></i>Gestión administrativa de la junta de vecinos</button>
         <button type="button" class="cat-filtro" data-cat-filtro="PRY" data-linea="PRY" aria-pressed="false"><i aria-hidden="true"></i>Proyectos y financiamiento</button>
         <button type="button" class="cat-filtro" data-cat-filtro="HER" data-linea="HER" aria-pressed="false"><i aria-hidden="true"></i>Herramientas y comunicación</button>
@@ -103,64 +100,72 @@
             <span class="curso-com__codigo">GRD-01</span>
             <div>
               <h4>Mapa de riesgos y capacidades del barrio</h4>
-              <p>Cartografía participativa: los vecinos identifican amenazas, zonas seguras, recursos y personas que requieren apoyo.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Con un plano del sector, los vecinos identifican las amenazas, las zonas seguras, los recursos disponibles y las viviendas que requieren apoyo prioritario. Es el punto de partida de toda la línea.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> mapa de riesgos y capacidades y matriz con los tres riesgos principales.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-GRD-02">
             <span class="curso-com__codigo">GRD-02</span>
             <div>
               <h4>Plan comunitario de emergencia</h4>
-              <p>La junta sale con su plan escrito: roles, comunicaciones, puntos de encuentro y coordinación con otros actores.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>6 horas · 2 sesiones</span></div>
+              <p>Convierte el diagnóstico en un plan escrito, breve y conocido por los vecinos: escenarios, roles con titulares y suplentes, zonas seguras, avisos y contactos, coordinado con el plan comunal.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> Plan Comunitario de Emergencia y ficha resumen de una página.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>6 horas · 2 sesiones</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-GRD-03">
             <span class="curso-com__codigo">GRD-03</span>
             <div>
               <h4>Prevención y respuesta ante incendios forestales y de interfaz urbana</h4>
-              <p>Medidas de prevención en la vivienda y el entorno, y cómo actuar ante un incendio que se acerca al barrio.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Explica cómo se inician y propagan los incendios en el borde entre ciudad y vegetación, cómo reducir el combustible alrededor de las viviendas y cómo actuar si el fuego se acerca.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> plan barrial de prevención de incendios.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-GRD-04">
             <span class="curso-com__codigo">GRD-04</span>
             <div>
               <h4>Preparación familiar</h4>
-              <p>Mochila de emergencia, plan familiar y puntos de encuentro, para que cada hogar sepa qué hacer.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--abierto"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-comunidad"/></svg>Abierto a todos los vecinos</span></div>
+              <p>Curso abierto a todos los vecinos para armar la mochila de emergencia, el plan familiar y los puntos de encuentro, considerando a las personas mayores, los niños y las mascotas de cada hogar.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> plan familiar de emergencia de cada participante.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com tag-com--abierto"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-comunidad"/></svg>Abierto a todos los vecinos</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-GRD-05">
             <span class="curso-com__codigo">GRD-05</span>
             <div>
               <h4>Sistemas de alerta temprana vecinal</h4>
-              <p>Cómo recibir, verificar y difundir una alerta en el barrio, y quién avisa a quién.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Organiza cómo se avisa en el barrio: árbol de llamadas, grupos de mensajería, sirenas o señales comunitarias, y cómo enlazar esos avisos con las alertas oficiales.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> protocolo de alerta vecinal y árbol de llamadas.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-GRD-06">
             <span class="curso-com__codigo">GRD-06</span>
             <div>
               <h4>Evacuación y simulacros barriales</h4>
-              <p>Rutas de evacuación, puntos de encuentro y diseño, ejecución y evaluación de un simulacro barrial.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>6 horas · 2 sesiones</span></div>
+              <p>La junta planifica, ejecuta y evalúa un simulacro de evacuación de su sector, con rutas, zonas seguras y apoyo a quienes no pueden evacuar solos.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> informe del simulacro con mejoras al plan.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>6 horas · 2 sesiones</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-GRD-07">
             <span class="curso-com__codigo">GRD-07</span>
             <div>
-              <h4>Inclusión en emergencias: personas mayores, con discapacidad, postradas y niños</h4>
-              <p>Cómo identificar y apoyar a quienes necesitan más ayuda antes, durante y después de una emergencia.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Inclusión en emergencias</h4>
+              <p>Cómo identificar y apoyar a las personas mayores, a las personas con discapacidad o postradas y a los niños antes, durante y después de una emergencia, resguardando su privacidad.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> registro reservado de apoyo prioritario y asignación de apoyos.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-GRD-08">
             <span class="curso-com__codigo">GRD-08</span>
             <div>
-              <h4>Riesgo cotidiano en el barrio: calor extremo, cortes de agua y luz, temporales</h4>
-              <p>Preparación ante los eventos que más se repiten y que afectan la vida diaria del barrio.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Riesgo cotidiano en el barrio</h4>
+              <p>Prepara a la comunidad para eventos frecuentes que también dañan: calor extremo, cortes de agua y de luz, y temporales.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> plan de respuesta ante riesgos cotidianos.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           </ul>
@@ -173,46 +178,51 @@
           <span><span class="linea__titulo">Salud mental comunitaria</span><span class="linea__meta">SMC · 5 cursos · Herramientas de apoyo y cuidado mutuo para dirigentes y vecinos.</span></span>
         </summary>
         <div class="linea__cuerpo">
-          <p class="linea__nota" role="note"><b>Importante:</b> Estos cursos no forman terapeutas ni habilitan para diagnóstico o tratamiento. Entregan herramientas de apoyo comunitario y derivación.</p>
+          <p class="linea__nota" role="note"><b>Importante:</b> Estos cursos no forman terapeutas ni habilitan para diagnóstico o tratamiento. Entregan herramientas de apoyo comunitario y de derivación.</p>
           <ul class="cursos-com">
           <li class="curso-com" id="c-SMC-01">
             <span class="curso-com__codigo">SMC-01</span>
             <div>
               <h4>Primera ayuda psicológica para dirigentes</h4>
-              <p>Cómo acompañar a una persona afectada en las primeras horas: escuchar, contener y derivar.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Enseña a acompañar, contener y conectar con ayuda a un vecino afectado, practicando con casos simulados. No es terapia y no reemplaza a los equipos de salud.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> ruta local de derivación y tarjeta de bolsillo.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-SMC-02">
             <span class="curso-com__codigo">SMC-02</span>
             <div>
-              <h4>Cuidar al que cuida: desgaste del dirigente y Burnout Territorial</h4>
-              <p>Reconocer el desgaste en quienes dirigen y construir prácticas de cuidado dentro de la directiva.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Cuidar al que cuida</h4>
+              <p>Aborda el desgaste de dirigentes y voluntarios desde el concepto de Burnout Territorial, desarrollado por el IRT, y entrega herramientas para reconocerlo a tiempo y distribuir la carga.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> acuerdos de cuidado del equipo dirigente.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-SMC-03">
             <span class="curso-com__codigo">SMC-03</span>
             <div>
               <h4>Duelo y pérdida en comunidades afectadas</h4>
-              <p>Comprender el duelo personal y colectivo tras una emergencia y cómo acompañarlo desde la junta.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Prepara para acompañar las pérdidas que deja una crisis, incluidas la vivienda y el barrio, y para organizar acciones comunitarias de memoria, reconociendo cuándo se necesita apoyo profesional.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> plan comunitario de acompañamiento y memoria.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-SMC-04">
             <span class="curso-com__codigo">SMC-04</span>
             <div>
-              <h4>Convivencia y salud mental en el barrio: aislamiento y soledad en personas mayores</h4>
-              <p>Detectar el aislamiento de personas mayores y tejer redes vecinales de apoyo.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Convivencia, aislamiento y soledad en personas mayores</h4>
+              <p>Es un curso preventivo para detectar el aislamiento y la soledad en el barrio y tejer redes de apoyo entre vecinos, haya o no emergencia.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> mapa de redes de apoyo vecinal.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-SMC-05">
             <span class="curso-com__codigo">SMC-05</span>
             <div>
-              <h4>Niños y emergencias: cómo acompañarlos</h4>
-              <p>Cómo hablar con niños y niñas sobre lo ocurrido y acompañarlos en la recuperación.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Niños y emergencias</h4>
+              <p>Entrega orientaciones a familias, cuidadores y monitores para acompañar a niños y niñas antes, durante y después de una emergencia, con derivación obligatoria si hay sospecha de vulneración de derechos.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> guía de acompañamiento para familias.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           </ul>
@@ -221,7 +231,7 @@
       <details class="linea" id="linea-LID" data-linea="LID">
         <summary>
           <span class="linea__num"><span>Línea</span><b>3</b></span>
-          <span><span class="linea__titulo">Liderazgo</span><span class="linea__meta">LID · 6 cursos · Conducir, comunicar y decidir: el rol del dirigente en tiempos normales y de crisis.</span></span>
+          <span><span class="linea__titulo">Liderazgo comunitario</span><span class="linea__meta">LID · 6 cursos · Conducir, comunicar y decidir: el rol del dirigente en tiempos normales y de crisis.</span></span>
         </summary>
         <div class="linea__cuerpo">
           <ul class="cursos-com">
@@ -229,48 +239,54 @@
             <span class="curso-com__codigo">LID-01</span>
             <div>
               <h4>Líderes en tiempos de crisis</h4>
-              <p>El rol del dirigente antes, durante y después de una emergencia: organizar, coordinar y sostener a la comunidad.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Es el curso central de la línea. Trabaja qué se espera de un dirigente antes, durante y después de una crisis, cómo distribuir el liderazgo en equipo y cómo coordinarse con las instituciones.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> mapa de liderazgo para emergencias, con roles y suplentes.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-LID-02">
             <span class="curso-com__codigo">LID-02</span>
             <div>
               <h4>Decidir bajo presión</h4>
-              <p>Simulación de mesa: la directiva enfrenta un escenario de emergencia, toma decisiones y analiza lo aprendido.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--certificado"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-certificado"/></svg>Taller práctico certificado</span></div>
+              <p>En una simulación de mesa, la emergencia avanza por etapas y la directiva debe priorizar, coordinarse y comunicar con información incompleta. Al final se analiza el ejercicio en conjunto.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> protocolo de decisión y lista de mejoras al plan.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com tag-com--certificado"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-certificado"/></svg>Taller práctico certificado</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-LID-03">
             <span class="curso-com__codigo">LID-03</span>
             <div>
               <h4>Comunicación efectiva y manejo de rumores</h4>
-              <p>Informar a los vecinos con claridad y a tiempo, y responder ante rumores y desinformación.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Cubre la vocería de la junta, la relación con medios y autoridades y cómo responder a la desinformación en momentos de tensión.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> plan de comunicación de la junta.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-LID-04">
             <span class="curso-com__codigo">LID-04</span>
             <div>
               <h4>Mediación y resolución de conflictos vecinales</h4>
-              <p>Herramientas para prevenir y abordar conflictos entre vecinos y dentro de la organización.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Entrega herramientas de mediación básica para conflictos entre vecinos. Los casos de violencia o delito se derivan a quien corresponde y no se median en la junta.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> protocolo de manejo de conflictos.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-LID-05">
             <span class="curso-com__codigo">LID-05</span>
             <div>
               <h4>Asambleas que funcionan</h4>
-              <p>Preparar, conducir y registrar asambleas con participación, orden y acuerdos claros.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Enseña a preparar, conducir y registrar asambleas participativas que lleguen a acuerdos, practicando con una asamblea simulada.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> pauta de asamblea y formato de acta de acuerdos.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-LID-06">
             <span class="curso-com__codigo">LID-06</span>
             <div>
-              <h4>Relevo generacional: cómo sumar jóvenes a la junta</h4>
-              <p>Estrategias para que jóvenes se integren a la junta y asuman responsabilidades.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Relevo generacional</h4>
+              <p>Se trabaja en grupos mixtos de dirigentes y jóvenes para sumar nuevas generaciones a la organización y asegurar la continuidad.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> índice de la carpeta de traspaso.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           </ul>
@@ -286,67 +302,74 @@
           <li class="curso-com" id="c-LOG-01">
             <span class="curso-com__codigo">LOG-01</span>
             <div>
-              <h4>Coordinador/a Logístico Barrial</h4>
-              <p>Organizar recursos, insumos y apoyos del barrio durante una emergencia.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Coordinador/a Logístico Barrial en Emergencias</h4>
+              <p>Forma a quienes organizarán los recursos del barrio: inventario previo, centro de acopio, priorización según necesidades reales y rendición transparente, en coordinación con el municipio. La segunda sesión incluye un simulacro de centro de acopio.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> kit logístico (inventario, planillas, protocolo de acopio y acta de entrega).</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>6 horas · 2 sesiones</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-LOG-02">
             <span class="curso-com__codigo">LOG-02</span>
             <div>
-              <h4>Gestión de voluntarios</h4>
-              <p>Convocar, organizar, asignar tareas y cuidar a quienes se ofrecen a ayudar.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Gestión de voluntarios en emergencias</h4>
+              <p>Enseña a recibir, registrar, asignar tareas y cuidar a los voluntarios espontáneos para que cada persona que llega sume, con normas de seguridad y de protección.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> protocolo de gestión de voluntarios.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-LOG-03">
             <span class="curso-com__codigo">LOG-03</span>
             <div>
               <h4>Albergues y puntos de acogida comunitarios</h4>
-              <p>Habilitar y administrar un punto de acogida de forma ordenada y segura.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Prepara a la junta para habilitar la sede u otro espacio como punto de acogida seguro y digno, evaluando el lugar donde se dicta el curso.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> ficha de evaluación del espacio y protocolo de funcionamiento.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-LOG-04">
             <span class="curso-com__codigo">LOG-04</span>
             <div>
               <h4>Catastro vecinal de daños y necesidades</h4>
-              <p>Levantar un catastro vecinal y empalmarlo con la Ficha Básica de Emergencia (FIBE) municipal.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Enseña a levantar de manera ordenada la información de daños y necesidades del barrio y a entregarla de forma que complemente la ficha FIBE municipal, sin duplicarla.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> ficha de catastro vecinal y procedimiento de entrega al municipio.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           </ul>
         </div>
       </details>
-      <details class="linea" id="linea-SAP" data-linea="SAP">
+      <details class="linea" id="linea-SAL" data-linea="SAL">
         <summary>
           <span class="linea__num"><span>Línea</span><b>5</b></span>
-          <span><span class="linea__titulo">Salud y primeros auxilios</span><span class="linea__meta">SAP · 3 cursos · Actuar con seguridad mientras llega la ayuda profesional.</span></span>
+          <span><span class="linea__titulo">Salud y primeros auxilios</span><span class="linea__meta">SAL · 3 cursos · Actuar con seguridad mientras llega la ayuda profesional.</span></span>
         </summary>
         <div class="linea__cuerpo">
           <ul class="cursos-com">
-          <li class="curso-com" id="c-SAP-01">
-            <span class="curso-com__codigo">SAP-01</span>
+          <li class="curso-com" id="c-SAL-01">
+            <span class="curso-com__codigo">SAL-01</span>
             <div>
               <h4>Primeros auxilios comunitarios</h4>
-              <p>Actuación inicial ante heridas, quemaduras, caídas y otras situaciones frecuentes hasta que llegue la ayuda.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Enseña a actuar bien en los primeros minutos mientras llega la ayuda profesional, con mucha práctica y con la seguridad de quien ayuda como prioridad.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> lista de botiquín comunitario y pauta de actuación.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · versión extendida de 6 horas</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
-          <li class="curso-com" id="c-SAP-02">
-            <span class="curso-com__codigo">SAP-02</span>
+          <li class="curso-com" id="c-SAL-02">
+            <span class="curso-com__codigo">SAL-02</span>
             <div>
-              <h4>RCP y uso de DEA para sedes vecinales</h4>
-              <p>Reanimación cardiopulmonar y uso del desfibrilador externo automático en la sede vecinal.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>RCP y uso de DEA</h4>
+              <p>Es una práctica con maniquíes y desfibrilador de entrenamiento para responder ante un paro cardíaco. Se recomienda a toda junta, en especial si su sede tiene o tendrá un DEA.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> protocolo de respuesta ante un paro cardíaco en la sede.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
-          <li class="curso-com" id="c-SAP-03">
-            <span class="curso-com__codigo">SAP-03</span>
+          <li class="curso-com" id="c-SAL-03">
+            <span class="curso-com__codigo">SAL-03</span>
             <div>
               <h4>Salud en emergencias</h4>
-              <p>Agua segura, manejo de alimentos y cuidado de enfermedades crónicas sin acceso a farmacia.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Trata el agua segura, el manejo de alimentos y la continuidad de los tratamientos de enfermos crónicos cuando no hay acceso a farmacia, a partir de la experiencia del despliegue sanitario del IRT en 2024.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> registro de continuidad de cuidados del barrio.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           </ul>
@@ -359,61 +382,69 @@
         </summary>
         <div class="linea__cuerpo">
           <p class="linea__sub">Fortalecimiento organizacional para reducir la vulnerabilidad institucional de la comunidad.</p>
+          <p class="linea__nota" role="note"><b>Importante:</b> Los contenidos legales se revisan según la normativa vigente antes de cada dictación.</p>
           <ul class="cursos-com">
           <li class="curso-com" id="c-ADM-01">
             <span class="curso-com__codigo">ADM-01</span>
             <div>
-              <h4>La junta por dentro</h4>
-              <p>Ley 19.418, estatutos, roles del directorio, y derechos y deberes de los socios.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
+              <h4>La junta por dentro: ley, estatutos y roles</h4>
+              <p>Es el curso base de la línea. Recorre la Ley 19.418, los estatutos de cada junta, las funciones del directorio y de las comisiones, y los derechos y deberes de los socios.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> ficha resumen de sus estatutos y mapa de funciones.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-ADM-02">
             <span class="curso-com__codigo">ADM-02</span>
             <div>
-              <h4>Libros y documentos obligatorios</h4>
-              <p>Qué libros y documentos debe llevar la junta y cómo mantenerlos al día.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
+              <h4>Libros y documentos de la organización</h4>
+              <p>Revisa con los libros reales de cada junta qué registros debe llevar y cómo mantener al día el registro de socios, las actas y el archivo.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> diagnóstico de sus libros y plantillas de acta y registro de socios.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-ADM-03">
             <span class="curso-com__codigo">ADM-03</span>
             <div>
               <h4>Tesorería y rendición de cuentas</h4>
-              <p>Manejo ordenado de los recursos y rendición de cuentas ante la asamblea.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
+              <p>Muestra cómo registrar los ingresos y gastos con respaldo y cómo presentar el balance a la asamblea, con transparencia y neutralidad política.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> planilla de tesorería y formato de balance.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-ADM-04">
             <span class="curso-com__codigo">ADM-04</span>
             <div>
               <h4>Elecciones y vigencia del directorio</h4>
-              <p>Cómo organizar elecciones y mantener vigente el directorio.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
+              <p>Explica el proceso eleccionario completo, de la comisión electoral a la calificación, para que la directiva se renueve a tiempo y sin vicios.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> calendario y lista de verificación del proceso eleccionario.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-ADM-05">
             <span class="curso-com__codigo">ADM-05</span>
             <div>
               <h4>Personalidad jurídica al día</h4>
-              <p>Qué revisar para que la organización mantenga vigente su personalidad jurídica.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
+              <p>Enseña a revisar la vigencia de la organización y sus certificados, y cómo evitar caer en no vigencia.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> lista de verificación de vigencia y calendario de renovaciones.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-ADM-06">
             <span class="curso-com__codigo">ADM-06</span>
             <div>
               <h4>Requisitos para recibir fondos públicos</h4>
-              <p>Registro de Colaboradores del Estado (Ley 19.862) y demás requisitos para recibir fondos públicos.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
+              <p>Revisa el Registro de Colaboradores del Estado (Ley 19.862) y los demás registros y documentos que habilitan para postular. Cada junta verifica en línea su propia situación.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> lista de habilitación y plan de regularización.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-ADM-07">
             <span class="curso-com__codigo">ADM-07</span>
             <div>
               <h4>Comodato y administración de la sede social</h4>
-              <p>Uso, cuidado y responsabilidades en la administración de la sede.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
+              <p>Trata cómo obtener, cuidar y administrar la sede, que en una emergencia puede ser centro de coordinación o de acogida.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> reglamento de uso y plan de mantención de la sede.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-relatoria"/></svg>Solo dirigentes</span></div>
             </div>
           </li>
           </ul>
@@ -430,32 +461,36 @@
             <span class="curso-com__codigo">PRY-01</span>
             <div>
               <h4>Cómo formular un proyecto comunitario</h4>
-              <p>Del problema a la propuesta: objetivos, actividades, presupuesto y resultados esperados.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Es el curso central de la línea. Cada organización llega con una idea de proyecto y la convierte en un proyecto coherente, con diagnóstico, objetivos, actividades, presupuesto, cronograma e indicadores.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> perfil de proyecto completo, listo para adaptar a un fondo.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>6 horas · 2 sesiones</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-PRY-02">
             <span class="curso-com__codigo">PRY-02</span>
             <div>
               <h4>Mapa de fondos disponibles</h4>
-              <p>Qué fondos existen para organizaciones comunitarias y cómo organizarse para postular.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Presenta los fondos municipales, regionales y nacionales a los que pueden postular las organizaciones, con sus requisitos y plazos, y cómo buscarlos en los portales oficiales.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> calendario anual de postulaciones.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-PRY-03">
             <span class="curso-com__codigo">PRY-03</span>
             <div>
-              <h4>Rendición de proyectos financiados: cómo no quedar inhabilitado</h4>
-              <p>Cómo rendir un proyecto financiado y evitar quedar fuera de nuevas postulaciones.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Ejecución y rendición de proyectos</h4>
+              <p>Enseña a ejecutar y rendir un proyecto financiado sin quedar inhabilitados para postular de nuevo.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> carpeta de rendición.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-PRY-04">
             <span class="curso-com__codigo">PRY-04</span>
             <div>
               <h4>Alianzas con instituciones</h4>
-              <p>Cómo construir alianzas con municipio, CESFAM, bomberos, colegios y empresas.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Enseña a construir relaciones con el municipio, el CESFAM, bomberos, colegios y empresas, con reglas claras y sin comprometer la independencia de la organización.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> mapa de aliados y modelo de carta de apoyo.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           </ul>
@@ -472,24 +507,27 @@
             <span class="curso-com__codigo">HER-01</span>
             <div>
               <h4>Herramientas digitales para dirigentes</h4>
-              <p>Correo, documentos compartidos, formularios y mensajería para organizar el trabajo de la directiva.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Enseña a guardar los documentos de la junta en la nube, hacer formularios y planillas y realizar trámites en línea, practicando con los propios celulares. Es la base para los trámites de ADM-05, ADM-06 y PRY-02.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> carpeta digital compartida y formulario de inscripción.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · versión extendida de 6 horas</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-HER-02">
             <span class="curso-com__codigo">HER-02</span>
             <div>
-              <h4>Redes sociales de la junta: informar sin generar conflicto</h4>
-              <p>Criterios para informar por las redes de la junta de manera clara y respetuosa.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <h4>Redes sociales de la junta</h4>
+              <p>Enseña a informar a los vecinos por redes sociales sin generar conflicto, con reglas de uso y neutralidad política. Complementa LID-03.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> plan de comunicación digital y normas de uso.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           <li class="curso-com" id="c-HER-03">
             <span class="curso-com__codigo">HER-03</span>
             <div>
               <h4>Registro y memoria barrial</h4>
-              <p>Registrar la historia, las actividades y los aprendizajes del barrio.</p>
-              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span></div>
+              <p>Trabaja la memoria de los riesgos vividos como conocimiento para prevenir, con entrevistas voluntarias, consentimiento y especial cuidado ante los recuerdos dolorosos.</p>
+              <p class="curso-com__lleva"><b>La junta se lleva:</b> archivo de memoria barrial.</p>
+              <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>3 horas · 1 sesión</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
           </ul>
@@ -512,8 +550,8 @@
         <h3>Junta al día</h3>
         <p class="pack__para"><b>Para:</b> Directivas nuevas o reelectas</p>
         <ul>
-          <li><a href="#c-ADM-01">ADM-01</a>La junta por dentro</li>
-          <li><a href="#c-ADM-02">ADM-02</a>Libros y documentos obligatorios</li>
+          <li><a href="#c-ADM-01">ADM-01</a>La junta por dentro: ley, estatutos y roles</li>
+          <li><a href="#c-ADM-02">ADM-02</a>Libros y documentos de la organización</li>
           <li><a href="#c-ADM-03">ADM-03</a>Tesorería y rendición de cuentas</li>
           <li><a href="#c-ADM-04">ADM-04</a>Elecciones y vigencia del directorio</li>
           <li><a href="#c-ADM-05">ADM-05</a>Personalidad jurídica al día</li>
@@ -528,19 +566,19 @@
           <li><a href="#c-GRD-02">GRD-02</a>Plan comunitario de emergencia</li>
           <li><a href="#c-GRD-05">GRD-05</a>Sistemas de alerta temprana vecinal</li>
           <li><a href="#c-LID-01">LID-01</a>Líderes en tiempos de crisis</li>
-          <li><a href="#c-LOG-01">LOG-01</a>Coordinador/a Logístico Barrial</li>
-          <li><a href="#c-SAP-01">SAP-01</a>Primeros auxilios comunitarios</li>
+          <li><a href="#c-LOG-01">LOG-01</a>Coordinador/a Logístico Barrial en Emergencias</li>
+          <li><a href="#c-SAL-01">SAL-01</a>Primeros auxilios comunitarios</li>
         </ul>
       </article>
       <article class="pack">
         <h3>Junta que crece</h3>
         <p class="pack__para"><b>Para:</b> Juntas que quieren postular a fondos</p>
         <ul>
+          <li><a href="#c-ADM-06">ADM-06</a>Requisitos para recibir fondos públicos</li>
           <li><a href="#c-PRY-01">PRY-01</a>Cómo formular un proyecto comunitario</li>
           <li><a href="#c-PRY-02">PRY-02</a>Mapa de fondos disponibles</li>
-          <li><a href="#c-PRY-03">PRY-03</a>Rendición de proyectos financiados: cómo no quedar inhabilitado</li>
+          <li><a href="#c-PRY-03">PRY-03</a>Ejecución y rendición de proyectos</li>
           <li><a href="#c-PRY-04">PRY-04</a>Alianzas con instituciones</li>
-          <li><a href="#c-HER-01">HER-01</a>Herramientas digitales para dirigentes</li>
         </ul>
       </article>
       <article class="pack">
@@ -550,7 +588,7 @@
           <li><a href="#c-LID-01">LID-01</a>Líderes en tiempos de crisis</li>
           <li><a href="#c-LID-04">LID-04</a>Mediación y resolución de conflictos vecinales</li>
           <li><a href="#c-LID-05">LID-05</a>Asambleas que funcionan</li>
-          <li><a href="#c-SMC-02">SMC-02</a>Cuidar al que cuida: desgaste del dirigente y Burnout Territorial</li>
+          <li><a href="#c-SMC-02">SMC-02</a>Cuidar al que cuida</li>
           <li><a href="#c-ADM-03">ADM-03</a>Tesorería y rendición de cuentas</li>
         </ul>
       </article>
@@ -559,29 +597,45 @@
         <p class="pack__para"><b>Para:</b> Enfoque comunitario y de salud</p>
         <ul>
           <li><a href="#c-SMC-01">SMC-01</a>Primera ayuda psicológica para dirigentes</li>
-          <li><a href="#c-SMC-04">SMC-04</a>Convivencia y salud mental en el barrio: aislamiento y soledad en personas mayores</li>
-          <li><a href="#c-GRD-07">GRD-07</a>Inclusión en emergencias: personas mayores, con discapacidad, postradas y niños</li>
-          <li><a href="#c-SAP-01">SAP-01</a>Primeros auxilios comunitarios</li>
-          <li><a href="#c-SMC-05">SMC-05</a>Niños y emergencias: cómo acompañarlos</li>
+          <li><a href="#c-SMC-04">SMC-04</a>Convivencia, aislamiento y soledad en personas mayores</li>
+          <li><a href="#c-GRD-07">GRD-07</a>Inclusión en emergencias</li>
+          <li><a href="#c-SAL-01">SAL-01</a>Primeros auxilios comunitarios</li>
+          <li><a href="#c-SMC-05">SMC-05</a>Niños y emergencias</li>
         </ul>
       </article>
-      <article class="pack pack--integral">
+      <article class="pack pack--integral" id="programa-integral">
         <h3>Programa Formativo Comunitario Integral</h3>
-        <p class="pack__para"><b>Para:</b> juntas que buscan un proceso completo. Tres ejes; cada eje se compone de 3 módulos teóricos de 3 horas y 1 taller práctico certificado.</p>
+        <p class="pack__para"><b>Para:</b> juntas que buscan un proceso completo. Tres ejes. Cada eje tiene 3 módulos teórico-prácticos y 1 taller práctico certificado.</p>
         <div class="ejes">
           <div class="eje" data-linea="GRD">
             <h4>Eje Gestión del Riesgo de Desastres</h4>
-            <small>Módulos teóricos y taller</small>
-            <p style="margin:0"><span class="pendiente-dato">[PENDIENTE: definir módulos y taller]</span></p>
+            <small>Módulos teórico-prácticos</small>
+            <ul>
+              <li><a href="#c-GRD-01">GRD-01</a>Mapa de riesgos y capacidades del barrio</li>
+              <li><a href="#c-GRD-07">GRD-07</a>Inclusión en emergencias</li>
+              <li><a href="#c-GRD-05">GRD-05</a>Sistemas de alerta temprana vecinal</li>
+            </ul>
+            <small>Taller práctico certificado</small>
+            <ul>
+              <li><a href="#c-GRD-02">GRD-02</a>Plan comunitario de emergencia (6 horas). Aquí la junta reúne el mapa, el registro de inclusión y el sistema de alerta en su plan escrito.</li>
+            </ul>
           </div>
           <div class="eje" data-linea="SMC">
             <h4>Eje Salud mental comunitaria</h4>
-            <small>Módulos teóricos y taller</small>
-            <p style="margin:0"><span class="pendiente-dato">[PENDIENTE: definir módulos y taller]</span></p>
+            <small>Módulos teórico-prácticos</small>
+            <ul>
+              <li><a href="#c-SMC-02">SMC-02</a>Cuidar al que cuida</li>
+              <li><a href="#c-SMC-04">SMC-04</a>Convivencia, aislamiento y soledad en personas mayores</li>
+              <li><a href="#c-SMC-05">SMC-05</a>Niños y emergencias</li>
+            </ul>
+            <small>Taller práctico certificado</small>
+            <ul>
+              <li><a href="#c-SMC-01">SMC-01</a>Primera ayuda psicológica para dirigentes, con práctica en casos simulados y elaboración de la ruta local de derivación.</li>
+            </ul>
           </div>
           <div class="eje" data-linea="LID">
             <h4>Eje Liderazgo</h4>
-            <small>Módulos teóricos</small>
+            <small>Módulos teórico-prácticos</small>
             <ul>
               <li><a href="#c-LID-01">LID-01</a>Líderes en tiempos de crisis</li>
               <li><a href="#c-LID-03">LID-03</a>Comunicación efectiva y manejo de rumores</li>
@@ -592,6 +646,39 @@
               <li><a href="#c-LID-02">LID-02</a>Decidir bajo presión</li>
             </ul>
           </div>
+        </div>
+        <p class="pack__nota">Los cursos de la línea de <a href="#linea-LOG">Logística y respuesta</a> pueden sumarse como cuarto eje.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" id="instituciones" aria-labelledby="titulo-instituciones-com">
+  <div class="wrap">
+    <div class="encabezado">
+      <span class="antetitulo">Cursos para instituciones</span>
+      <h2 id="titulo-instituciones-com">También formamos a equipos de instituciones</h2>
+      <p class="bajada">Cursos y programas para equipos de instituciones contratantes, con material de estudio en el aula.</p>
+    </div>
+    <div class="inst-coms">
+      <article class="inst-com">
+        <img src="/assets/img/cursos/entrevista-motivacional.jpg" alt="Profesional de salud conversa con un hombre mayor en su hogar, con una tablilla de notas en la mano." width="1600" height="900" loading="lazy" decoding="async">
+        <div class="inst-com__texto">
+          <span class="etiqueta etiqueta--suave">Curso · Para instituciones</span>
+          <h3>Entrevista Motivacional y Consejería Familiar</h3>
+          <p>Curso teórico-práctico que entrega a los equipos de atención primaria herramientas de conversación para acompañar a personas con varias condiciones crónicas y a sus familias, en el marco de la ECICEP.</p>
+          <p class="inst-com__modalidad"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-modalidad"/></svg>Teórico-práctico · en línea a su propio ritmo + jornada presencial</p>
+          <a class="btn btn--secundario btn--chico" href="/cursos/entrevista-motivacional/">Ver el curso<svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-flecha"/></svg></a>
+        </div>
+      </article>
+      <article class="inst-com">
+        <img src="/assets/img/cursos/gestion-riesgo-desastres.jpg" alt="Equipo de emergencia con cascos y chalecos naranjos acompaña a una mujer mayor entre viviendas dañadas." width="1600" height="900" loading="lazy" decoding="async">
+        <div class="inst-com__texto">
+          <span class="etiqueta etiqueta--suave">Programa · Para instituciones</span>
+          <h3>Formación en Gestión del Riesgo de Desastres</h3>
+          <p>Programa teórico-práctico para comprender el desastre como resultado de amenazas, exposición, vulnerabilidades y capacidades, y preparar a equipos y comunidades para responder y recuperarse.</p>
+          <p class="inst-com__modalidad"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-modalidad"/></svg>Teórico-práctico · presencial o híbrido, con material de estudio en el aula</p>
+          <a class="btn btn--secundario btn--chico" href="/cursos/gestion-riesgo-desastres/">Ver el programa<svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-flecha"/></svg></a>
         </div>
       </article>
     </div>
@@ -619,7 +706,7 @@
       <p>Contacto de la Academia</p>
       <p><a class="correo" href="mailto:academia@institutoriesgoterritorial.cl">academia@institutoriesgoterritorial.cl</a></p>
     </div>
-    <p class="pie__copy">© 2026 Instituto de Riesgo Territorial · Academia IRT</p>
+    <p class="pie__copy">© 2026 Instituto de Riesgo Territorial · Academia IRT · <a href="/privacidad/">Privacidad y datos personales</a></p>
   </div>
 </footer>
 
