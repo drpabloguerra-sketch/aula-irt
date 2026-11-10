@@ -15,6 +15,8 @@
   var estado = document.querySelector('[data-cat-estado]');
   var vacio = document.querySelector('[data-cat-vacio]');
   var lineaActiva = '';
+  // Texto del estado sin filtro: el que trae la página (sirve para cualquier catálogo)
+  var textoInicial = estado ? estado.textContent : '';
 
   if (herramientas) herramientas.hidden = false;
 
@@ -51,7 +53,7 @@
     if (estado) {
       estado.textContent = (q || lineaActiva)
         ? total + (total === 1 ? ' curso encontrado' : ' cursos encontrados') + ' en ' + lineasVisibles + (lineasVisibles === 1 ? ' línea' : ' líneas') + '.'
-        : '8 líneas formativas · 40 cursos.';
+        : textoInicial;
     }
   }
 

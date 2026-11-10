@@ -1,0 +1,7 @@
+/* ==========================================================================
+   Academia IRT · Catálogo para organizaciones de trabajadores
+   Usa los mismos componentes de /assets/comunitario.css (se carga después).
+   Solo agrega el color de la línea «Continuidad operativa» (CON).
+   Las otras tres líneas reutilizan los acentos GRD, LID y SMC.
+   ========================================================================== */
+[data-linea="CON"]{--acento:#B8902F;--acento-texto:#7A5E14;--acento-claro:#F8F0DC}
