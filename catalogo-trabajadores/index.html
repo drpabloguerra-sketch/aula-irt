@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/academia.css?v=20261025b">
 <link rel="stylesheet" href="/assets/comunitario.css?v=20261108b">
-<link rel="stylesheet" href="/assets/trabajadores.css?v=20261110">
+<link rel="stylesheet" href="/assets/trabajadores.css?v=20261110b">
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -44,7 +44,7 @@
     <div>
       <span class="antetitulo">Línea de trabajo y gestión del riesgo</span>
       <h1 id="titulo-catalogo">Catálogo para organizaciones de trabajadores</h1>
-      <p class="bajada">Cursos presenciales teórico-prácticos para sindicatos, federaciones y centrales. Se pueden tomar por separado, por línea o como programa completo «Trabajadores Preparados» (40 horas).</p>
+      <p class="bajada">Cursos presenciales teórico-prácticos para sindicatos, federaciones y centrales. Se pueden tomar por separado, por línea o como programa completo «Trabajadores Preparados» (cursos 1 a 10, 40 horas).</p>
       <div class="datos">
         <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Presencial, hasta 20 personas</span>
         <span class="dato"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>Cursos de 4 horas</span>
@@ -81,6 +81,7 @@
         <button type="button" class="cat-filtro" data-cat-filtro="LID" data-linea="LID" aria-pressed="false"><i aria-hidden="true"></i>Liderazgo y organización</button>
         <button type="button" class="cat-filtro" data-cat-filtro="SMC" data-linea="SMC" aria-pressed="false"><i aria-hidden="true"></i>Salud mental en emergencias</button>
         <button type="button" class="cat-filtro" data-cat-filtro="CON" data-linea="CON" aria-pressed="false"><i aria-hidden="true"></i>Continuidad operativa</button>
+        <button type="button" class="cat-filtro" data-cat-filtro="COM" data-linea="COM" aria-pressed="false"><i aria-hidden="true"></i>Curso complementario</button>
       </fieldset>
       <p class="cat-estado" id="cat-estado" data-cat-estado aria-live="polite">4 líneas · 11 cursos.</p>
     </div>
@@ -191,7 +192,7 @@
       <details class="linea" id="linea-CON" data-linea="CON">
         <summary>
           <span class="linea__num"><span>Línea</span><b>4</b></span>
-          <span><span class="linea__titulo">Continuidad operativa</span><span class="linea__meta">3 cursos</span></span>
+          <span><span class="linea__titulo">Continuidad operativa</span><span class="linea__meta">2 cursos</span></span>
         </summary>
         <div class="linea__cuerpo">
           <ul class="cursos-com">
@@ -213,6 +214,17 @@
               <div class="curso-com__tags"><span class="tag-com"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-reloj"/></svg>4 horas</span><span class="tag-com tag-com--tp"><svg class="ico" aria-hidden="true"><use href="/assets/iconos.svg?v=20261025#i-presencial"/></svg>Teórico-práctico</span></div>
             </div>
           </li>
+          </ul>
+        </div>
+      </details>
+      <details class="linea" id="linea-COM" data-linea="COM">
+        <summary>
+          <span class="linea__num"><span>Extra</span><b>+</b></span>
+          <span><span class="linea__titulo">Curso complementario</span><span class="linea__meta">1 curso</span></span>
+        </summary>
+        <div class="linea__cuerpo">
+          <p class="linea__nota" role="note">No forma parte del programa de 40 horas.</p>
+          <ul class="cursos-com">
           <li class="curso-com" id="c-T11">
             <span class="curso-com__codigo">Curso 11</span>
             <div>
@@ -228,7 +240,7 @@
     </div>
     <p class="cat-vacio" data-cat-vacio hidden>No encontramos cursos con ese texto. Pruebe con otra palabra o elija «Todas».</p>
 
-    <p class="linea__nota" role="note" style="margin-top:24px;--acento:var(--irt-marino);--acento-claro:#E8ECF4">El programa aborda riesgo, seguridad, salud y organización ante emergencias. No trata negociación colectiva ni disputas laborales, y no se alinea con ningún sector político. Certificación propia del IRT. El IRT no es un OTEC registrado en SENCE, por lo que no permite usar la franquicia tributaria.</p>
+    <p class="linea__nota" role="note" style="margin-top:24px;--acento:var(--irt-marino);--acento-claro:#E8ECF4">El programa aborda riesgo, seguridad, salud y organización ante emergencias. No trata negociación colectiva ni disputas laborales, y no se alinea con ningún sector político. Certificación propia del IRT.</p>
 
     <div class="cierre-com">
       <p><b>¿Le interesa un curso o el programa para su organización?</b>Escríbanos a academia@institutoriesgoterritorial.cl.</p>

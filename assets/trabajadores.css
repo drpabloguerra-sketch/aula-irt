@@ -1,7 +1,9 @@
 /* ==========================================================================
    Academia IRT · Catálogo para organizaciones de trabajadores
    Usa los mismos componentes de /assets/comunitario.css (se carga después).
-   Solo agrega el color de la línea «Continuidad operativa» (CON).
+   Solo agrega los colores de «Continuidad operativa» (CON) y del grupo «Curso complementario» (COM).
    Las otras tres líneas reutilizan los acentos GRD, LID y SMC.
    ========================================================================== */
 [data-linea="CON"]{--acento:#B8902F;--acento-texto:#7A5E14;--acento-claro:#F8F0DC}
+/* Grupo «Curso complementario» (fuera del programa de 40 horas) */
+[data-linea="COM"]{--acento:#4A6670;--acento-texto:#36505A;--acento-claro:#E8EFF1}
